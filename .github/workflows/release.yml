@@ -96,9 +96,9 @@ jobs:
             echo CORS_WHITE_LIST=${{ vars.CORS_WHITE_LIST }} >> .env
             
             curl https://raw.githubusercontent.com/ngyngcphu/tick3d-be/main/docker-compose.yml -o docker-compose.yml
-            docker-compose stop tick3d-be
-            docker-compose rm -f tick3d-be
-            docker-compose up -d tick3d-be
+            docker compose stop tick3d-be
+            docker compose rm -f tick3d-be
+            docker compose up -d tick3d-be
             
             docker logout ${{ env.REGISTRY }}
             
