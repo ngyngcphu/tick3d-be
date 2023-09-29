@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/ngyngcphu/tick3d-be/compare/v1.0.1...v1.0.2) (2023-09-29)
+
+
+### Bug Fixes
+
+* **package:** rename action build and push ([a48ad9b](https://github.com/ngyngcphu/tick3d-be/commit/a48ad9b7a2fd66d880987f1dca33fe4b52cd4500))
+
 ## [1.0.1](https://github.com/ngyngcphu/tick3d-be/compare/v1.0.0...v1.0.1) (2023-09-29)
 
 
