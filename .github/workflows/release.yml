@@ -69,7 +69,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build]
     env:
-      POSTGRES_URL: postgresql://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@postgres:5432/${{ secrets.POSTGRES_DB }}?schema=public
+      POSTGRES_URL: postgresql://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@${{ secrets.VPS_HOST }}:5433/${{ secrets.POSTGRES_DB }}?schema=public
     steps:
       - name: Deploy
         uses: appleboy/ssh-action@master
