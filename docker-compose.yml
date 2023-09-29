@@ -1,29 +1,29 @@
 version: "3.5"
 services:
-  postgres_tick3D:
+  postgres_tick3d:
     image: postgres:15
-    container_name: postgres_tick3D
+    container_name: postgres_tick3d
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
     volumes:
-      - postgres_db_tick3D:/var/lib/postgresql/data
+      - postgres_db_tick3d:/var/lib/postgresql/data
     restart: always
 
-  tick3D-be:
+  tick3d-be:
     build:
       context: .
       dockerfile: ./Dockerfile
-    image: ghcr.io/ngyngcphu/tick3D-be:latest
-    container_name: tick3D-be
+    image: ghcr.io/ngyngcphu/tick3d-be:latest
+    container_name: tick3d-be
     ports:
       - 8081:8080
     volumes:
       - .env:/app/.env
     depends_on:
-      - postgres_tick3D
+      - postgres_tick3d
     restart: always
   
 volumes:
-  postgres_db_tick3D:
+  postgres_db_tick3d:

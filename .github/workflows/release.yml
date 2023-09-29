@@ -12,7 +12,7 @@ env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
   # Image name MUST have a pattern like <org_name_lowercase>/<repo_name_lowercase>
-  IMAGE_NAME: ngyngcphu/tick3D-be
+  IMAGE_NAME: ngyngcphu/tick3d-be
   # username login to ghcr MUST be organization or personal name in lower case
   CD_USERNAME: ngyngcphu
 
@@ -85,7 +85,7 @@ jobs:
             echo $CR_PAT | docker login ${{ env.REGISTRY }} -u ${{ env.CD_USERNAME }} --password-stdin
             docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
             
-            cd tick3D-be
+            cd tick3d-be
             rm -f .env
             echo POSTGRES_USER=${{ secrets.POSTGRES_USER }} >> .env
             echo POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} >> .env
@@ -95,10 +95,10 @@ jobs:
             echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> .env
             echo CORS_WHITE_LIST=${{ vars.CORS_WHITE_LIST }} >> .env
             
-            curl https://raw.githubusercontent.com/ngyngcphu/tick3D-be/main/docker-compose.yml -o docker-compose.yml
-            docker-compose stop tick3D-be
-            docker-compose rm -f tick3D-be
-            docker-compose up -d tick3D-be
+            curl https://raw.githubusercontent.com/ngyngcphu/tick3d-be/main/docker-compose.yml -o docker-compose.yml
+            docker-compose stop tick3d-be
+            docker-compose rm -f tick3d-be
+            docker-compose up -d tick3d-be
             
             docker logout ${{ env.REGISTRY }}
             
