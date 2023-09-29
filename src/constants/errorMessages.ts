@@ -6,3 +6,5 @@ export const LOGIN_FAIL = 'Incorrect login information !';
 export const MUST_LOGIN_FIRST = 'Login first !';
 export const INVALID_TOKEN = 'Invalid token !';
 export const NOT_FOUND_GENERIC = 'Not found !';
+
+export const PERMISSION_DENIED = 'You do not have permission to access this resource.';

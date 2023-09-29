@@ -1,21 +1,33 @@
 import { hashSync } from 'bcrypt';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, UserRole } from '@prisma/client';
 
 const prisma = new PrismaClient();
 const SALT_ROUNDS = 10;
 
-const user = {
-    email: 'npvinh0507@gmail.com',
-    password: '123456789'
-};
+const users = [
+    {
+        email: 'admin@gmail.com',
+        password: 'admin1234',
+        role: UserRole.ADMIN
+    },
+    {
+        email: 'user@gmail.com',
+        password: 'user5678',
+        role: UserRole.USER
+    }
+];
 
 async function generateSampleData() {
-    const hashPassword = hashSync(user.password, SALT_ROUNDS);
-    const sampleUser = await prisma.user.create({
-        data: {
+    const handleUsers = users.map((user) => {
+        const hashPassword = hashSync(user.password, SALT_ROUNDS);
+        return {
             email: user.email,
-            password: hashPassword
-        }
+            password: hashPassword,
+            role: user.role
+        };
+    });
+    const sampleUser = await prisma.user.createMany({
+        data: handleUsers
     });
     console.log(sampleUser);
     process.exit(0);

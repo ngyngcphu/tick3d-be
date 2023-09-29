@@ -15,4 +15,10 @@ model User {
   id       String @id @default(cuid())
   email    String @unique @db.VarChar(50)
   password String
+  role     UserRole   @default(USER)
+}
+
+enum UserRole {
+  USER
+  ADMIN
 }

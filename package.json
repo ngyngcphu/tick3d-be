@@ -1,6 +1,6 @@
 {
-  "name": "fastify-template",
-  "version": "1.6.1",
+  "name": "tick3d-be",
+  "version": "",
   "license": "ISC",
   "description": "",
   "type": "commonjs",
@@ -19,8 +19,8 @@
     "format": "prettier '**/*.{ts,js,json}' --write",
     "prepare": "is-ci || husky install",
     "bootstrap": "yarn start:docker && yarn && yarn db:migrate && npx prisma db seed",
-    "start:docker": "docker-compose -f docker-compose.dev.yml up -d",
-    "clean:docker": "docker-compose -f docker-compose.dev.yml down --volumes --remove-orphans",
+    "start:docker": "docker compose -f docker-compose.dev.yml up -d",
+    "clean:docker": "docker compose -f docker-compose.dev.yml down --volumes --remove-orphans",
     "clean:git": "git branch --merged >/tmp/merged-branches && nano /tmp/merged-branches && xargs git branch -D </tmp/merged-branches && git fetch --prune --all"
   },
   "dependencies": {

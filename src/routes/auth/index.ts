@@ -1,3 +1,4 @@
+import { Type } from '@sinclair/typebox';
 import { AuthInputDto } from '@dtos/in';
 import { AuthResultDto } from '@dtos/out';
 import { authHandler } from '@handlers';
@@ -25,5 +26,15 @@ export const authPlugin = createRoutes('Auth', [
             }
         },
         handler: authHandler.signup
+    },
+    {
+        method: 'POST',
+        url: '/logout',
+        schema: {
+            response: {
+                200: Type.Null()
+            }
+        },
+        handler: authHandler.logout
     }
 ]);

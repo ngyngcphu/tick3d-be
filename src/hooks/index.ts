@@ -3,3 +3,4 @@
  */
 
 export * from './verifyToken.hook';
+export * from './verifyUserRole.hook';

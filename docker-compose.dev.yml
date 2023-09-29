@@ -1,18 +1,18 @@
 version: "3.5"
 services:
-  postgres:
+  postgres_tick3D:
     image: postgres:15
-    container_name: postgres
+    container_name: postgres_tick3D
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
     ports:
-      - 5432:5432
+      - 5433:5432
     volumes:
-      - postgres_db:/var/lib/postgresql/data
+      - postgres_db_tick3D:/var/lib/postgresql/data
     restart: always
 
 volumes:
-  postgres_db:
+  postgres_db_tick3D:
 

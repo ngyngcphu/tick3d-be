@@ -2,12 +2,11 @@ name: CI
 
 on:
   pull_request:
-    branches: ["master"]
+    branches: ["main"]
     # See docs at https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#example-excluding-paths
     paths-ignore:
       - '.husky/**'
       - '**.md'
-      - 'package.json'
   
 jobs:
   test:

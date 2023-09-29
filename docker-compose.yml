@@ -1,29 +1,29 @@
 version: "3.5"
 services:
-  postgres:
+  postgres_tick3D:
     image: postgres:15
-    container_name: postgres
+    container_name: postgres_tick3D
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
     volumes:
-      - postgres_db:/var/lib/postgresql/data
+      - postgres_db_tick3D:/var/lib/postgresql/data
     restart: always
 
-  fastify:
+  tick3D-be:
     build:
       context: .
       dockerfile: ./Dockerfile
-    image: ghcr.io/phucvinh57/fastify-template:0.1.0
-    container_name: fastify_template
+    image: ghcr.io/ngyngcphu/tick3D-be:latest
+    container_name: tick3D-be
     ports:
-      - 8080:8080
+      - 8081:8080
     volumes:
       - .env:/app/.env
     depends_on:
-      - postgres
+      - postgres_tick3D
     restart: always
   
 volumes:
-  postgres_db:
+  postgres_db_tick3D:
