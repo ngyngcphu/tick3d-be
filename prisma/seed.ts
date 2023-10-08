@@ -6,14 +6,18 @@ const SALT_ROUNDS = 10;
 
 const users = [
     {
-        email: 'admin@gmail.com',
+        accountName: 'admin',
         password: 'admin1234',
-        role: UserRole.ADMIN
+        role: UserRole.MANAGER,
+        tel: '0123456789',
+        profileName: 'admin'
     },
     {
-        email: 'user@gmail.com',
+        accountName: 'customer',
         password: 'user5678',
-        role: UserRole.USER
+        role: UserRole.CUSTOMER,
+        tel: '9876543210',
+        profileName: 'user'
     }
 ];
 
@@ -21,9 +25,11 @@ async function generateSampleData() {
     const handleUsers = users.map((user) => {
         const hashPassword = hashSync(user.password, SALT_ROUNDS);
         return {
-            email: user.email,
-            password: hashPassword,
-            role: user.role
+            account_name: user.accountName,
+            password_sh: hashPassword,
+            role: user.role,
+            tel: user.tel,
+            profile_name: user.profileName
         };
     });
     const sampleUser = await prisma.user.createMany({
