@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -12,13 +9,110 @@ datasource db {
 }
 
 model User {
-  id       String @id @default(cuid())
-  email    String @unique @db.VarChar(50)
-  password String
-  role     UserRole   @default(USER)
+  id              String @id @default(cuid())
+  account_name    String @unique @db.VarChar(63)
+  salt_password   String @db.VarChar(255)
+  hash_password   String @db.VarChar(255)
+  role            UserRole @default(CUSTOMER)
+  tel             String @db.VarChar(15)
+  profile_name    String @db.VarChar(63)
+}
+
+model Customer {
+  user_id         String @id
+  user            User @relation(fields: [user_id], references: [id]) 
+}
+
+model Manager {
+  user_id         String @id
+  user            User @relation(fields: [user_id], references: [id])
+}
+
+model Model {
+  id              String @id @default(cuid())
+  name            String @db.VarChar(63)
+  price           Float
+  gcode           String @db.Text
+  uploadTime      DateTime @default(now())
+}
+
+model UploadedModel {
+  model_id        String @id
+  model           Model @relation(fields: [model_id], references: [id])
+  user_id	  String @id
+  user            Customer @relation(fields: [author_id], references: [user_id])
+}
+
+model DefaultModel {
+  model_id        String @id
+  model           Model @relation(fields: [model_id], references: [id])
+  category_id     String
+  category        Category @relation(fields: [category_id], references: [id])
+  likesNo         Int
+  imageUrl        String @db.VarChar(255)
+}
+
+model Like {
+  user_id	  String @id
+  user            Customer @relation(fields: [user_id], references: [user_id])
+  model_id        String @id
+  model           DefaultModel @relation(fields: [model_id], references: [model_id])
+  @@id([user_id, model_id])
+}
+
+model Cart {
+  user_id         String
+  user            Customer @relation(fields: [user_id], references: [user_id])
+  model_id        String
+  model           Model @relation(fields: [model_id], references: [id])
+  quantity	  Int     
+  @@id([user_id, model_id])
+}
+
+model Order {
+  id              String @id @default(cuid())
+  user_id         String
+  user            Customer @relation(fields: [user_id], references: [user_id])
+  total_price     Float
+  shipping_fee    Float
+  est_deli_time   DateTime
+  status          Status @default(ORDER_PENDING)
+  district        String @db.VarChar(31)
+  ward            String @db.VarChar(31)
+  street          String @db.VarChar(31)
+  streetNo        String @db.VarChar(31)
+  creation_time   DateTime @default(now())
+  isPaid          Boolean
+  extra_note      String @db.VarChar(255) @default('')
+}
+
+model Item {
+  item_id         String @default(cuid())
+  order_id        String
+  order           Order @relation(fields: [order_id], references: [id])
+  name            String @db.VarChar(63)
+  gcode           String @db.Text
+  quantity        Int
+  imageUrl        String @db.VarChar(255)
+  @@id ([item_id, order_id])
+}
+
+model Category {
+  id              String @id @default(cuid())
+  name            String @db.VarChar(50)   
 }
 
 enum UserRole {
-  USER
-  ADMIN
+  CUSTOMER
+  MANAGER
+}
+
+enum Status {
+  ORDER_PENDING
+  ORDER_PROCESSED
+  PRINT_PENDING
+  PRINTED
+  DELIVERING
+  DELIVERED
+  REJECTED
 }
