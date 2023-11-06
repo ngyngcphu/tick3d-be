@@ -14,7 +14,7 @@ const users = [
         verified: true
     },
     {
-        email: 'huydo862003@gmail.com',
+        email: 'customer@gmail.com',
         password: 'user5678',
         role: UserRole.CUSTOMER,
         tel: '9876543210',
