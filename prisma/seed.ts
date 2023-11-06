@@ -6,14 +6,14 @@ const SALT_ROUNDS = 10;
 
 const users = [
     {
-        accountName: 'admin',
+        email: 'admin@gmail.com',
         password: 'admin1234',
         role: UserRole.MANAGER,
         tel: '0123456789',
         profileName: 'admin'
     },
     {
-        accountName: 'customer',
+        email: 'customer@gmail.com',
         password: 'user5678',
         role: UserRole.CUSTOMER,
         tel: '9876543210',
@@ -25,7 +25,7 @@ async function generateSampleData() {
     const handleUsers = users.map((user) => {
         const hashPassword = hashSync(user.password, SALT_ROUNDS);
         return {
-            account_name: user.accountName,
+            email: user.email,
             password_sh: hashPassword,
             role: user.role,
             tel: user.tel,

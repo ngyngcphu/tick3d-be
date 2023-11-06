@@ -8,14 +8,14 @@ const getUserById: Handler<UserDto> = async (req, res) => {
     const user = await prisma.user.findUnique({
         select: {
             id: true,
-            account_name: true
+            email: true
         },
         where: { id: userId }
     });
     if (user === null) return res.badRequest(USER_NOT_FOUND);
     return {
         id: user.id,
-        accountName: user.account_name
+        email: user.email
     };
 };
 
