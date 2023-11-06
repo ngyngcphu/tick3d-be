@@ -37,6 +37,7 @@
     "envalid": "^7.3.1",
     "fastify": "^4.21.0",
     "jsonwebtoken": "^9.0.1",
+    "nodemailer": "^6.9.7",
     "prisma": "^5.1.1"
   },
   "devDependencies": {
@@ -44,6 +45,7 @@
     "@types/jest": "^29.5.3",
     "@types/jsonwebtoken": "^9.0.2",
     "@types/node": "^20.4.8",
+    "@types/nodemailer": "^6.4.13",
     "@typescript-eslint/eslint-plugin": "^6.2.1",
     "@typescript-eslint/parser": "^6.2.1",
     "barrelsby": "^2.8.0",

@@ -1,6 +1,7 @@
+import nodemailer from 'nodemailer';
 import { compare, hash } from 'bcrypt';
 import { prisma } from '@repositories';
-import { cookieOptions, DUPLICATED_EMAIL, LOGIN_FAIL, SALT_ROUNDS } from '@constants';
+import { cookieOptions, DUPLICATED_EMAIL, LOGIN_FAIL, SALT_ROUNDS, INVALID_VERIFICATION_LINK, USER_NOT_FOUND } from '@constants';
 import jwt from 'jsonwebtoken';
 import { envs } from '@configs';
 import { User, UserRole } from '@prisma/client';
@@ -72,8 +73,97 @@ const logout: Handler = async (_req, res) => {
     return null;
 };
 
+const verifyLink: Handler<string, { Params: { id: string } }> = async (req, res) => {
+    const verificationEmail = await prisma.verificationEmail.findFirst({
+        select: {
+            user_id: true,
+            expiration_date: true
+        },
+        where: {
+            id: req.params.id
+        }
+    });
+
+    if (!verificationEmail) {
+        return res.badRequest(INVALID_VERIFICATION_LINK);
+    }
+
+    if (verificationEmail.expiration_date.getTime() < Date.now()) {
+        await prisma.verificationEmail.delete({
+            where: {
+                id: req.params.id
+            }
+        });
+        return res.badRequest(INVALID_VERIFICATION_LINK);
+    }
+
+    await prisma.user.update({
+        data: {
+            verified: true
+        },
+        where: {
+            id: verificationEmail.user_id
+        }
+    });
+
+    return 'Verify successfully !';
+};
+
+const sendVerifyLink: Handler = async (req, res) => {
+    const userId = req.userId;
+    const user = await prisma.user.findUnique({
+        select: {
+            id: true,
+            verified: true,
+            email: true
+        },
+        where: { id: userId }
+    });
+
+    if (!user) {
+        return res.badRequest(USER_NOT_FOUND);
+    }
+
+    if (user.verified) {
+        return null;
+    }
+
+    await prisma.verificationEmail.deleteMany({
+        where: {
+            user_id: user.id
+        }
+    });
+
+    const verificationEmail = await prisma.verificationEmail.create({
+        data: {
+            user_id: user.id
+        }
+    });
+
+    const mailer = nodemailer.createTransport({
+        host: envs.SMTP_SERVER,
+        port: envs.SMTP_PORT,
+        secure: false,
+        auth: {
+            user: envs.SMTP_USER,
+            pass: envs.SMTP_PASSWORD
+        }
+    });
+
+    mailer.sendMail({
+        from: '"Tick3d" <tick3d@no-reply>',
+        to: user.email,
+        subject: 'Tick3d verification link',
+        html: `<p>Click this link to verify your tick3d account: <a>${envs.BACKEND_URL}/auth/verify/${verificationEmail.id}</a></p>`
+    });
+
+    return null;
+};
+
 export const authHandler = {
     login,
     signup,
-    logout
+    logout,
+    verifyLink,
+    sendVerifyLink
 };
