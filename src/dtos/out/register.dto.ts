@@ -1,13 +1,16 @@
+import { MIN_EMAIL_LENGTH } from '@constants';
 import { ObjectId } from '@dtos/common';
 import { UserRole } from '@prisma/client';
 import { Static, Type } from '@sinclair/typebox';
 
-export const AuthResultDto = Type.Object({
+// See https://github.com/sinclairzx81/typebox
+
+export const RegisterResultDto = Type.Object({
     id: ObjectId,
-    email: Type.String({ format: 'email' }),
+    email: Type.String({ minLength: MIN_EMAIL_LENGTH }),
     tel: Type.String(),
     profileName: Type.String(),
     role: Type.Union([Type.Literal(UserRole.CUSTOMER), Type.Literal(UserRole.MANAGER)])
 });
 
-export type AuthResultDto = Static<typeof AuthResultDto>;
+export type RegisterResultDto = Static<typeof RegisterResultDto>;

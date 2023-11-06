@@ -1,6 +1,6 @@
 import { Type } from '@sinclair/typebox';
-import { AuthInputDto } from '@dtos/in';
-import { AuthResultDto } from '@dtos/out';
+import { AuthInputDto, RegisterInputDto } from '@dtos/in';
+import { AuthResultDto, RegisterResultDto } from '@dtos/out';
 import { authHandler } from '@handlers';
 import { createRoutes } from '@utils';
 
@@ -20,9 +20,9 @@ export const authPlugin = createRoutes('Auth', [
         method: 'POST',
         url: '/signup',
         schema: {
-            body: AuthInputDto,
+            body: RegisterInputDto,
             response: {
-                200: AuthResultDto
+                200: RegisterResultDto
             }
         },
         handler: authHandler.signup

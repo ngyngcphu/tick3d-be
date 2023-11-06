@@ -4,8 +4,8 @@ import { cookieOptions, DUPLICATED_EMAIL, LOGIN_FAIL, SALT_ROUNDS } from '@const
 import jwt from 'jsonwebtoken';
 import { envs } from '@configs';
 import { User, UserRole } from '@prisma/client';
-import { AuthInputDto } from '@dtos/in';
-import { AuthResultDto } from '@dtos/out';
+import { AuthInputDto, RegisterInputDto } from '@dtos/in';
+import { AuthResultDto, RegisterResultDto } from '@dtos/out';
 import { Handler } from '@interfaces';
 import { logger } from '@utils';
 
@@ -14,10 +14,12 @@ const login: Handler<AuthResultDto, { Body: AuthInputDto }> = async (req, res) =
         select: {
             id: true,
             password_sh: true,
-            account_name: true,
-            role: true
+            email: true,
+            role: true,
+            profile_name: true,
+            tel: true
         },
-        where: { account_name: req.body.accountName }
+        where: { email: req.body.email }
     });
     if (!user) return res.badRequest(LOGIN_FAIL);
 
@@ -29,17 +31,20 @@ const login: Handler<AuthResultDto, { Body: AuthInputDto }> = async (req, res) =
 
     return {
         id: user.id,
-        accountName: user.account_name
+        email: user.email,
+        profileName: user.profile_name,
+        tel: user.tel,
+        role: user.role
     };
 };
 
-const signup: Handler<AuthResultDto, { Body: AuthInputDto }> = async (req, res) => {
+const signup: Handler<RegisterResultDto, { Body: RegisterInputDto }> = async (req, res) => {
     const hashPassword = await hash(req.body.password, SALT_ROUNDS);
     let user: User;
     try {
         user = await prisma.user.create({
             data: {
-                account_name: req.body.accountName,
+                email: req.body.email,
                 password_sh: hashPassword,
                 tel: req.body.tel,
                 profile_name: req.body.profileName
@@ -55,7 +60,10 @@ const signup: Handler<AuthResultDto, { Body: AuthInputDto }> = async (req, res) 
 
     return {
         id: user.id,
-        accountName: user.account_name
+        email: user.email,
+        tel: user.tel,
+        profileName: user.profile_name,
+        role: user.role
     };
 };
 
