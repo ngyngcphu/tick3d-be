@@ -9,14 +9,23 @@ datasource db {
 }
 
 model User {
-  id            String     @id @default(cuid())
-  email         String     @unique @db.VarChar(63)
-  password_sh   String     @db.VarChar(255)
-  role          UserRole   @default(CUSTOMER)
-  tel           String     @db.VarChar(15)
-  profile_name  String     @db.VarChar(63)
-  Customer      Customer?
-  Manager       Manager?
+  id                String             @id @default(cuid())
+  email             String             @unique @db.VarChar(63)
+  password_sh       String             @db.VarChar(255)
+  role              UserRole           @default(CUSTOMER)
+  tel               String             @db.VarChar(15)
+  profile_name      String             @db.VarChar(63)
+  Customer          Customer?
+  Manager           Manager?
+  verified          Boolean            @default(false)
+  VerificationEmail VerificationEmail?
+}
+
+model VerificationEmail {
+  id              String   @id @default(cuid())
+  user_id         String   @unique
+  User            User     @relation(fields: [user_id], references: [id])
+  expiration_date DateTime @default(dbgenerated("NOW() + interval '1 day'"))
 }
 
 model Customer {
@@ -34,11 +43,11 @@ model Manager {
 }
 
 model Model {
-  id            String          @id @default(cuid())
-  name          String          @db.VarChar(63)
+  id            String         @id @default(cuid())
+  name          String         @db.VarChar(63)
   price         Float
-  gcode         String          @db.Text
-  uploadTime    DateTime        @default(now())
+  gcode         String         @db.Text
+  uploadTime    DateTime       @default(now())
   UploadedModel UploadedModel?
   DefaultModel  DefaultModel?
   Cart          Cart[]

@@ -10,7 +10,8 @@ const users = [
         password: 'admin1234',
         role: UserRole.MANAGER,
         tel: '0123456789',
-        profileName: 'admin'
+        profileName: 'admin',
+        verified: true
     },
     {
         email: 'customer@gmail.com',
@@ -29,7 +30,8 @@ async function generateSampleData() {
             password_sh: hashPassword,
             role: user.role,
             tel: user.tel,
-            profile_name: user.profileName
+            profile_name: user.profileName,
+            verified: user?.verified
         };
     });
     const sampleUser = await prisma.user.createMany({

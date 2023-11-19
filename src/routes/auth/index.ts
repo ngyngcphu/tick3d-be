@@ -3,6 +3,7 @@ import { AuthInputDto, RegisterInputDto } from '@dtos/in';
 import { AuthResultDto, RegisterResultDto } from '@dtos/out';
 import { authHandler } from '@handlers';
 import { createRoutes } from '@utils';
+import { verifyToken } from '@hooks';
 
 export const authPlugin = createRoutes('Auth', [
     {
@@ -36,5 +37,31 @@ export const authPlugin = createRoutes('Auth', [
             }
         },
         handler: authHandler.logout
+    },
+    {
+        method: 'GET',
+        url: '/verify/:id',
+        schema: {
+            params: {
+                id: Type.String()
+            },
+            response: {
+                200: Type.Null(),
+                404: Type.Null()
+            }
+        },
+        handler: authHandler.verifyLink
+    },
+    {
+        method: 'POST',
+        url: '/verify',
+        onRequest: [verifyToken],
+        schema: {
+            response: {
+                200: Type.Null(),
+                400: Type.Null()
+            }
+        },
+        handler: authHandler.sendVerifyLink
     }
 ]);
