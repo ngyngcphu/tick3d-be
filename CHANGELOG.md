@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.1.0](https://github.com/ngyngcphu/tick3d-be/compare/v1.0.3...v1.1.0) (2023-11-23)
+
+
+### Features
+
+* add email verification ([588f50a](https://github.com/ngyngcphu/tick3d-be/commit/588f50a529c7bbabec3ba8e559555ecea848d945))
+* add prisma schema ([36201b2](https://github.com/ngyngcphu/tick3d-be/commit/36201b20aec82de089e630862fb7f73012d7de68))
+* run db migrations ([e874d58](https://github.com/ngyngcphu/tick3d-be/commit/e874d58cd8a1d10690c5796795d1294b67151514))
+
+
+### Bug Fixes
+
+* auth now uses the new schema ([33b2d28](https://github.com/ngyngcphu/tick3d-be/commit/33b2d28c243cb7f9f54448a819db0f6c094efbbe))
+* **auth:** adapt to the new schema ([95e3ecc](https://github.com/ngyngcphu/tick3d-be/commit/95e3ecce11e71a0d45bc855a95c5d83b031049a5))
+* **auth:** missed cases when adapt code to new schema ([599e7c6](https://github.com/ngyngcphu/tick3d-be/commit/599e7c69e7dcbd5e03ba90bbbe97dc455ab9cff8))
+* **prisma:** change account_name to email in user model ([3e2eeba](https://github.com/ngyngcphu/tick3d-be/commit/3e2eeba89205d85651d6f19010cd145629d1221c))
+* **prisma:** semantic errors in schema file ([e00b5d4](https://github.com/ngyngcphu/tick3d-be/commit/e00b5d4cfb3d76a9cc3b82ac31fa34e342f1c5a3))
+* **schema:** split profile name ([761e1e4](https://github.com/ngyngcphu/tick3d-be/commit/761e1e486a1e33f8d77188a3b7342c022e7952e1))
+* seeder ([6742a51](https://github.com/ngyngcphu/tick3d-be/commit/6742a519125d313a469e76172dd5877675798d3f))
+
 ## [1.0.3](https://github.com/ngyngcphu/tick3d-be/compare/v1.0.2...v1.0.3) (2023-09-29)
 
 
