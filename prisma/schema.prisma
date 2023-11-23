@@ -14,7 +14,8 @@ model User {
   password_sh       String             @db.VarChar(255)
   role              UserRole           @default(CUSTOMER)
   tel               String             @db.VarChar(15)
-  profile_name      String             @db.VarChar(63)
+  first_name        String             @db.VarChar(63)
+  last_name         String             @db.VarChar(63)
   Customer          Customer?
   Manager           Manager?
   verified          Boolean            @default(false)

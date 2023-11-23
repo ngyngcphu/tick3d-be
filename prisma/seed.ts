@@ -10,7 +10,8 @@ const users = [
         password: 'admin1234',
         role: UserRole.MANAGER,
         tel: '0123456789',
-        profileName: 'admin',
+        first_name: 'admin',
+        last_name: 'good',
         verified: true
     },
     {
@@ -18,7 +19,8 @@ const users = [
         password: 'user5678',
         role: UserRole.CUSTOMER,
         tel: '9876543210',
-        profileName: 'user'
+        first_name: 'user',
+        last_name: 'good'
     }
 ];
 
@@ -30,7 +32,8 @@ async function generateSampleData() {
             password_sh: hashPassword,
             role: user.role,
             tel: user.tel,
-            profile_name: user.profileName,
+            last_name: user.last_name,
+            first_name: user.first_name,
             verified: user?.verified
         };
     });

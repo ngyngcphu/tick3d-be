@@ -6,7 +6,8 @@ export const AuthResultDto = Type.Object({
     id: ObjectId,
     email: Type.String({ format: 'email' }),
     tel: Type.String(),
-    profileName: Type.String(),
+    firstname: Type.String(),
+    lastname: Type.String(),
     role: Type.Union([Type.Literal(UserRole.CUSTOMER), Type.Literal(UserRole.MANAGER)])
 });
 
