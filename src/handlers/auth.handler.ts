@@ -17,7 +17,8 @@ const login: Handler<AuthResultDto, { Body: AuthInputDto }> = async (req, res) =
             password_sh: true,
             email: true,
             role: true,
-            profile_name: true,
+            first_name: true,
+            last_name: true,
             tel: true
         },
         where: { email: req.body.email }
@@ -33,7 +34,8 @@ const login: Handler<AuthResultDto, { Body: AuthInputDto }> = async (req, res) =
     return {
         id: user.id,
         email: user.email,
-        profileName: user.profile_name,
+        firstname: user.first_name,
+        lastname: user.last_name,
         tel: user.tel,
         role: user.role
     };
@@ -48,7 +50,8 @@ const signup: Handler<RegisterResultDto, { Body: RegisterInputDto }> = async (re
                 email: req.body.email,
                 password_sh: hashPassword,
                 tel: req.body.tel,
-                profile_name: req.body.profileName
+                first_name: req.body.firstname,
+                last_name: req.body.lastname
             }
         });
     } catch (err) {
@@ -63,7 +66,8 @@ const signup: Handler<RegisterResultDto, { Body: RegisterInputDto }> = async (re
         id: user.id,
         email: user.email,
         tel: user.tel,
-        profileName: user.profile_name,
+        firstname: user.first_name,
+        lastname: user.last_name,
         role: user.role
     };
 };

@@ -9,7 +9,8 @@ export const RegisterResultDto = Type.Object({
     id: ObjectId,
     email: Type.String({ minLength: MIN_EMAIL_LENGTH }),
     tel: Type.String(),
-    profileName: Type.String(),
+    lastname: Type.String(),
+    firstname: Type.String(),
     role: Type.Union([Type.Literal(UserRole.CUSTOMER), Type.Literal(UserRole.MANAGER)])
 });
 
