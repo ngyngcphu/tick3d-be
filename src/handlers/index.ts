@@ -3,4 +3,5 @@
  */
 
 export * from './auth.handler';
+export * from './cart.handler';
 export * from './user.handler';
