@@ -8,7 +8,8 @@
         "./src/hooks",
         "./src/interfaces",
         "./src/repositories",
-        "./src/utils"
+        "./src/utils",
+        "./src/services"
     ],
     "exclude": ["__mock__", "__mocks__", ".spec.ts"],
     "delete": true

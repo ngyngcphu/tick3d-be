@@ -22,7 +22,7 @@
     "start:docker": "docker compose -f docker-compose.dev.yml up -d",
     "clean:docker": "docker compose -f docker-compose.dev.yml down --volumes --remove-orphans",
     "clean:git": "git branch --merged >/tmp/merged-branches && nano /tmp/merged-branches && xargs git branch -D </tmp/merged-branches && git fetch --prune --all",
-    "commit" :"cz"
+    "commit": "cz"
   },
   "dependencies": {
     "@fastify/cookie": "^9.0.4",
@@ -33,6 +33,7 @@
     "@fastify/swagger-ui": "^1.9.3",
     "@prisma/client": "^5.1.1",
     "@sinclair/typebox": "^0.31.1",
+    "axios": "^1.6.2",
     "bcrypt": "^5.1.0",
     "dotenv": "^16.3.1",
     "envalid": "^7.3.1",
