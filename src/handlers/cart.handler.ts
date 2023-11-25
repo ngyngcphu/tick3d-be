@@ -1,8 +1,8 @@
 import { Handler } from '@interfaces';
 import { AddCartInputDto } from '@dtos/in';
 import { prisma } from '@repositories';
-import { ADD_MODELS_FAILED } from '@constants';
-import { GetCartResultDto } from 'src/dtos/out/getCart.dto';
+import { ADD_CART_FAILED } from '@constants';
+import { GetCartResultDto } from '@dtos/out';
 
 const get: Handler<GetCartResultDto> = async (req, res) => {
     const user_id = req.userId;
@@ -57,7 +57,7 @@ const add: Handler<string, { Body: AddCartInputDto }> = async (req, res) => {
 
         return 'Added successfully';
     } catch (e) {
-        return res.badRequest(ADD_MODELS_FAILED);
+        return res.badRequest(ADD_CART_FAILED);
     }
 };
 
