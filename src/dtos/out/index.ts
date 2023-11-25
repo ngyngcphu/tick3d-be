@@ -3,5 +3,6 @@
  */
 
 export * from './auth.dto';
+export * from './getCart.dto';
 export * from './register.dto';
 export * from './user.dto';
