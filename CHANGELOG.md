@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/ngyngcphu/tick3d-be/compare/v1.1.0...v1.2.0) (2023-11-25)
+
+
+### Features
+
+* add cart api ([5477b7a](https://github.com/ngyngcphu/tick3d-be/commit/5477b7a273fa12843c25e748430fc9abc99323a8))
+
 ## [1.1.0](https://github.com/ngyngcphu/tick3d-be/compare/v1.0.3...v1.1.0) (2023-11-23)
 
 
