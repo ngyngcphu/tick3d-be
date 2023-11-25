@@ -97,6 +97,11 @@ jobs:
             echo COOKIE_SECRET=${{ secrets.COOKIE_SECRET }} >> .env
             echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> .env
             echo CORS_WHITE_LIST=${{ vars.CORS_WHITE_LIST }} >> .env
+            echo BACKEND_URL=${{ secrets.BACKEND_URL }} >> .env
+            echo SMTP_SERVER=${{ secrets.SMTP_SERVER }} >> .env
+            echo SMTP_PORT=${{ secrets.SMTP_PORT }} >> .env
+            echo SMTP_USER=${{ secrets.SMTP_USER }} >> .env
+            echo SMTP_PASSWORD=${{ secrets.SMTP_PASSWORD }} >> .env
             
             curl https://raw.githubusercontent.com/ngyngcphu/tick3d-be/main/docker-compose.yml -o docker-compose.yml
             docker compose stop tick3d-be
