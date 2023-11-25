@@ -21,7 +21,8 @@
     "bootstrap": "yarn start:docker && yarn && yarn db:migrate && npx prisma db seed",
     "start:docker": "docker compose -f docker-compose.dev.yml up -d",
     "clean:docker": "docker compose -f docker-compose.dev.yml down --volumes --remove-orphans",
-    "clean:git": "git branch --merged >/tmp/merged-branches && nano /tmp/merged-branches && xargs git branch -D </tmp/merged-branches && git fetch --prune --all"
+    "clean:git": "git branch --merged >/tmp/merged-branches && nano /tmp/merged-branches && xargs git branch -D </tmp/merged-branches && git fetch --prune --all",
+    "commit" :"cz"
   },
   "dependencies": {
     "@fastify/cookie": "^9.0.4",
@@ -50,6 +51,7 @@
     "@typescript-eslint/parser": "^6.2.1",
     "barrelsby": "^2.8.0",
     "cross-env": "^7.0.3",
+    "cz-conventional-changelog": "^3.3.0",
     "dotenv-cli": "^7.2.1",
     "eslint": "^8.46.0",
     "eslint-config-prettier": "^9.0.0",
@@ -67,5 +69,10 @@
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
