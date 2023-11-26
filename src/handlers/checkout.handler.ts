@@ -51,6 +51,7 @@ async function createOrderItem(
 
     await prisma.item.create({
         data: {
+            model_id: model.id,
             order_id: orderId,
             name: model.name,
             gcode: model.gcode,
@@ -107,6 +108,25 @@ const createPayPalOrder: Handler<PaypalDto, { Body: CreatePayPalOrderDto }> = as
     }
 };
 
+async function increaseModalBoughtAmount(orderId: string) {
+    const items = await prisma.item.findMany({
+        where: {
+            order_id: orderId
+        }
+    });
+
+    await Promise.all(
+        items.map(async (item) => {
+            await prisma.model.update({
+                where: { id: item.model_id },
+                data: {
+                    boughtAmount: { increment: item.quantity }
+                }
+            });
+        })
+    );
+}
+
 const completePayPalOrder: Handler<CompletePaypalDto, { Body: CompletePayPalOrderDto }> = async (req, res) => {
     try {
         const accessToken = await getPayPalAccessToken();
@@ -129,6 +149,8 @@ const completePayPalOrder: Handler<CompletePaypalDto, { Body: CompletePayPalOrde
                 isPaid: true
             }
         });
+
+        await increaseModalBoughtAmount(orderId);
 
         return res.send({ id: completeOrderResponse.id, amountMoney });
     } catch (err) {

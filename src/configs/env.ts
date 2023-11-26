@@ -20,7 +20,8 @@ export const envs = cleanEnv(process.env, {
     PAYPAL_LIVE_ENDPOINT: url(),
     PAYPAL_SANDBOX_ENDPOINT: url(),
     PAYPAL_CLIENT_ID: str(),
-    PAYPAL_CLIENT_SECRET: str()
+    PAYPAL_CLIENT_SECRET: str(),
+    MINIO_URL: str()
 });
 
 export const CORS_WHITE_LIST = envs.CORS_WHITE_LIST.split(',');

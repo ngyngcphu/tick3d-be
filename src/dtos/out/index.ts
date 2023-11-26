@@ -3,8 +3,10 @@
  */
 
 export * from './auth.dto';
+export * from './getCart.dto';
+export * from './home.dtos';
+export * from './model.dto';
 export * from './order.dto';
 export * from './paypal.dto';
-export * from './getCart.dto';
 export * from './register.dto';
 export * from './user.dto';
