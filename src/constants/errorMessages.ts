@@ -7,5 +7,6 @@ export const MUST_LOGIN_FIRST = 'Login first !';
 export const INVALID_TOKEN = 'Invalid token !';
 export const NOT_FOUND_GENERIC = 'Not found !';
 export const INVALID_VERIFICATION_LINK = 'Invalid or expired verification link !';
+export const ADD_CART_FAILED = 'Failed to add some models';
 
 export const PERMISSION_DENIED = 'You do not have permission to access this resource.';
