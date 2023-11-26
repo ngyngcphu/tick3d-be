@@ -6,4 +6,5 @@ export * from './auth.handler';
 export * from './cart.handler';
 export * from './checkout.handler';
 export * from './home.handler';
+export * from './model.handler';
 export * from './user.handler';
