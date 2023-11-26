@@ -1,2 +1,2 @@
 type Result<T> = Promise<T | void>;
-type HandlerTag = 'User' | 'Auth' | 'Cart';
+type HandlerTag = 'User' | 'Auth' | 'Cart' | 'Checkout';
