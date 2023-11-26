@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.0](https://github.com/ngyngcphu/tick3d-be/compare/v1.2.1...v1.3.0) (2023-11-26)
+
+
+### Features
+
+* **checkout:** create API for generating orders in the checkout process ([488170e](https://github.com/ngyngcphu/tick3d-be/commit/488170e5dee6417c64786599da51daa2ecdf84c9))
+
+
+### Bug Fixes
+
+* **cd:** remove volume when deploy new version ([e89e5f2](https://github.com/ngyngcphu/tick3d-be/commit/e89e5f2fbd73c54988e29e193f2544661b625318))
+
 ## [1.2.1](https://github.com/ngyngcphu/tick3d-be/compare/v1.2.0...v1.2.1) (2023-11-26)
 
 
