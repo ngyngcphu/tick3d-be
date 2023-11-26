@@ -104,7 +104,7 @@ jobs:
             echo SMTP_PASSWORD=${{ secrets.SMTP_PASSWORD }} >> .env
             
             curl https://raw.githubusercontent.com/ngyngcphu/tick3d-be/main/docker-compose.yml -o docker-compose.yml
-            docker compose stop tick3d-be
+            docker compose down --volumes --remove-orphans tick3d-be
             docker compose rm -f tick3d-be
             docker compose up -d tick3d-be
             
