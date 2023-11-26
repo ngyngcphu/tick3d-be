@@ -110,6 +110,8 @@ jobs:
             echo PAYPAL_SANDBOX_ENDPOINT=${{ secrets.PAYPAL_SANDBOX_ENDPOINT }} >> .env
             echo PAYPAL_CLIENT_ID=${{ secrets.PAYPAL_CLIENT_ID }} >> .env
             echo PAYPAL_CLIENT_SECRET=${{ secrets.PAYPAL_CLIENT_SECRET }} >> .env
+            echo MINIO_URL=${{ secrets.MINIO_URL }} >> .env
+            
             
             curl https://raw.githubusercontent.com/ngyngcphu/tick3d-be/main/docker-compose.yml -o docker-compose.yml
             docker compose down --volumes --remove-orphans tick3d-be
