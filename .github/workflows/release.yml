@@ -105,7 +105,7 @@ jobs:
             echo SMTP_USER=${{ secrets.SMTP_USER }} >> .env
             echo SMTP_PASSWORD=${{ secrets.SMTP_PASSWORD }} >> .env
             echo >> .env
-            CHECKOUT_ENVIRONMENT=sandbox
+            echo CHECKOUT_ENVIRONMENT=${{ secrets.CHECKOUT_ENVIRONMENT }} >> .env
             echo PAYPAL_LIVE_ENDPOINT=${{ secrets.PAYPAL_LIVE_ENDPOINT }} >> .env
             echo PAYPAL_SANDBOX_ENDPOINT=${{ secrets.PAYPAL_SANDBOX_ENDPOINT }} >> .env
             echo PAYPAL_CLIENT_ID=${{ secrets.PAYPAL_CLIENT_ID }} >> .env
