@@ -3,5 +3,5 @@
  */
 
 export * from './auth.handler';
-export * from './paypal.handler';
+export * from './checkout.handler';
 export * from './user.handler';

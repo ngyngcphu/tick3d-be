@@ -1,7 +1,7 @@
 import { verifyToken } from 'src/hooks';
 import { FastifyInstance } from 'fastify';
 import { userPlugin } from './user.plugin';
-import { CheckoutPlugin } from './paypal.plugin';
+import { CheckoutPlugin } from './checkout.plugin';
 
 export async function apiPlugin(app: FastifyInstance) {
     app.addHook('onRequest', verifyToken);

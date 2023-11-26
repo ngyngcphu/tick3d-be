@@ -93,21 +93,22 @@ model Cart {
 }
 
 model Order {
-  id            String   @id @default(cuid())
-  user_id       String
-  user          Customer @relation(fields: [user_id], references: [user_id])
-  total_price   Float
-  shipping_fee  Float
-  est_deli_time DateTime
-  status        Status   @default(ORDER_PENDING)
-  district      String   @db.VarChar(31)
-  ward          String   @db.VarChar(31)
-  street        String   @db.VarChar(31)
-  streetNo      String   @db.VarChar(31)
-  creation_time DateTime @default(now())
-  isPaid        Boolean
-  extra_note    String?  @db.VarChar(255)
-  Item          Item[]
+  id               String   @id @default(cuid())
+  user_id          String
+  user             Customer @relation(fields: [user_id], references: [user_id])
+  total_price      Float
+  shipping_fee     Float
+  est_deli_time    DateTime
+  status           Status   @default(ORDER_PENDING)
+  district         String   @db.VarChar(31)
+  ward             String   @db.VarChar(31)
+  street           String   @db.VarChar(31)
+  streetNo         String   @db.VarChar(31)
+  creation_time    DateTime @default(now())
+  isPaid           Boolean
+  extra_note       String?  @db.VarChar(255)
+  Item             Item[]
+  digital_order_id String?
 }
 
 model Item {
