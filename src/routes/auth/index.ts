@@ -29,7 +29,7 @@ export const authPlugin = createRoutes('Auth', [
         handler: authHandler.signup
     },
     {
-        method: 'POST',
+        method: 'DELETE',
         url: '/logout',
         schema: {
             response: {

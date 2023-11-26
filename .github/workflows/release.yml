@@ -94,17 +94,27 @@ jobs:
             echo POSTGRES_DB=${{ secrets.POSTGRES_DB }} >> .env
             echo POSTGRES_PORT=${{ secrets.POSTGRES_PORT }} >> .env
             echo POSTGRES_URL=${{ env.POSTGRES_URL }} >> .env
+            echo >> .env
             echo COOKIE_SECRET=${{ secrets.COOKIE_SECRET }} >> .env
             echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> .env
             echo CORS_WHITE_LIST=${{ vars.CORS_WHITE_LIST }} >> .env
             echo BACKEND_URL=${{ secrets.BACKEND_URL }} >> .env
+            echo >> .env
             echo SMTP_SERVER=${{ secrets.SMTP_SERVER }} >> .env
             echo SMTP_PORT=${{ secrets.SMTP_PORT }} >> .env
             echo SMTP_USER=${{ secrets.SMTP_USER }} >> .env
             echo SMTP_PASSWORD=${{ secrets.SMTP_PASSWORD }} >> .env
+            echo >> .env
+            echo CHECKOUT_ENVIRONMENT=${{ secrets.CHECKOUT_ENVIRONMENT }} >> .env
+            echo PAYPAL_LIVE_ENDPOINT=${{ secrets.PAYPAL_LIVE_ENDPOINT }} >> .env
+            echo PAYPAL_SANDBOX_ENDPOINT=${{ secrets.PAYPAL_SANDBOX_ENDPOINT }} >> .env
+            echo PAYPAL_CLIENT_ID=${{ secrets.PAYPAL_CLIENT_ID }} >> .env
+            echo PAYPAL_CLIENT_SECRET=${{ secrets.PAYPAL_CLIENT_SECRET }} >> .env
+            echo MINIO_URL=${{ secrets.MINIO_URL }} >> .env
+            
             
             curl https://raw.githubusercontent.com/ngyngcphu/tick3d-be/main/docker-compose.yml -o docker-compose.yml
-            docker compose stop tick3d-be
+            docker compose down --volumes --remove-orphans tick3d-be
             docker compose rm -f tick3d-be
             docker compose up -d tick3d-be
             

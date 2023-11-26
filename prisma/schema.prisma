@@ -44,14 +44,24 @@ model Manager {
 }
 
 model Model {
-  id            String         @id @default(cuid())
-  name          String         @db.VarChar(63)
-  price         Float
-  gcode         String         @db.Text
-  uploadTime    DateTime       @default(now())
-  UploadedModel UploadedModel?
-  DefaultModel  DefaultModel?
-  Cart          Cart[]
+  id             String          @id @default(cuid())
+  name           String          @db.VarChar(63)
+  price          Float
+  gcode          String          @db.Text
+  uploadTime     DateTime        @default(now())
+  description    String          @db.VarChar(255)
+  UploadedModel  UploadedModel?
+  DefaultModel   DefaultModel?
+  Cart           Cart[]
+  ModelPromotion ModelPromotion?
+  boughtAmount   Int             @default(0)
+  Item           Item[]
+}
+
+model ModelPromotion {
+  model_id String @unique
+  model    Model  @relation(fields: [model_id], references: [id])
+  discount Float
 }
 
 model UploadedModel {
@@ -64,12 +74,13 @@ model UploadedModel {
 }
 
 model DefaultModel {
-  model_id    String   @id
-  model       Model    @relation(fields: [model_id], references: [id])
-  category_id String
-  likesNo     Int
-  imageUrl    String   @db.VarChar(255)
-  Like        Like[]
+  model_id     String   @id
+  model        Model    @relation(fields: [model_id], references: [id])
+  category_id  String
+  likesNo      Int
+  imageUrl     String   @db.VarChar(255)
+  subImageUrls String[] @db.VarChar(255)
+  Like         Like[]
 }
 
 model Like {
@@ -92,25 +103,27 @@ model Cart {
 }
 
 model Order {
-  id            String   @id @default(cuid())
-  user_id       String
-  user          Customer @relation(fields: [user_id], references: [user_id])
-  total_price   Float
-  shipping_fee  Float
-  est_deli_time DateTime
-  status        Status   @default(ORDER_PENDING)
-  district      String   @db.VarChar(31)
-  ward          String   @db.VarChar(31)
-  street        String   @db.VarChar(31)
-  streetNo      String   @db.VarChar(31)
-  creation_time DateTime @default(now())
-  isPaid        Boolean
-  extra_note    String?  @db.VarChar(255)
-  Item          Item[]
+  id               String   @id @default(cuid())
+  user_id          String
+  user             Customer @relation(fields: [user_id], references: [user_id])
+  total_price      Float
+  shipping_fee     Float
+  est_deli_time    DateTime
+  status           Status   @default(ORDER_PENDING)
+  district         String   @db.VarChar(31)
+  ward             String   @db.VarChar(31)
+  street           String   @db.VarChar(31)
+  streetNo         String   @db.VarChar(31)
+  creation_time    DateTime @default(now())
+  isPaid           Boolean
+  extra_note       String?  @db.VarChar(255)
+  Item             Item[]
+  digital_order_id String?
 }
 
 model Item {
-  item_id  String @default(cuid())
+  model_id String
+  modal    Model  @relation(fields: [model_id], references: [id])
   order_id String
   order    Order  @relation(fields: [order_id], references: [id])
   name     String @db.VarChar(63)
@@ -118,7 +131,7 @@ model Item {
   quantity Int
   imageUrl String @db.VarChar(255)
 
-  @@id([item_id, order_id])
+  @@id([model_id, order_id])
 }
 
 enum UserRole {

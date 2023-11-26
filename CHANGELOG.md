@@ -1,5 +1,51 @@
 # Changelog
 
+## [1.4.1](https://github.com/ngyngcphu/tick3d-be/compare/v1.4.0...v1.4.1) (2023-11-26)
+
+
+### Bug Fixes
+
+* **cd:** correct addition of CHECKOUT_ENVIROMENT to .env ([8a5c273](https://github.com/ngyngcphu/tick3d-be/commit/8a5c27342ea148966a8df239937691a8bbece44b))
+
+## [1.4.0](https://github.com/ngyngcphu/tick3d-be/compare/v1.3.0...v1.4.0) (2023-11-26)
+
+
+### Features
+
+* **home:** implement API to retrieve home slide images from Minio server ([20276f5](https://github.com/ngyngcphu/tick3d-be/commit/20276f51282e7e04d59c6b5cf625bf8443ed83fa))
+* **model:** implement Api for fetch all default models for the homapage ([04dd059](https://github.com/ngyngcphu/tick3d-be/commit/04dd05978da78b47a2b1e6be2132eca2255489d7))
+
+
+### Bug Fixes
+
+* **cd:** add missing environment variables in release; improve readability ([11fc9e3](https://github.com/ngyngcphu/tick3d-be/commit/11fc9e3dad25f349520f5cf67ac47748a255bd82))
+
+## [1.3.0](https://github.com/ngyngcphu/tick3d-be/compare/v1.2.1...v1.3.0) (2023-11-26)
+
+
+### Features
+
+* **checkout:** create API for generating orders in the checkout process ([488170e](https://github.com/ngyngcphu/tick3d-be/commit/488170e5dee6417c64786599da51daa2ecdf84c9))
+
+
+### Bug Fixes
+
+* **cd:** remove volume when deploy new version ([e89e5f2](https://github.com/ngyngcphu/tick3d-be/commit/e89e5f2fbd73c54988e29e193f2544661b625318))
+
+## [1.2.1](https://github.com/ngyngcphu/tick3d-be/compare/v1.2.0...v1.2.1) (2023-11-26)
+
+
+### Bug Fixes
+
+* **logout:** change POST method to DELETE method ([9cda5c8](https://github.com/ngyngcphu/tick3d-be/commit/9cda5c8010014463fece6ba0911054ede048ae64))
+
+## [1.2.0](https://github.com/ngyngcphu/tick3d-be/compare/v1.1.0...v1.2.0) (2023-11-25)
+
+
+### Features
+
+* add cart api ([5477b7a](https://github.com/ngyngcphu/tick3d-be/commit/5477b7a273fa12843c25e748430fc9abc99323a8))
+
 ## [1.1.0](https://github.com/ngyngcphu/tick3d-be/compare/v1.0.3...v1.1.0) (2023-11-23)
 
 
