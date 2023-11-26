@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.4.0](https://github.com/ngyngcphu/tick3d-be/compare/v1.3.0...v1.4.0) (2023-11-26)
+
+
+### Features
+
+* **home:** implement API to retrieve home slide images from Minio server ([20276f5](https://github.com/ngyngcphu/tick3d-be/commit/20276f51282e7e04d59c6b5cf625bf8443ed83fa))
+* **model:** implement Api for fetch all default models for the homapage ([04dd059](https://github.com/ngyngcphu/tick3d-be/commit/04dd05978da78b47a2b1e6be2132eca2255489d7))
+
+
+### Bug Fixes
+
+* **cd:** add missing environment variables in release; improve readability ([11fc9e3](https://github.com/ngyngcphu/tick3d-be/commit/11fc9e3dad25f349520f5cf67ac47748a255bd82))
+
 ## [1.3.0](https://github.com/ngyngcphu/tick3d-be/compare/v1.2.1...v1.3.0) (2023-11-26)
 
 
