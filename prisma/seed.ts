@@ -37,11 +37,27 @@ async function generateSampleData() {
             verified: user?.verified
         };
     });
-    const sampleUser = await prisma.user.createMany({
-        data: handleUsers
+
+    handleUsers.forEach(async (user) => {
+        const { role, id } =
+            (await prisma.user.create({
+                data: user
+            })) || {};
+
+        if (role === UserRole.CUSTOMER) {
+            await prisma.customer.create({
+                data: {
+                    user_id: id
+                }
+            });
+        } else {
+            await prisma.manager.create({
+                data: {
+                    user_id: id
+                }
+            });
+        }
     });
-    console.log(sampleUser);
-    process.exit(0);
 }
 
 generateSampleData();
