@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/ngyngcphu/tick3d-be/compare/v1.2.0...v1.2.1) (2023-11-26)
+
+
+### Bug Fixes
+
+* **logout:** change POST method to DELETE method ([9cda5c8](https://github.com/ngyngcphu/tick3d-be/commit/9cda5c8010014463fece6ba0911054ede048ae64))
+
 ## [1.2.0](https://github.com/ngyngcphu/tick3d-be/compare/v1.1.0...v1.2.0) (2023-11-25)
 
 
