@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.1](https://github.com/ngyngcphu/tick3d-be/compare/v1.4.0...v1.4.1) (2023-11-26)
+
+
+### Bug Fixes
+
+* **cd:** correct addition of CHECKOUT_ENVIROMENT to .env ([8a5c273](https://github.com/ngyngcphu/tick3d-be/commit/8a5c27342ea148966a8df239937691a8bbece44b))
+
 ## [1.4.0](https://github.com/ngyngcphu/tick3d-be/compare/v1.3.0...v1.4.0) (2023-11-26)
 
 
