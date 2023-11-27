@@ -124,7 +124,7 @@ model Order {
 
 model Item {
   model_id String
-  modal    Model  @relation(fields: [model_id], references: [id])
+  model    Model  @relation(fields: [model_id], references: [id])
   order_id String
   order    Order  @relation(fields: [order_id], references: [id])
   name     String @db.VarChar(63)
