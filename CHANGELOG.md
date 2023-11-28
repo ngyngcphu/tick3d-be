@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.2](https://github.com/ngyngcphu/tick3d-be/compare/v1.4.1...v1.4.2) (2023-11-27)
+
+
+### Bug Fixes
+
+* add to manager & customer table along with user ([81a420c](https://github.com/ngyngcphu/tick3d-be/commit/81a420cf2dbb4e9132ff7c1b48c01654eff7e697))
+* modal typo ([b035202](https://github.com/ngyngcphu/tick3d-be/commit/b035202f784618d28cbf8bae38754392c2dadfc4))
+
 ## [1.4.1](https://github.com/ngyngcphu/tick3d-be/compare/v1.4.0...v1.4.1) (2023-11-26)
 
 
