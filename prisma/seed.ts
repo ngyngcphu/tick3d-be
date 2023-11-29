@@ -190,7 +190,31 @@ async function handlePromotions() {
 
 async function generateSampleData() {
     const handleUsersResult = await handleUsers();
-    console.log(await prisma.user.createMany({ data: handleUsersResult }));
+    const createUserRes = await Promise.all(
+        handleUsersResult.map(async (user) => {
+            const { role, id } =
+                (await prisma.user.create({
+                    data: user
+                })) || {};
+
+            if (role === UserRole.CUSTOMER) {
+                await prisma.customer.create({
+                    data: {
+                        user_id: id
+                    }
+                });
+            } else {
+                await prisma.manager.create({
+                    data: {
+                        user_id: id
+                    }
+                });
+            }
+            return 1;
+        })
+    );
+
+    console.log({ count: createUserRes.length });
 
     console.log(await handleCategories());
 

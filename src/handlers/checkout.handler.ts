@@ -108,7 +108,7 @@ const createPayPalOrder: Handler<PaypalDto, { Body: CreatePayPalOrderDto }> = as
     }
 };
 
-async function increaseModalBoughtAmount(orderId: string) {
+async function increaseModelBoughtAmount(orderId: string) {
     const items = await prisma.item.findMany({
         where: {
             order_id: orderId
@@ -150,7 +150,7 @@ const completePayPalOrder: Handler<CompletePaypalDto, { Body: CompletePayPalOrde
             }
         });
 
-        await increaseModalBoughtAmount(orderId);
+        await increaseModelBoughtAmount(orderId);
 
         return res.send({ id: completeOrderResponse.id, amountMoney });
     } catch (err) {
