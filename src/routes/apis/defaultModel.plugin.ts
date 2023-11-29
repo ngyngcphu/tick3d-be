@@ -38,7 +38,7 @@ export const defaultModelPlugin = createRoutes('Default Model', [
         url: '/:id',
         onRequest: [],
         schema: {
-            description: 'Get a default model with the specified id',
+            summary: 'Get a default model with the specified id',
             params: {
                 id: Type.String()
             },
