@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/ngyngcphu/tick3d-be/compare/v1.4.2...v1.5.0) (2023-11-29)
+
+
+### Features
+
+* adapt to the latest commit ([29fa9d1](https://github.com/ngyngcphu/tick3d-be/commit/29fa9d17e852bcc541b3d8a6034aaeeebb4965b9))
+
 ## [1.4.2](https://github.com/ngyngcphu/tick3d-be/compare/v1.4.1...v1.4.2) (2023-11-27)
 
 
