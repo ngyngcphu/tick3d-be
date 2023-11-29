@@ -4,8 +4,8 @@
 
 export * from './auth.handler';
 export * from './cart.handler';
-export * from './defaultModel.handler';
 export * from './checkout.handler';
+export * from './defaultModel.handler';
 export * from './home.handler';
 export * from './user.handler';
 export * from './userModel.handler';

@@ -5,7 +5,8 @@ import { Static, Type } from '@sinclair/typebox';
 export const UploadUserModelInputDto = Type.Array(
     Type.Object({
         name: Type.String(),
-        gcode: Type.String()
+        gcode: Type.String(),
+        description: Type.Optional(Type.String())
     })
 );
 

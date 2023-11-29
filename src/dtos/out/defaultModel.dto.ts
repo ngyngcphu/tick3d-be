@@ -10,7 +10,11 @@ export const DefaultModelResultDto = Type.Object({
     imageUrl: Type.String(),
     likesNo: Type.Number(),
     gcode: Type.String(),
-    uploadTime: Type.String({ format: 'date-time' })
+    uploadTime: Type.String({ format: 'date-time' }),
+    description: Type.String(),
+    numberBought: Type.Number(),
+    subImages: Type.Array(Type.String()),
+    discount: Type.Optional(Type.Number())
 });
 
 export type DefaultModelResultDto = Static<typeof DefaultModelResultDto>;

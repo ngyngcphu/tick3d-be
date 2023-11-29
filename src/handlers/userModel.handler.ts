@@ -96,7 +96,8 @@ const upload: Handler<UserModelListResultDto, { Body: UploadUserModelInputDto }>
                     data: {
                         gcode: input.gcode,
                         name: input.name,
-                        price: estimatePrice(input.gcode)
+                        price: estimatePrice(input.gcode),
+                        description: input.description || ''
                     }
                 });
                 await prisma.uploadedModel.create({

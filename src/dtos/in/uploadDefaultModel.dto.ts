@@ -8,7 +8,10 @@ export const UploadDefaultModelInputDto = Type.Array(
         price: Type.Number(),
         gcode: Type.String(),
         imageUrl: Type.String(),
-        category_id: Type.String()
+        category_id: Type.String(),
+        description: Type.Optional(Type.String()),
+        subImageUrls: Type.Optional(Type.Array(Type.String())),
+        discount: Type.Number()
     })
 );
 

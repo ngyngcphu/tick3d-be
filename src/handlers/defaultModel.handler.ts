@@ -14,12 +14,19 @@ const getAll: Handler<DefaultModelListResultDto> = async () => {
                     name: true,
                     price: true,
                     uploadTime: true,
-                    gcode: true
+                    ModelPromotion: {
+                        select: {
+                            discount: true
+                        }
+                    },
+                    description: true,
+                    boughtAmount: true
                 }
             },
             imageUrl: true,
             likesNo: true,
-            category_id: true
+            category_id: true,
+            subImageUrls: true
         }
     });
 
@@ -31,7 +38,10 @@ const getAll: Handler<DefaultModelListResultDto> = async () => {
         name: model.model.name,
         price: model.model.price,
         uploadTime: model.model.uploadTime.toISOString(),
-        gcode: model.model.gcode
+        description: model.model.description,
+        numberBought: model.model.boughtAmount,
+        subImages: model.subImageUrls,
+        discount: model.model.ModelPromotion?.discount
     }));
 };
 
@@ -46,12 +56,20 @@ const get: Handler<DefaultModelResultDto, { Params: { id: string } }> = async (r
                     name: true,
                     price: true,
                     uploadTime: true,
-                    gcode: true
+                    gcode: true,
+                    description: true,
+                    boughtAmount: true,
+                    ModelPromotion: {
+                        select: {
+                            discount: true
+                        }
+                    }
                 }
             },
             imageUrl: true,
             likesNo: true,
-            category_id: true
+            category_id: true,
+            subImageUrls: true
         },
         where: {
             model_id: id
@@ -70,7 +88,11 @@ const get: Handler<DefaultModelResultDto, { Params: { id: string } }> = async (r
         name: model.model.name,
         price: model.model.price,
         uploadTime: model.model.uploadTime.toISOString(),
-        gcode: model.model.gcode
+        gcode: model.model.gcode,
+        description: model.model.description,
+        numberBought: model.model.boughtAmount,
+        subImages: model.subImageUrls,
+        discount: model.model.ModelPromotion?.discount
     };
 };
 
@@ -91,7 +113,13 @@ const upload: Handler<DefaultModelListResultDto, { Body: UploadDefaultModelInput
                     data: {
                         gcode: input.gcode,
                         name: input.name,
-                        price: input.price
+                        price: input.price,
+                        description: input.description || '',
+                        ModelPromotion: {
+                            create: {
+                                discount: input.discount
+                            }
+                        }
                     }
                 });
                 const defaultModel = await prisma.defaultModel.create({
@@ -104,13 +132,18 @@ const upload: Handler<DefaultModelListResultDto, { Body: UploadDefaultModelInput
                         category_id: input.category_id,
                         imageUrl: input.imageUrl,
                         likesNo: 0,
-                        model_id: model.id
+                        model_id: model.id,
+                        subImageUrls: input.subImageUrls
                     }
                 });
                 outputList.push({
                     ...model,
                     uploadTime: model.uploadTime.toISOString(),
-                    ...defaultModel
+                    ...defaultModel,
+                    numberBought: 0,
+                    description: input.description || '',
+                    discount: input.discount,
+                    subImages: input.subImageUrls || []
                 });
             })
         );
@@ -142,22 +175,26 @@ const del: Handler<string, { Params: { id: string } }> = async (req, res) => {
 
 const update: Handler<string, { Params: { id: string }; Body: UpdateDefaultModelInputDto }> = async (req, res) => {
     const { id } = req.params;
-    const { gcode, name, price, category_id, imageUrl } = req.body;
+    const { gcode, name, price, category_id, imageUrl, discount, description, subImageUrls } = req.body;
     try {
-        await prisma.model.update({
-            data: {
-                gcode,
-                price,
-                name
-            },
-            where: {
-                id
-            }
-        });
         await prisma.defaultModel.update({
             data: {
                 category_id,
-                imageUrl
+                imageUrl,
+                subImageUrls,
+                model: {
+                    update: {
+                        gcode,
+                        price,
+                        name,
+                        ModelPromotion: {
+                            update: {
+                                discount
+                            }
+                        },
+                        description
+                    }
+                }
             },
             where: {
                 model_id: id

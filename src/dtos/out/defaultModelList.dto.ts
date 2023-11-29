@@ -9,7 +9,11 @@ export const DefaultModelListResultDto = Type.Array(
         price: Type.Number(),
         imageUrl: Type.String(),
         likesNo: Type.Number(),
-        uploadTime: Type.String({ format: 'date-time' })
+        uploadTime: Type.String({ format: 'date-time' }),
+        description: Type.String(),
+        numberBought: Type.Number(),
+        subImages: Type.Array(Type.String()),
+        discount: Type.Optional(Type.Number())
     })
 );
 

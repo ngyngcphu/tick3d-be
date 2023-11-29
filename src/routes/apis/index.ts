@@ -10,7 +10,7 @@ export async function apiPlugin(app: FastifyInstance) {
     app.register(userPlugin, { prefix: '/user' });
     app.register(CheckoutPlugin, { prefix: '/checkout' });
     app.register(cartPlugin, { prefix: '/cart' });
-    app.register(defaultModelPlugin, { prefix: '/defaultModel' });
+    app.register(defaultModelPlugin, { prefix: '/model' });
     app.register(userModelPlugin, { prefix: '/userModel' });
     app.register(homePlugin, { prefix: '/home' });
 }

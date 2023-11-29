@@ -6,7 +6,7 @@ import { UserRole } from '@prisma/client';
 import { Type } from '@sinclair/typebox';
 import { createRoutes } from '@utils';
 
-export const userModelPlugin = createRoutes('UserModel', [
+export const userModelPlugin = createRoutes('User Model', [
     {
         method: 'GET',
         url: '',
