@@ -12,6 +12,8 @@ export const userModelPlugin = createRoutes('User Model', [
         url: '',
         onRequest: [verifyToken],
         schema: {
+            summary: 'Get all user models',
+            description: 'If the user is a manager, it can view all models. If the user is a student, it can view its models',
             response: {
                 200: UserModelListResultDto
             }
@@ -23,6 +25,7 @@ export const userModelPlugin = createRoutes('User Model', [
         url: '',
         onRequest: [verifyToken, verifyUserRole(UserRole.CUSTOMER)],
         schema: {
+            summary: 'Upload a user-defined model',
             body: UploadUserModelInputDto,
             response: {
                 200: UserModelListResultDto
@@ -35,6 +38,8 @@ export const userModelPlugin = createRoutes('User Model', [
         url: '/:id',
         onRequest: [verifyToken],
         schema: {
+            summary: 'Get the user model with the specified id',
+            description: 'A customer can only view its user models',
             params: {
                 id: Type.String()
             },
@@ -49,6 +54,7 @@ export const userModelPlugin = createRoutes('User Model', [
         url: '/:id',
         onRequest: [verifyToken],
         schema: {
+            summary: 'Delete the user model with the specified id',
             params: {
                 id: Type.String()
             }
@@ -60,6 +66,8 @@ export const userModelPlugin = createRoutes('User Model', [
         url: '/:id',
         onRequest: [verifyToken, verifyUserRole(UserRole.CUSTOMER)],
         schema: {
+            summary: 'Update a user model',
+            description: 'Only the customer can do this',
             params: {
                 id: Type.String()
             },

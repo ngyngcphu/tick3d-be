@@ -12,6 +12,7 @@ export const defaultModelPlugin = createRoutes('Default Model', [
         url: '',
         onRequest: [],
         schema: {
+            summary: 'Get all default models',
             response: {
                 200: DefaultModelListResultDto
             }
@@ -23,6 +24,8 @@ export const defaultModelPlugin = createRoutes('Default Model', [
         url: '',
         onRequest: [verifyToken, verifyUserRole(UserRole.MANAGER)],
         schema: {
+            summary: 'Upload a default model',
+            description: 'Only the manager can do this',
             body: UploadDefaultModelInputDto,
             response: {
                 200: DefaultModelListResultDto
@@ -35,6 +38,7 @@ export const defaultModelPlugin = createRoutes('Default Model', [
         url: '/:id',
         onRequest: [],
         schema: {
+            description: 'Get a default model with the specified id',
             params: {
                 id: Type.String()
             },
@@ -49,6 +53,8 @@ export const defaultModelPlugin = createRoutes('Default Model', [
         url: '/:id',
         onRequest: [verifyToken, verifyUserRole(UserRole.MANAGER)],
         schema: {
+            summary: 'Delete a default model with the specified id',
+            description: 'Only the manager can do this',
             params: {
                 id: Type.String()
             }
@@ -60,6 +66,8 @@ export const defaultModelPlugin = createRoutes('Default Model', [
         url: '/:id',
         onRequest: [verifyToken, verifyUserRole(UserRole.MANAGER)],
         schema: {
+            summary: 'Update a default model with the specified id',
+            description: 'Only the manager can do this',
             params: {
                 id: Type.String()
             },
