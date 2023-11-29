@@ -7,3 +7,7 @@ export * from './auth.dto';
 export * from './order.dto';
 export * from './paypal.dto';
 export * from './register.dto';
+export * from './updateDefaultModel.dto';
+export * from './updateUserModel.dto';
+export * from './uploadDefaultModel.dto';
+export * from './uploadUserModel.dto';

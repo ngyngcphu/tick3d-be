@@ -3,4 +3,5 @@
  */
 
 export * from './createRoutes';
+export * from './estimatePrice';
 export * from './logger';

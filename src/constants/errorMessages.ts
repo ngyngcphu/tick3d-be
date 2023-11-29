@@ -8,5 +8,8 @@ export const INVALID_TOKEN = 'Invalid token !';
 export const NOT_FOUND_GENERIC = 'Not found !';
 export const INVALID_VERIFICATION_LINK = 'Invalid or expired verification link !';
 export const ADD_CART_FAILED = 'Failed to add some models';
+export const MODEL_NOT_FOUND = 'This model does not exist';
+export const DELETE_MODEL_FAILED = 'Model deletion failed';
+export const UPDATE_MODEL_FAILED = 'Model update failed';
 
 export const PERMISSION_DENIED = 'You do not have permission to access this resource.';

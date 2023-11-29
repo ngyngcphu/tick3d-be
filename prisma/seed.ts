@@ -115,7 +115,7 @@ const models = [
 ];
 
 async function handleUsers() {
-    return users.map((user) => {
+    const _handleUsers = users.map((user) => {
         const hashPassword = hashSync(user.password, SALT_ROUNDS);
         return {
             email: user.email,
@@ -127,6 +127,29 @@ async function handleUsers() {
             verified: user?.verified
         };
     });
+
+    _handleUsers.forEach(async (user) => {
+        const { role, id } =
+            (await prisma.user.create({
+                data: user
+            })) || {};
+
+        if (role === UserRole.CUSTOMER) {
+            await prisma.customer.create({
+                data: {
+                    user_id: id
+                }
+            });
+        } else {
+            await prisma.manager.create({
+                data: {
+                    user_id: id
+                }
+            });
+        }
+    });
+  
+    return _handleUsers;
 }
 
 async function handleCategories() {

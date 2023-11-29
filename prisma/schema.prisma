@@ -77,10 +77,9 @@ model DefaultModel {
   model_id     String   @id
   model        Model    @relation(fields: [model_id], references: [id])
   category_id  String
-  category     Category @relation(fields: [category_id], references: [id])
   likesNo      Int
   imageUrl     String   @db.VarChar(255)
-  subImageUrls String[]   @db.VarChar(255)
+  subImageUrls String[] @db.VarChar(255)
   Like         Like[]
 }
 
@@ -133,12 +132,6 @@ model Item {
   imageUrl String @db.VarChar(255)
 
   @@id([model_id, order_id])
-}
-
-model Category {
-  id           String         @id @default(cuid())
-  name         String         @db.VarChar(50)
-  DefaultModel DefaultModel[]
 }
 
 enum UserRole {
