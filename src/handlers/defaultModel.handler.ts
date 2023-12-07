@@ -1,9 +1,9 @@
-import { DELETE_MODEL_FAILED, MODEL_NOT_FOUND, UPDATE_MODEL_FAILED } from '@constants';
+import { DELETE_MODEL_FAILED, MODEL_NOT_FOUND, UPDATE_MODEL_FAILED, TOGGLE_LIKE_FAILED } from '@constants';
 import { UploadDefaultModelInputDto } from '@dtos/in';
-import { DefaultModelListResultDto, DefaultModelResultDto } from '@dtos/out';
+import { DefaultModelListResultDto, DefaultModelResultDto, ToggleLikeResultDto } from '@dtos/out';
 import { Handler } from '@interfaces';
 import { prisma } from '@repositories';
-import { UpdateDefaultModelInputDto } from 'src/dtos/in/updateDefaultModel.dto';
+import { UpdateDefaultModelInputDto } from '@dtos/in';
 
 const getAll: Handler<DefaultModelListResultDto> = async () => {
     const defaultModels = await prisma.defaultModel.findMany({
@@ -167,7 +167,7 @@ const del: Handler<string, { Params: { id: string } }> = async (req, res) => {
             }
         });
     } catch (e) {
-        return res.badRequest(DELETE_MODEL_FAILED);
+        return res.internalServerError(DELETE_MODEL_FAILED);
     }
 
     return 'Delete succesfully';
@@ -201,10 +201,78 @@ const update: Handler<string, { Params: { id: string }; Body: UpdateDefaultModel
             }
         });
     } catch (e) {
-        return res.badRequest(UPDATE_MODEL_FAILED);
+        return res.internalServerError(UPDATE_MODEL_FAILED);
     }
 
     return 'Update succesfully';
+};
+
+const toggleLike: Handler<ToggleLikeResultDto, { Params: { id: string } }> = async (req, res) => {
+    const { userId: user_id } = req;
+    const { id: model_id } = req.params;
+
+    try {
+        const like = await prisma.like.findFirst({
+            where: {
+                user_id,
+                model_id
+            }
+        });
+
+        if (like) {
+            await prisma.like.delete({
+                where: {
+                    user_id_model_id: {
+                        user_id,
+                        model_id
+                    }
+                }
+            });
+
+            await prisma.defaultModel.update({
+                data: {
+                    likesNo: {
+                        decrement: 1
+                    }
+                },
+                where: {
+                    model_id
+                }
+            });
+
+            return {
+                userId: user_id,
+                modelId: model_id,
+                liked: false
+            };
+        }
+
+        await prisma.like.create({
+            data: {
+                model_id,
+                user_id
+            }
+        });
+
+        await prisma.defaultModel.update({
+            data: {
+                likesNo: {
+                    increment: 1
+                }
+            },
+            where: {
+                model_id
+            }
+        });
+
+        return {
+            userId: user_id,
+            modelId: model_id,
+            liked: true
+        };
+    } catch (e) {
+        return res.internalServerError(TOGGLE_LIKE_FAILED);
+    }
 };
 
 export const defaultModelHandler = {
@@ -212,5 +280,6 @@ export const defaultModelHandler = {
     getAll,
     upload,
     delete: del,
-    update
+    update,
+    toggleLike
 };

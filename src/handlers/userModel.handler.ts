@@ -1,11 +1,10 @@
 import { UPDATE_MODEL_FAILED, MODEL_NOT_FOUND, DELETE_MODEL_FAILED } from '@constants';
-import { UploadUserModelInputDto } from '@dtos/in';
+import { UploadUserModelInputDto, UpdateUserModelInputDto } from '@dtos/in';
 import { UserModelListResultDto, UserModelResultDto } from '@dtos/out';
 import { Handler } from '@interfaces';
 import { UserRole } from '@prisma/client';
 import { prisma } from '@repositories';
-import { UpdateUserModelInputDto } from 'src/dtos/in/updateUserModel.dto';
-import { estimatePrice } from 'src/utils/estimatePrice';
+import { estimatePrice } from '@utils';
 
 const getAll: Handler<UserModelListResultDto> = async (req) => {
     const user_id = req.userId;
@@ -113,7 +112,7 @@ const upload: Handler<UserModelListResultDto, { Body: UploadUserModelInputDto }>
             })
         );
     } catch (e) {
-        return res.badRequest('Failed to add some models');
+        return res.internalServerError('Failed to add some models');
     }
 
     return outputList;
@@ -136,7 +135,7 @@ const del: Handler<string, { Params: { id: string } }> = async (req, res) => {
             }
         });
     } catch (e) {
-        return res.badRequest(DELETE_MODEL_FAILED);
+        return res.internalServerError(DELETE_MODEL_FAILED);
     }
 
     return 'Delete succesfully';
@@ -167,7 +166,7 @@ const update: Handler<string, { Params: { id: string }; Body: UpdateUserModelInp
             }
         });
     } catch (e) {
-        return res.badRequest(UPDATE_MODEL_FAILED);
+        return res.internalServerError(UPDATE_MODEL_FAILED);
     }
 
     return 'Update succesfully';
