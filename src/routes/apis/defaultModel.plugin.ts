@@ -1,5 +1,5 @@
 import { UploadDefaultModelInputDto, UpdateDefaultModelInputDto } from '@dtos/in';
-import { DefaultModelListResultDto, DefaultModelResultDto } from '@dtos/out';
+import { DefaultModelListResultDto, DefaultModelResultDto, ToggleLikeResultDto } from '@dtos/out';
 import { defaultModelHandler } from '@handlers';
 import { verifyToken, verifyUserRole } from '@hooks';
 import { UserRole } from '@prisma/client';
@@ -74,5 +74,20 @@ export const defaultModelPlugin = createRoutes('Default Model', [
             body: UpdateDefaultModelInputDto
         },
         handler: defaultModelHandler.update
+    },
+    {
+        method: 'POST',
+        url: '/:id/toggle-like',
+        onRequest: [verifyToken, verifyUserRole(UserRole.CUSTOMER)],
+        schema: {
+            summary: 'Toggle the `like` status of a customer for a model. The current user is inferred based on jwt',
+            params: {
+                id: Type.String()
+            },
+            response: {
+                200: ToggleLikeResultDto
+            }
+        },
+        handler: defaultModelHandler.toggleLike
     }
 ]);
