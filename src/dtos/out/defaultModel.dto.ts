@@ -7,6 +7,7 @@ export const DefaultModelResultDto = Type.Object({
     name: Type.String(),
     price: Type.Number(),
     category_id: Type.String(),
+    category: Type.String(),
     imageUrl: Type.String(),
     likesNo: Type.Number(),
     gcode: Type.String(),

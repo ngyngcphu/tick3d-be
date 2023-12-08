@@ -8,6 +8,8 @@ export const DefaultModelListResultDto = Type.Array(
         name: Type.String(),
         price: Type.Number(),
         imageUrl: Type.String(),
+        category_id: Type.String(),
+        category: Type.String(),
         likesNo: Type.Number(),
         uploadTime: Type.String({ format: 'date-time' }),
         description: Type.String(),

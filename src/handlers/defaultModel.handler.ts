@@ -26,6 +26,11 @@ const getAll: Handler<DefaultModelListResultDto> = async () => {
             imageUrl: true,
             likesNo: true,
             category_id: true,
+            Category: {
+                select: {
+                    name: true
+                }
+            },
             subImageUrls: true
         }
     });
@@ -33,6 +38,7 @@ const getAll: Handler<DefaultModelListResultDto> = async () => {
     return defaultModels.map((model) => ({
         id: model.model_id,
         category_id: model.category_id,
+        category: model.Category.name,
         imageUrl: model.imageUrl,
         likesNo: model.likesNo,
         name: model.model.name,
@@ -69,6 +75,11 @@ const get: Handler<DefaultModelResultDto, { Params: { id: string } }> = async (r
             imageUrl: true,
             likesNo: true,
             category_id: true,
+            Category: {
+                select: {
+                    name: true
+                }
+            },
             subImageUrls: true
         },
         where: {
@@ -83,6 +94,7 @@ const get: Handler<DefaultModelResultDto, { Params: { id: string } }> = async (r
     return {
         id: model.model_id,
         category_id: model.category_id,
+        category: model.Category.name,
         imageUrl: model.imageUrl,
         likesNo: model.likesNo,
         name: model.model.name,
@@ -126,7 +138,12 @@ const upload: Handler<DefaultModelListResultDto, { Body: UploadDefaultModelInput
                     select: {
                         imageUrl: true,
                         category_id: true,
-                        likesNo: true
+                        likesNo: true,
+                        Category: {
+                            select: {
+                                name: true
+                            }
+                        }
                     },
                     data: {
                         category_id: input.category_id,
@@ -143,7 +160,9 @@ const upload: Handler<DefaultModelListResultDto, { Body: UploadDefaultModelInput
                     numberBought: 0,
                     description: input.description || '',
                     discount: input.discount,
-                    subImages: input.subImageUrls || []
+                    subImages: input.subImageUrls || [],
+                    category_id: input.category_id,
+                    category: defaultModel.Category.name
                 });
             })
         );
@@ -179,7 +198,6 @@ const update: Handler<string, { Params: { id: string }; Body: UpdateDefaultModel
     try {
         await prisma.defaultModel.update({
             data: {
-                category_id,
                 imageUrl,
                 subImageUrls,
                 model: {
@@ -193,6 +211,11 @@ const update: Handler<string, { Params: { id: string }; Body: UpdateDefaultModel
                             }
                         },
                         description
+                    }
+                },
+                Category: {
+                    connect: {
+                        id: category_id
                     }
                 }
             },
