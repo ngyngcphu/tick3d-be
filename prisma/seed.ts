@@ -63,7 +63,7 @@ const models = [
     {
         id: 'clpf912p4000008le4y510kce',
         categoryId: categories[0].id,
-        likesNo: 10,
+        likesNo: 0,
         image: 'http://localhost:3003/item_1.jpg',
         subImage1: 'http://localhost:3003/sub1_image1.jpg',
         subImage2: 'http://localhost:3003/sub1_image2.jpg',
@@ -76,7 +76,7 @@ const models = [
     {
         id: 'clpf91chg000108le8nmq4vyh',
         categoryId: categories[0].id,
-        likesNo: 10,
+        likesNo: 0,
         image: 'http://localhost:3003/item_2.jpg',
         subImage1: 'http://localhost:3003/sub2_image1.jpg',
         subImage2: 'http://localhost:3003/sub2_image2.jpg',
@@ -89,7 +89,7 @@ const models = [
     {
         id: 'clpf91hyj000208le1cjs2n36',
         categoryId: categories[0].id,
-        likesNo: 10,
+        likesNo: 0,
         image: 'http://localhost:3003/item_3.jpg',
         subImage1: 'http://localhost:3003/sub3_image1.jpg',
         subImage2: 'http://localhost:3003/sub3_image2.jpg',
@@ -102,7 +102,7 @@ const models = [
     {
         id: 'clpf91rz3000308lefog88vgy',
         categoryId: categories[0].id,
-        likesNo: 10,
+        likesNo: 0,
         image: 'http://localhost:3003/item_4.jpg',
         subImage1: 'http://localhost:3003/sub4_image1.jpg',
         subImage2: 'http://localhost:3003/sub4_image2.jpg',
@@ -148,7 +148,7 @@ async function handleUsers() {
             });
         }
     });
-  
+
     return _handleUsers;
 }
 
@@ -190,31 +190,8 @@ async function handlePromotions() {
 
 async function generateSampleData() {
     const handleUsersResult = await handleUsers();
-    const createUserRes = await Promise.all(
-        handleUsersResult.map(async (user) => {
-            const { role, id } =
-                (await prisma.user.create({
-                    data: user
-                })) || {};
 
-            if (role === UserRole.CUSTOMER) {
-                await prisma.customer.create({
-                    data: {
-                        user_id: id
-                    }
-                });
-            } else {
-                await prisma.manager.create({
-                    data: {
-                        user_id: id
-                    }
-                });
-            }
-            return 1;
-        })
-    );
-
-    console.log({ count: createUserRes.length });
+    console.log({ count: handleUsersResult.length });
 
     console.log(await handleCategories());
 

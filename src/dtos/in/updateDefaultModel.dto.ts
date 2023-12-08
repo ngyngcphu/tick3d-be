@@ -10,7 +10,7 @@ export const UpdateDefaultModelInputDto = Type.Object({
     category_id: Type.Optional(Type.String()),
     description: Type.Optional(Type.String()),
     subImageUrls: Type.Optional(Type.Array(Type.String())),
-    discount: Type.Number()
+    discount: Type.Optional(Type.Number())
 });
 
 export type UpdateDefaultModelInputDto = Static<typeof UpdateDefaultModelInputDto>;
