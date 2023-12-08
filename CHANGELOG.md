@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.6.0](https://github.com/ngyngcphu/tick3d-be/compare/v1.5.0...v1.6.0) (2023-12-08)
+
+
+### Features
+
+* add toggle-like api ([bd563da](https://github.com/ngyngcphu/tick3d-be/commit/bd563da773c25e2d199ae5e5c02e71e0b2c075e6))
+
+
+### Bug Fixes
+
+* bugs related to model api ([b0cdb72](https://github.com/ngyngcphu/tick3d-be/commit/b0cdb7281b42b44c8bb340c418ed238eeae268b7))
+* default model api ([e8533fb](https://github.com/ngyngcphu/tick3d-be/commit/e8533fb5e56d2578eea425e47998a5283376a36a))
+* prisma schema ([1daa05c](https://github.com/ngyngcphu/tick3d-be/commit/1daa05cca56fb21d9af148dd277504e3e82df564))
+* remove redundant migration ([4edcb12](https://github.com/ngyngcphu/tick3d-be/commit/4edcb121d7da8a5caf0207c0a0c927bbf6302417))
+
 ## [1.5.0](https://github.com/ngyngcphu/tick3d-be/compare/v1.4.2...v1.5.0) (2023-11-29)
 
 
