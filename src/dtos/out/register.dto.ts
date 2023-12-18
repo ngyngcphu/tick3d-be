@@ -11,7 +11,8 @@ export const RegisterResultDto = Type.Object({
     tel: Type.String(),
     lastname: Type.String(),
     firstname: Type.String(),
-    role: Type.Union([Type.Literal(UserRole.CUSTOMER), Type.Literal(UserRole.MANAGER)])
+    role: Type.Union([Type.Literal(UserRole.CUSTOMER), Type.Literal(UserRole.MANAGER)]),
+    verified: Type.Boolean()
 });
 
 export type RegisterResultDto = Static<typeof RegisterResultDto>;
