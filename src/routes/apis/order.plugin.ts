@@ -41,7 +41,7 @@ export const orderPlugin = createRoutes('Order', [
         url: '/:id',
         onRequest: [verifyToken, verifyUserRole(UserRole.MANAGER)],
         schema: {
-            summary: 'Update the info of an order. For managerx only',
+            summary: 'Update the info of an order. For managers only',
             response: {
                 200: OrderResultDto,
                 400: Type.String()
