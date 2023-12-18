@@ -19,7 +19,7 @@ export const DefaultModelQueryStringDto = Type.Object({
     categoryId: Type.Optional(Type.String({ description: 'The category id' })),
     likes_ge: Type.Optional(Type.Number({ minimum: 0, description: 'The minimum threshold for number of likes' })),
     start: Type.Optional(
-        Type.Number({ minimum: 1, multipleOf: 1, description: 'For pagination purpose - the index of the start item, starting at 1' })
+        Type.Number({ minimum: 0, multipleOf: 1, description: 'For pagination purpose - the index of the start item, starting at 0' })
     ),
     noItems: Type.Optional(
         Type.Number({ minimum: 1, multipleOf: 1, description: 'For pagination purpose - the number of items to return' })
