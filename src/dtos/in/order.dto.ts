@@ -69,6 +69,17 @@ export const OrderQueryStringDto = Type.Object({
     )
 });
 
+export const UpdateOrderDto = Type.Object({
+    status: Type.Optional(
+        Type.Union(
+            Object.values(Status).map((e) => Type.Literal(e)),
+            { description: 'Order status' }
+        )
+    )
+});
+
+export type UpdateOrderDto = Static<typeof UpdateOrderDto>;
+
 export type OrderQueryStringDto = Static<typeof OrderQueryStringDto>;
 
 export type CreateOrderInputDto = Static<typeof CreateOrderInputDto>;

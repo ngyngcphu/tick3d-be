@@ -14,6 +14,7 @@ export * from './orderResultDto.dto';
 export * from './paypal.dto';
 export * from './register.dto';
 export * from './toggleLike.dto';
+export * from './updateOrder.dto';
 export * from './user.dto';
 export * from './userModel.dto';
 export * from './userModelList.dto';
