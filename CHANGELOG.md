@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.11.0](https://github.com/ngyngcphu/tick3d-be/compare/v1.10.0...v1.11.0) (2023-12-18)
+
+
+### Features
+
+* add api to delete and reset cart ([a3133f2](https://github.com/ngyngcphu/tick3d-be/commit/a3133f2ecdf38b59b621bcf547438596dc3ea0ec))
+
 ## [1.10.0](https://github.com/ngyngcphu/tick3d-be/compare/v1.9.3...v1.10.0) (2023-12-18)
 
 
