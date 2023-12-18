@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.6.2](https://github.com/ngyngcphu/tick3d-be/compare/v1.6.1...v1.6.2) (2023-12-18)
+
+
+### Bug Fixes
+
+* add types declaration for otp-generator ([05117e3](https://github.com/ngyngcphu/tick3d-be/commit/05117e380e5bbd864b13785f568876c078531acc))
+* verification flow ([699d8af](https://github.com/ngyngcphu/tick3d-be/commit/699d8af81c67068ff80d07df579806a8345fb2f3))
+
 ## [1.6.1](https://github.com/ngyngcphu/tick3d-be/compare/v1.6.0...v1.6.1) (2023-12-18)
 
 
