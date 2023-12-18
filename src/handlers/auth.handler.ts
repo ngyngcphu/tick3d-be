@@ -12,6 +12,8 @@ import { Handler } from '@interfaces';
 import { logger } from '@utils';
 
 const login: Handler<AuthResultDto, { Body: AuthInputDto }> = async (req, res) => {
+    res.clearCookie('token');
+
     const user = await prisma.user.findUnique({
         select: {
             id: true,
