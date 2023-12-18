@@ -1,7 +1,8 @@
 import { OrderQueryStringDto } from '@dtos/in';
 import { OrderListResultDto, OrderResultDto } from '@dtos/out';
 import { ordersHandler } from '@handlers';
-import { verifyToken } from '@hooks';
+import { verifyToken, verifyUserRole } from '@hooks';
+import { UserRole } from '@prisma/client';
 import { Type } from '@sinclair/typebox';
 import { createRoutes } from '@utils';
 
@@ -34,5 +35,18 @@ export const orderPlugin = createRoutes('Order', [
             }
         },
         handler: ordersHandler.getOrderById
+    },
+    {
+        method: 'PUT',
+        url: '/:id',
+        onRequest: [verifyToken, verifyUserRole(UserRole.MANAGER)],
+        schema: {
+            summary: 'Update the info of an order. For managerx only',
+            response: {
+                200: OrderResultDto,
+                400: Type.String()
+            }
+        },
+        handler: ordersHandler.update
     }
 ]);

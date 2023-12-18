@@ -14,5 +14,6 @@ export const UPDATE_MODEL_FAILED = 'Model update failed';
 export const TOGGLE_LIKE_FAILED = 'Toggle like failed';
 export const USER_ALREADY_VERIFIED = 'User is already verified';
 export const ORDER_NOT_FOUND = 'Order not found';
+export const UPDATE_ORDER_FAILED = 'Update order failed';
 
 export const PERMISSION_DENIED = 'You do not have permission to access this resource.';

@@ -1,9 +1,9 @@
 import { Handler } from '@interfaces';
-import { OrderListResultDto, OrderResultDto } from '@dtos/out';
+import { OrderListResultDto, OrderResultDto, UpdateOrderResultDto } from '@dtos/out';
 import { prisma } from '@repositories';
-import { USER_NOT_FOUND, ORDER_NOT_FOUND } from '@constants';
+import { USER_NOT_FOUND, ORDER_NOT_FOUND, UPDATE_ORDER_FAILED } from '@constants';
 import { UserRole } from '@prisma/client';
-import { OrderQueryStringDto } from '@dtos/in';
+import { OrderQueryStringDto, UpdateOrderDto } from '@dtos/in';
 
 const getOrderById: Handler<OrderResultDto, { Params: { orderId: string } }> = async (req, res) => {
     const userId = req.userId;
@@ -34,7 +34,16 @@ const getOrderById: Handler<OrderResultDto, { Params: { orderId: string } }> = a
             street: true,
             streetNo: true,
             total_price: true,
-            ward: true
+            ward: true,
+            Item: {
+                select: {
+                    model_id: true,
+                    gcode: true,
+                    name: true,
+                    quantity: true,
+                    imageUrl: true
+                }
+            }
         },
         where: {
             id: req.params.orderId
@@ -59,7 +68,8 @@ const getOrderById: Handler<OrderResultDto, { Params: { orderId: string } }> = a
         totalPrice: order.total_price,
         ward: order.ward,
         note: order.extra_note || undefined,
-        userId
+        userId,
+        items: order.Item
     };
 };
 
@@ -135,7 +145,40 @@ const getOrders: Handler<OrderListResultDto, { Querystring: OrderQueryStringDto 
     }
 };
 
+const update: Handler<UpdateOrderResultDto, { Params: { id: string }; Body: UpdateOrderDto }> = async (req, res) => {
+    try {
+        const order = await prisma.order.update({
+            data: {
+                status: req.body.status
+            },
+            where: {
+                id: req.params.id
+            }
+        });
+
+        return {
+            creationTime: order.creation_time.toISOString(),
+            digitalOrderId: order.digital_order_id || undefined,
+            district: order.district,
+            estimatedDeliveryTime: order.est_deli_time.toISOString(),
+            id: req.params.id,
+            isPaid: order.isPaid,
+            shippingFee: order.shipping_fee,
+            status: order.status,
+            street: order.street,
+            streetNo: order.streetNo,
+            totalPrice: order.total_price,
+            ward: order.ward,
+            note: order.extra_note || undefined,
+            userId: order.user_id
+        };
+    } catch (e) {
+        return res.badRequest(UPDATE_ORDER_FAILED);
+    }
+};
+
 export const ordersHandler = {
     getOrderById,
-    getOrders
+    getOrders,
+    update
 };
