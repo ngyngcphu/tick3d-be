@@ -1,4 +1,4 @@
-import { UpdateUserModelInputDto, UploadUserModelInputDto } from '@dtos/in';
+import { UpdateUserModelInputDto, UploadUserModelInputDto, UserModelQueryStringDto } from '@dtos/in';
 import { UserModelListResultDto, UserModelResultDto } from '@dtos/out';
 import { userModelHandler } from '@handlers';
 import { verifyToken, verifyUserRole } from '@hooks';
@@ -14,6 +14,7 @@ export const userModelPlugin = createRoutes('User Model', [
         schema: {
             summary: 'Get all user models',
             description: 'If the user is a manager, it can view all models. If the user is a student, it can view its models',
+            querystring: UserModelQueryStringDto,
             response: {
                 200: UserModelListResultDto
             }

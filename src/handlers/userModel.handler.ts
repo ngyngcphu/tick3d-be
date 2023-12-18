@@ -5,8 +5,9 @@ import { Handler } from '@interfaces';
 import { UserRole } from '@prisma/client';
 import { prisma } from '@repositories';
 import { estimatePrice } from '@utils';
+import { UserModelQueryStringDto } from '@dtos/in';
 
-const getAll: Handler<UserModelListResultDto> = async (req) => {
+const getAll: Handler<UserModelListResultDto, { Querystring: UserModelQueryStringDto }> = async (req) => {
     const user_id = req.userId;
 
     const user = await prisma.user.findFirst({
@@ -30,8 +31,27 @@ const getAll: Handler<UserModelListResultDto> = async (req) => {
             }
         },
         where: {
-            user_id: user?.role === UserRole.CUSTOMER ? user_id : undefined
-        }
+            user_id: user?.role === UserRole.CUSTOMER ? user_id : undefined,
+            model: {
+                name: {
+                    contains: req.query.keyword,
+                    mode: 'insensitive'
+                },
+                uploadTime: {
+                    gt: req.query.uploaded_after && new Date(req.query.uploaded_after),
+                    lt: req.query.uploaded_before && new Date(req.query.uploaded_before)
+                }
+            }
+        },
+        orderBy: {
+            model: {
+                uploadTime: req.query.orderBy === 'uploadedTime' ? req.query.order || 'desc' : undefined,
+                price: req.query.orderBy === 'price' ? req.query.order || 'asc' : undefined,
+                name: req.query.orderBy === 'name' ? req.query.order || 'asc' : undefined
+            }
+        },
+        skip: req.query.start,
+        take: req.query.noItems
     });
 
     return userModels.map((model) => ({
