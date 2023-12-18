@@ -8,5 +8,6 @@ export * from './category.handler';
 export * from './checkout.handler';
 export * from './defaultModel.handler';
 export * from './home.handler';
+export * from './order.handler';
 export * from './user.handler';
 export * from './userModel.handler';

@@ -4,11 +4,13 @@
 
 export * from './auth.dto';
 export * from './category.dto';
+export * from './createOrder.dto';
 export * from './defaultModel.dto';
 export * from './defaultModelList.dto';
 export * from './getCart.dto';
 export * from './home.dtos';
-export * from './order.dto';
+export * from './orderListResult.dto';
+export * from './orderResultDto.dto';
 export * from './paypal.dto';
 export * from './register.dto';
 export * from './toggleLike.dto';
