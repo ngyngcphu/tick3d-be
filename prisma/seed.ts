@@ -21,7 +21,8 @@ const users = [
         role: UserRole.CUSTOMER,
         tel: '9876543210',
         first_name: 'user',
-        last_name: 'good'
+        last_name: 'good',
+        verified: true
     }
 ];
 
