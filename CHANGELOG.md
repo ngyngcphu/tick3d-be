@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.1](https://github.com/ngyngcphu/tick3d-be/compare/v1.6.0...v1.6.1) (2023-12-18)
+
+
+### Bug Fixes
+
+* allow normal user to get user by id ([bde485a](https://github.com/ngyngcphu/tick3d-be/commit/bde485a4c4c86fbfdbb37ce73274cdb3fa594f41))
+
 ## [1.6.0](https://github.com/ngyngcphu/tick3d-be/compare/v1.5.0...v1.6.0) (2023-12-08)
 
 
