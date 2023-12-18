@@ -6,75 +6,79 @@ import { prisma } from '@repositories';
 import { UpdateDefaultModelInputDto } from '@dtos/in';
 
 const getAll: Handler<DefaultModelListResultDto, { Querystring: DefaultModelQueryStringDto }> = async (req) => {
-    const defaultModels = await prisma.defaultModel.findMany({
-        select: {
-            model_id: true,
-            model: {
-                select: {
-                    name: true,
-                    price: true,
-                    uploadTime: true,
-                    ModelPromotion: {
-                        select: {
-                            discount: true
-                        }
-                    },
-                    description: true,
-                    boughtAmount: true
-                }
-            },
-            imageUrl: true,
-            likesNo: true,
-            category_id: true,
-            Category: {
-                select: {
-                    name: true
-                }
-            },
-            subImageUrls: true
-        },
-        where: {
-            likesNo: {
-                gte: req.query.likes_ge
-            },
-            category_id: req.query.categoryId,
-            model: {
-                name: {
-                    contains: req.query.keyword,
-                    mode: 'insensitive'
+    try {
+        const defaultModels = await prisma.defaultModel.findMany({
+            select: {
+                model_id: true,
+                model: {
+                    select: {
+                        name: true,
+                        price: true,
+                        uploadTime: true,
+                        ModelPromotion: {
+                            select: {
+                                discount: true
+                            }
+                        },
+                        description: true,
+                        boughtAmount: true
+                    }
                 },
-                uploadTime: {
-                    gt: req.query.uploaded_after && new Date(req.query.uploaded_after),
-                    lt: req.query.uploaded_before && new Date(req.query.uploaded_before)
+                imageUrl: true,
+                likesNo: true,
+                category_id: true,
+                Category: {
+                    select: {
+                        name: true
+                    }
+                },
+                subImageUrls: true
+            },
+            where: {
+                likesNo: {
+                    gte: req.query.likes_ge
+                },
+                category_id: req.query.categoryId,
+                model: {
+                    name: {
+                        contains: req.query.keyword,
+                        mode: 'insensitive'
+                    },
+                    uploadTime: {
+                        gt: req.query.uploaded_after && new Date(req.query.uploaded_after),
+                        lt: req.query.uploaded_before && new Date(req.query.uploaded_before)
+                    }
                 }
-            }
-        },
-        orderBy: {
-            likesNo: req.query.orderBy === 'likesNo' ? req.query.order || 'desc' : undefined,
-            model: {
-                uploadTime: req.query.orderBy === 'uploadedTime' ? req.query.order || 'desc' : undefined,
-                price: req.query.orderBy === 'price' ? req.query.order || 'asc' : undefined,
-                name: req.query.orderBy === 'name' ? req.query.order || 'asc' : undefined
-            }
-        },
-        skip: req.query.start,
-        take: req.query.noItems
-    });
+            },
+            orderBy: {
+                likesNo: req.query.orderBy === 'likesNo' ? req.query.order || 'desc' : undefined,
+                model: {
+                    uploadTime: req.query.orderBy === 'uploadedTime' ? req.query.order || 'desc' : undefined,
+                    price: req.query.orderBy === 'price' ? req.query.order || 'asc' : undefined,
+                    name: req.query.orderBy === 'name' ? req.query.order || 'asc' : undefined
+                }
+            },
+            skip: req.query.start,
+            take: req.query.noItems
+        });
 
-    return defaultModels.map((model) => ({
-        id: model.model_id,
-        category_id: model.category_id,
-        category: model.Category.name,
-        imageUrl: model.imageUrl,
-        likesNo: model.likesNo,
-        name: model.model.name,
-        price: model.model.price,
-        uploadTime: model.model.uploadTime.toISOString(),
-        description: model.model.description,
-        numberBought: model.model.boughtAmount,
-        subImages: model.subImageUrls,
-        discount: model.model.ModelPromotion?.discount
-    }));
+        return defaultModels.map((model) => ({
+            id: model.model_id,
+            category_id: model.category_id,
+            category: model.Category.name,
+            imageUrl: model.imageUrl,
+            likesNo: model.likesNo,
+            name: model.model.name,
+            price: model.model.price,
+            uploadTime: model.model.uploadTime.toISOString(),
+            description: model.model.description,
+            numberBought: model.model.boughtAmount,
+            subImages: model.subImageUrls,
+            discount: model.model.ModelPromotion?.discount
+        }));
+    } catch (e) {
+        return [];
+    }
 };
 
 const get: Handler<DefaultModelResultDto, { Params: { id: string } }> = async (req, res) => {
