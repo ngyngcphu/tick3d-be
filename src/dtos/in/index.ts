@@ -12,4 +12,5 @@ export * from './updateDefaultModel.dto';
 export * from './updateUserModel.dto';
 export * from './uploadDefaultModel.dto';
 export * from './uploadUserModel.dto';
+export * from './userModel.dto';
 export * from './verifyOTP.dto';

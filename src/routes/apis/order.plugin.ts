@@ -1,3 +1,4 @@
+import { OrderQueryStringDto } from '@dtos/in';
 import { OrderListResultDto, OrderResultDto } from '@dtos/out';
 import { ordersHandler } from '@handlers';
 import { verifyToken } from '@hooks';
@@ -11,6 +12,7 @@ export const orderPlugin = createRoutes('Order', [
         onRequest: [verifyToken],
         schema: {
             summary: 'Get all orders of the current customer. For managers, return all orders',
+            querystring: OrderQueryStringDto,
             response: {
                 200: OrderListResultDto,
                 400: Type.String()
