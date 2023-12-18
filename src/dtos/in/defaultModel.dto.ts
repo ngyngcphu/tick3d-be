@@ -17,9 +17,13 @@ export const DefaultModelQueryStringDto = Type.Object({
         })
     ),
     categoryId: Type.Optional(Type.String({ description: 'The category id' })),
-    likes_ge: Type.Optional(Type.Number({ description: 'The minimum threshold for number of likes' })),
-    start: Type.Optional(Type.Number({ description: 'For pagination purpose - the index of the start item' })),
-    noItems: Type.Optional(Type.Number({ description: 'For pagination purpose - the number of items to return' })),
+    likes_ge: Type.Optional(Type.Number({ minimum: 0, description: 'The minimum threshold for number of likes' })),
+    start: Type.Optional(
+        Type.Number({ minimum: 1, multipleOf: 1, description: 'For pagination purpose - the index of the start item, starting at 1' })
+    ),
+    noItems: Type.Optional(
+        Type.Number({ minimum: 1, multipleOf: 1, description: 'For pagination purpose - the number of items to return' })
+    ),
     orderBy: Type.Optional(
         Type.Union([Type.Literal('likesNo'), Type.Literal('uploadedTime'), Type.Literal('price'), Type.Literal('name')], {
             description: 'The name of the field to order on',
