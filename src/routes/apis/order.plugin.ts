@@ -1,5 +1,5 @@
-import { OrderQueryStringDto } from '@dtos/in';
-import { OrderListResultDto, OrderResultDto } from '@dtos/out';
+import { OrderQueryStringDto, UpdateOrderDto } from '@dtos/in';
+import { OrderListResultDto, OrderResultDto, UpdateOrderResultDto } from '@dtos/out';
 import { ordersHandler } from '@handlers';
 import { verifyToken, verifyUserRole } from '@hooks';
 import { UserRole } from '@prisma/client';
@@ -42,8 +42,9 @@ export const orderPlugin = createRoutes('Order', [
         onRequest: [verifyToken, verifyUserRole(UserRole.MANAGER)],
         schema: {
             summary: 'Update the info of an order. For managers only',
+            body: UpdateOrderDto,
             response: {
-                200: OrderResultDto,
+                200: UpdateOrderResultDto,
                 400: Type.String()
             }
         },
