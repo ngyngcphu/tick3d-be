@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0](https://github.com/ngyngcphu/tick3d-be/compare/v1.6.2...v1.7.0) (2023-12-18)
+
+
+### Features
+
+* **seed.ts:** increase number of mock data using faker.js ([672cbef](https://github.com/ngyngcphu/tick3d-be/commit/672cbef76fc465fc347a9ffdfbdb8d8a6cdc5db3))
+
 ## [1.6.2](https://github.com/ngyngcphu/tick3d-be/compare/v1.6.1...v1.6.2) (2023-12-18)
 
 
