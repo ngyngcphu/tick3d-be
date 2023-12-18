@@ -3,6 +3,7 @@
  */
 
 export * from './auth.dto';
+export * from './category.dto';
 export * from './defaultModel.dto';
 export * from './defaultModelList.dto';
 export * from './getCart.dto';
