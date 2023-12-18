@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.9.0](https://github.com/ngyngcphu/tick3d-be/compare/v1.8.0...v1.9.0) (2023-12-18)
+
+
+### Features
+
+* add search, filter, pagination support for default model ([cdb6345](https://github.com/ngyngcphu/tick3d-be/commit/cdb63452bf330aa0413f817e1c92438c3657911d))
+
+
+### Bug Fixes
+
+* slides can be pulled by anyone ([1573c63](https://github.com/ngyngcphu/tick3d-be/commit/1573c63c56bef6cb2030e1d3b64cfb181a96964c))
+
 ## [1.8.0](https://github.com/ngyngcphu/tick3d-be/compare/v1.7.0...v1.8.0) (2023-12-18)
 
 
