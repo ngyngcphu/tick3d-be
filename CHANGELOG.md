@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.10.0](https://github.com/ngyngcphu/tick3d-be/compare/v1.9.3...v1.10.0) (2023-12-18)
+
+
+### Features
+
+* order support query string ([d6201de](https://github.com/ngyngcphu/tick3d-be/commit/d6201dec61c0c184fa481a6f61a4575441c98cdd))
+
+
+### Bug Fixes
+
+* default model start query param constraint ([4c6ef31](https://github.com/ngyngcphu/tick3d-be/commit/4c6ef31df3b65b3021a7e092eb4470af39460515))
+* make userModel getAll more robust ([4cc5246](https://github.com/ngyngcphu/tick3d-be/commit/4cc52463ae4f7c8820da3acea990a27d4adfabfa))
+* userModel suppoer query string ([f48b334](https://github.com/ngyngcphu/tick3d-be/commit/f48b334b90f82a26c570f1e2c6f38357a05395bd))
+
 ## [1.9.3](https://github.com/ngyngcphu/tick3d-be/compare/v1.9.2...v1.9.3) (2023-12-18)
 
 
