@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.1](https://github.com/ngyngcphu/tick3d-be/compare/v1.9.0...v1.9.1) (2023-12-18)
+
+
+### Bug Fixes
+
+* make getAll more robust ([7dffe10](https://github.com/ngyngcphu/tick3d-be/commit/7dffe106bff169861f9df975cda91db605dad2ac))
+
 ## [1.9.0](https://github.com/ngyngcphu/tick3d-be/compare/v1.8.0...v1.9.0) (2023-12-18)
 
 
