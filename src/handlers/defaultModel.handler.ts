@@ -1,12 +1,11 @@
 import { DELETE_MODEL_FAILED, MODEL_NOT_FOUND, UPDATE_MODEL_FAILED, TOGGLE_LIKE_FAILED } from '@constants';
-import { SearchDefaultModelParamsDto, UploadDefaultModelInputDto } from '@dtos/in';
+import { DefaultModelQueryStringDto, UploadDefaultModelInputDto } from '@dtos/in';
 import { DefaultModelListResultDto, DefaultModelResultDto, ToggleLikeResultDto } from '@dtos/out';
 import { Handler } from '@interfaces';
 import { prisma } from '@repositories';
 import { UpdateDefaultModelInputDto } from '@dtos/in';
-import { SearchDefaultModelResultDto } from 'src/dtos/out/searchModel.dto';
 
-const getAll: Handler<DefaultModelListResultDto> = async () => {
+const getAll: Handler<DefaultModelListResultDto, { Querystring: DefaultModelQueryStringDto }> = async (req) => {
     const defaultModels = await prisma.defaultModel.findMany({
         select: {
             model_id: true,
@@ -33,7 +32,33 @@ const getAll: Handler<DefaultModelListResultDto> = async () => {
                 }
             },
             subImageUrls: true
-        }
+        },
+        where: {
+            likesNo: {
+                gte: req.query.likes_ge
+            },
+            category_id: req.query.categoryId,
+            model: {
+                name: {
+                    contains: req.query.keyword,
+                    mode: 'insensitive'
+                },
+                uploadTime: {
+                    gt: req.query.uploaded_after && new Date(req.query.uploaded_after),
+                    lt: req.query.uploaded_before && new Date(req.query.uploaded_before)
+                }
+            }
+        },
+        orderBy: {
+            likesNo: req.query.orderBy === 'likesNo' ? req.query.order || 'desc' : undefined,
+            model: {
+                uploadTime: req.query.orderBy === 'uploadedTime' ? req.query.order || 'desc' : undefined,
+                price: req.query.orderBy === 'price' ? req.query.order || 'asc' : undefined,
+                name: req.query.orderBy === 'name' ? req.query.order || 'asc' : undefined
+            }
+        },
+        skip: req.query.start,
+        take: req.query.noItems
     });
 
     return defaultModels.map((model) => ({
@@ -299,25 +324,11 @@ const toggleLike: Handler<ToggleLikeResultDto, { Params: { id: string } }> = asy
     }
 };
 
-const search: Handler<SearchDefaultModelResultDto, { Params: SearchDefaultModelParamsDto }> = async (req) => {
-    const keyword = req.params.keyword;
-    const simpleDefaultModelList = await prisma.model.findMany({
-        where: { name: { contains: keyword } },
-        select: {
-            id: true,
-            name: true
-        }
-    });
-
-    return simpleDefaultModelList;
-};
-
 export const defaultModelHandler = {
     get,
     getAll,
     upload,
     delete: del,
     update,
-    toggleLike,
-    search
+    toggleLike
 };

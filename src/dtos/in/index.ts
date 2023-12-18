@@ -4,10 +4,10 @@
 
 export * from './addCart.dto';
 export * from './auth.dto';
+export * from './defaultModel.dto';
 export * from './order.dto';
 export * from './paypal.dto';
 export * from './register.dto';
-export * from './searchDefaultModel.dto';
 export * from './updateDefaultModel.dto';
 export * from './updateUserModel.dto';
 export * from './uploadDefaultModel.dto';
