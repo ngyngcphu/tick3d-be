@@ -5,8 +5,8 @@ import { Static, Type } from '@sinclair/typebox';
 export const AddCartInputDto = Type.Object({
     models: Type.Array(
         Type.Object({
-            id: Type.String(),
-            quantity: Type.Number()
+            id: Type.String({ description: 'The id of the model to add to cart' }),
+            quantity: Type.Number({ minimum: 1, description: 'The number to add to cart' })
         })
     )
 });
