@@ -25,10 +25,19 @@ export const DefaultModelQueryStringDto = Type.Object({
         Type.Number({ minimum: 1, multipleOf: 1, description: 'For pagination purpose - the number of items to return' })
     ),
     orderBy: Type.Optional(
-        Type.Union([Type.Literal('likesNo'), Type.Literal('uploadedTime'), Type.Literal('price'), Type.Literal('name')], {
-            description: 'The name of the field to order on',
-            examples: ['likesNo', 'uploadedTime', 'price', 'name']
-        })
+        Type.Union(
+            [
+                Type.Literal('likesNo'),
+                Type.Literal('uploadedTime'),
+                Type.Literal('price'),
+                Type.Literal('name'),
+                Type.Literal('numberBought')
+            ],
+            {
+                description: 'The name of the field to order on',
+                examples: ['likesNo', 'uploadedTime', 'price', 'name', 'numberBought']
+            }
+        )
     ),
     order: Type.Optional(
         Type.Union([Type.Literal('asc'), Type.Literal('desc')], { description: 'Sort ascending or descending', examples: ['asc', 'desc'] })

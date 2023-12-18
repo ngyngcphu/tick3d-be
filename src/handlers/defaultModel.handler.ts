@@ -55,7 +55,8 @@ const getAll: Handler<DefaultModelListResultDto, { Querystring: DefaultModelQuer
                 model: {
                     uploadTime: req.query.orderBy === 'uploadedTime' ? req.query.order || 'desc' : undefined,
                     price: req.query.orderBy === 'price' ? req.query.order || 'asc' : undefined,
-                    name: req.query.orderBy === 'name' ? req.query.order || 'asc' : undefined
+                    name: req.query.orderBy === 'name' ? req.query.order || 'asc' : undefined,
+                    boughtAmount: req.query.orderBy === 'numberBought' ? req.query.order || 'desc' : undefined
                 }
             },
             skip: req.query.start,
