@@ -1,5 +1,6 @@
 import { hashSync } from 'bcrypt';
 import { PrismaClient, UserRole } from '@prisma/client';
+import { faker } from '@faker-js/faker';
 
 const prisma = new PrismaClient();
 const SALT_ROUNDS = 10;
@@ -59,60 +60,31 @@ const categories: { name: string; id: string }[] = [
     }
 ];
 
-const models = [
-    {
-        id: 'clpf912p4000008le4y510kce',
-        categoryId: categories[0].id,
-        likesNo: 0,
-        image: 'http://localhost:3003/item_1.jpg',
-        subImage1: 'http://localhost:3003/sub1_image1.jpg',
-        subImage2: 'http://localhost:3003/sub1_image2.jpg',
-        name: 'Pokeball 3D Model',
-        discount: 0.15,
-        price: 490000,
-        description: 'Đây là mô hình 3D Pokeball, Pokeball là mô hình bán chạy, mang vẻ đẹp thế giới Pokemon.',
-        numberBought: 77
-    },
-    {
-        id: 'clpf91chg000108le8nmq4vyh',
-        categoryId: categories[0].id,
-        likesNo: 0,
-        image: 'http://localhost:3003/item_2.jpg',
-        subImage1: 'http://localhost:3003/sub2_image1.jpg',
-        subImage2: 'http://localhost:3003/sub2_image2.jpg',
-        name: 'Pikachu 3D Model',
-        discount: 0.2,
-        price: 59000,
-        description: 'Đây là mô hình 3D Pikachu, Pikachu là biểu tượng của Pokemon hệ điện.',
-        numberBought: 95
-    },
-    {
-        id: 'clpf91hyj000208le1cjs2n36',
-        categoryId: categories[0].id,
-        likesNo: 0,
-        image: 'http://localhost:3003/item_3.jpg',
-        subImage1: 'http://localhost:3003/sub3_image1.jpg',
-        subImage2: 'http://localhost:3003/sub3_image2.jpg',
-        name: 'Squirtle 3D Model',
-        discount: 0.25,
-        price: 55000,
-        description: 'Đây là mô hình 3D Squirtle, Squirtle là biểu tượng của Pokemon hệ nước.',
-        numberBought: 86
-    },
-    {
-        id: 'clpf91rz3000308lefog88vgy',
-        categoryId: categories[0].id,
-        likesNo: 0,
-        image: 'http://localhost:3003/item_4.jpg',
-        subImage1: 'http://localhost:3003/sub4_image1.jpg',
-        subImage2: 'http://localhost:3003/sub4_image2.jpg',
-        name: 'Bullbasur 3D Model',
-        discount: 0.1,
-        price: 49000,
-        description: 'Đây là mô hình 3D Bulbasur, Bulbasur là biểu tượng của Pokemon hệ thực vật.',
-        numberBought: 39
+const generateModel = () => {
+    return {
+        id: faker.string.uuid(),
+        categoryId: faker.helpers.arrayElement(categories).id,
+        likesNo: faker.number.int({ min: 0, max: 200 }),
+        image: faker.image.url(),
+        subImage1: faker.image.url(),
+        subImage2: faker.image.url(),
+        name: faker.commerce.productName(),
+        discount: faker.number.float({ min: 0, max: 0.5, precision: 0.01 }),
+        price: faker.number.int({ min: 1000, max: 1000000 }),
+        description: faker.lorem.paragraph(),
+        numberBought: faker.number.int({ min: 0, max: 50 })
+    };
+};
+
+const generateModels = (count: number) => {
+    const models = [];
+    for (let i = 0; i < count; i++) {
+        models.push(generateModel());
     }
-];
+    return models;
+};
+
+const models = generateModels(100);
 
 async function handleUsers() {
     const _handleUsers = users.map((user) => {
