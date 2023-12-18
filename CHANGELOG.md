@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.11.2](https://github.com/ngyngcphu/tick3d-be/compare/v1.11.1...v1.11.2) (2023-12-18)
+
+
+### Bug Fixes
+
+* cookie config ([f1b9921](https://github.com/ngyngcphu/tick3d-be/commit/f1b9921d435467c757c2c7cc50a6392c5a51d648))
+
 ## [1.11.1](https://github.com/ngyngcphu/tick3d-be/compare/v1.11.0...v1.11.1) (2023-12-18)
 
 
