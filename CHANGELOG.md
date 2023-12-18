@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.8.0](https://github.com/ngyngcphu/tick3d-be/compare/v1.7.0...v1.8.0) (2023-12-18)
+
+
+### Features
+
+* add apis for viewing orders ([545b625](https://github.com/ngyngcphu/tick3d-be/commit/545b6252b27a80efd38994f0522bfa84e4c978c0))
+
+
+### Bug Fixes
+
+* signup did not add to Customer relation ([a361e65](https://github.com/ngyngcphu/tick3d-be/commit/a361e65f3c5176fd15aec5dde7bba289ba629f8f))
+
 ## [1.7.0](https://github.com/ngyngcphu/tick3d-be/compare/v1.6.2...v1.7.0) (2023-12-18)
 
 
