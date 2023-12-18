@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.11.1](https://github.com/ngyngcphu/tick3d-be/compare/v1.11.0...v1.11.1) (2023-12-18)
+
+
+### Bug Fixes
+
+* add body schema in order plugin ([6f4c38a](https://github.com/ngyngcphu/tick3d-be/commit/6f4c38a9eda0b618bdfbcaed79a0f35593e94fee))
+* add type for params ([004981b](https://github.com/ngyngcphu/tick3d-be/commit/004981b450ae46bb2368174aadb0f138ab484faf))
+* add update order api and return items detail in getOrderById ([4dbd17f](https://github.com/ngyngcphu/tick3d-be/commit/4dbd17f67a5650893c5436ffa55753b0ea746a52))
+
 ## [1.11.0](https://github.com/ngyngcphu/tick3d-be/compare/v1.10.0...v1.11.0) (2023-12-18)
 
 
