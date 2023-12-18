@@ -1,4 +1,4 @@
-import { UploadDefaultModelInputDto, UpdateDefaultModelInputDto } from '@dtos/in';
+import { UploadDefaultModelInputDto, UpdateDefaultModelInputDto, DefaultModelQueryStringDto } from '@dtos/in';
 import { DefaultModelListResultDto, DefaultModelResultDto, ToggleLikeResultDto } from '@dtos/out';
 import { defaultModelHandler } from '@handlers';
 import { verifyToken, verifyUserRole } from '@hooks';
@@ -13,6 +13,7 @@ export const defaultModelPlugin = createRoutes('Default Model', [
         onRequest: [],
         schema: {
             summary: 'Get all default models',
+            querystring: DefaultModelQueryStringDto,
             response: {
                 200: DefaultModelListResultDto
             }

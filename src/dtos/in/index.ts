@@ -4,6 +4,7 @@
 
 export * from './addCart.dto';
 export * from './auth.dto';
+export * from './defaultModel.dto';
 export * from './order.dto';
 export * from './paypal.dto';
 export * from './register.dto';
