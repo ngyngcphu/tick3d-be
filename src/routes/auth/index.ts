@@ -1,9 +1,8 @@
 import { Type } from '@sinclair/typebox';
-import { AuthInputDto, RegisterInputDto } from '@dtos/in';
+import { AuthInputDto, RegisterInputDto, VerifyOTPInputDto } from '@dtos/in';
 import { AuthResultDto, RegisterResultDto } from '@dtos/out';
 import { authHandler } from '@handlers';
 import { createRoutes } from '@utils';
-import { verifyToken } from '@hooks';
 
 export const authPlugin = createRoutes('Auth', [
     {
@@ -39,29 +38,34 @@ export const authPlugin = createRoutes('Auth', [
         handler: authHandler.logout
     },
     {
-        method: 'GET',
-        url: '/verify/:id',
+        method: 'POST',
+        url: '/otp/verify/:userId',
         schema: {
+            summary: 'Verify the OTP for the user',
             params: {
-                id: Type.String()
+                userId: Type.String()
             },
+            body: VerifyOTPInputDto,
             response: {
-                200: Type.Null(),
+                200: Type.String(),
                 404: Type.Null()
             }
         },
-        handler: authHandler.verifyLink
+        handler: authHandler.verifyOTP
     },
     {
         method: 'POST',
-        url: '/verify',
-        onRequest: [verifyToken],
+        url: '/otp/generate/:userId',
         schema: {
+            summary: "Send an email containing the OTP to the user's email",
+            params: {
+                userId: Type.String()
+            },
             response: {
-                200: Type.Null(),
-                400: Type.Null()
+                200: Type.String(),
+                400: Type.String()
             }
         },
-        handler: authHandler.sendVerifyLink
+        handler: authHandler.sendOTP
     }
 ]);

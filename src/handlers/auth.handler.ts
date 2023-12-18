@@ -1,11 +1,12 @@
 import nodemailer from 'nodemailer';
 import { compare, hash } from 'bcrypt';
 import { prisma } from '@repositories';
-import { cookieOptions, DUPLICATED_EMAIL, LOGIN_FAIL, SALT_ROUNDS, INVALID_VERIFICATION_LINK, USER_NOT_FOUND } from '@constants';
+import { cookieOptions, DUPLICATED_EMAIL, LOGIN_FAIL, SALT_ROUNDS, INVALID_OTP, USER_NOT_FOUND, USER_ALREADY_VERIFIED } from '@constants';
 import jwt from 'jsonwebtoken';
+import otpGenerator from 'otp-generator';
 import { envs } from '@configs';
-import { User, UserRole } from '@prisma/client';
-import { AuthInputDto, RegisterInputDto } from '@dtos/in';
+import { User } from '@prisma/client';
+import { AuthInputDto, RegisterInputDto, VerifyOTPInputDto } from '@dtos/in';
 import { AuthResultDto, RegisterResultDto } from '@dtos/out';
 import { Handler } from '@interfaces';
 import { logger } from '@utils';
@@ -19,7 +20,8 @@ const login: Handler<AuthResultDto, { Body: AuthInputDto }> = async (req, res) =
             role: true,
             first_name: true,
             last_name: true,
-            tel: true
+            tel: true,
+            verified: true
         },
         where: { email: req.body.email }
     });
@@ -28,8 +30,10 @@ const login: Handler<AuthResultDto, { Body: AuthInputDto }> = async (req, res) =
     const correctPassword = await compare(req.body.password, user.password_sh);
     if (!correctPassword) return res.badRequest(LOGIN_FAIL);
 
-    const userToken = jwt.sign({ userId: user.id, role: user.role }, envs.JWT_SECRET);
-    res.setCookie('token', userToken, cookieOptions);
+    if (user.verified) {
+        const userToken = jwt.sign({ userId: user.id, role: user.role }, envs.JWT_SECRET);
+        res.setCookie('token', userToken, cookieOptions);
+    }
 
     return {
         id: user.id,
@@ -37,7 +41,8 @@ const login: Handler<AuthResultDto, { Body: AuthInputDto }> = async (req, res) =
         firstname: user.first_name,
         lastname: user.last_name,
         tel: user.tel,
-        role: user.role
+        role: user.role,
+        verified: user.verified
     };
 };
 
@@ -51,7 +56,8 @@ const signup: Handler<RegisterResultDto, { Body: RegisterInputDto }> = async (re
                 password_sh: hashPassword,
                 tel: req.body.tel,
                 first_name: req.body.firstname,
-                last_name: req.body.lastname
+                last_name: req.body.lastname,
+                verified: false
             }
         });
     } catch (err) {
@@ -59,16 +65,14 @@ const signup: Handler<RegisterResultDto, { Body: RegisterInputDto }> = async (re
         return res.badRequest(DUPLICATED_EMAIL);
     }
 
-    const userToken = jwt.sign({ userId: user.id, role: UserRole.CUSTOMER }, envs.JWT_SECRET);
-    res.setCookie('token', userToken, cookieOptions);
-
     return {
         id: user.id,
         email: user.email,
         tel: user.tel,
         firstname: user.first_name,
         lastname: user.last_name,
-        role: user.role
+        role: user.role,
+        verified: false
     };
 };
 
@@ -77,44 +81,50 @@ const logout: Handler = async (_req, res) => {
     return null;
 };
 
-const verifyLink: Handler<string, { Params: { id: string } }> = async (req, res) => {
+const verifyOTP: Handler<string, { Params: { userId: string }; Body: VerifyOTPInputDto }> = async (req, res) => {
     const verificationEmail = await prisma.verificationEmail.findFirst({
         select: {
-            user_id: true,
-            expiration_date: true
+            expiration_time: true
         },
         where: {
-            id: req.params.id
+            user_id: req.params.userId,
+            otp: req.body.otp
         }
     });
 
     if (!verificationEmail) {
-        return res.badRequest(INVALID_VERIFICATION_LINK);
+        return res.badRequest(INVALID_OTP);
     }
 
-    if (verificationEmail.expiration_date.getTime() < Date.now()) {
+    if (verificationEmail.expiration_time.getTime() < Date.now()) {
         await prisma.verificationEmail.delete({
             where: {
-                id: req.params.id
+                user_id: req.params.userId
             }
         });
-        return res.badRequest(INVALID_VERIFICATION_LINK);
+        return res.badRequest(INVALID_OTP);
     }
+
+    await prisma.verificationEmail.delete({
+        where: {
+            user_id: req.params.userId
+        }
+    });
 
     await prisma.user.update({
         data: {
             verified: true
         },
         where: {
-            id: verificationEmail.user_id
+            id: req.params.userId
         }
     });
 
     return 'Verify successfully !';
 };
 
-const sendVerifyLink: Handler = async (req, res) => {
-    const userId = req.userId;
+const sendOTP: Handler<string, { Params: { userId: string } }> = async (req, res) => {
+    const { userId } = req.params;
     const user = await prisma.user.findUnique({
         select: {
             id: true,
@@ -129,7 +139,7 @@ const sendVerifyLink: Handler = async (req, res) => {
     }
 
     if (user.verified) {
-        return null;
+        return res.badRequest(USER_ALREADY_VERIFIED);
     }
 
     await prisma.verificationEmail.deleteMany({
@@ -138,9 +148,12 @@ const sendVerifyLink: Handler = async (req, res) => {
         }
     });
 
-    const verificationEmail = await prisma.verificationEmail.create({
+    const otp = otpGenerator.generate(6, { upperCaseAlphabets: true, specialChars: false });
+
+    await prisma.verificationEmail.create({
         data: {
-            user_id: user.id
+            user_id: user.id,
+            otp
         }
     });
 
@@ -158,16 +171,16 @@ const sendVerifyLink: Handler = async (req, res) => {
         from: '"Tick3d" <tick3d@no-reply>',
         to: user.email,
         subject: 'Tick3d verification link',
-        html: `<p>Click this link to verify your tick3d account: <a>${envs.BACKEND_URL}/auth/verify/${verificationEmail.id}</a></p>`
+        html: `<p>Enter this OTP to verify your tick3d account: ${otp}</p>`
     });
 
-    return null;
+    return 'Verification email sent';
 };
 
 export const authHandler = {
     login,
     signup,
     logout,
-    verifyLink,
-    sendVerifyLink
+    verifyOTP,
+    sendOTP
 };

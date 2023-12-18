@@ -8,7 +8,8 @@ export const AuthResultDto = Type.Object({
     tel: Type.String(),
     firstname: Type.String(),
     lastname: Type.String(),
-    role: Type.Union([Type.Literal(UserRole.CUSTOMER), Type.Literal(UserRole.MANAGER)])
+    role: Type.Union([Type.Literal(UserRole.CUSTOMER), Type.Literal(UserRole.MANAGER)]),
+    verified: Type.Boolean()
 });
 
 export type AuthResultDto = Static<typeof AuthResultDto>;
