@@ -1,5 +1,5 @@
-import { UploadDefaultModelInputDto, UpdateDefaultModelInputDto } from '@dtos/in';
-import { DefaultModelListResultDto, DefaultModelResultDto, ToggleLikeResultDto } from '@dtos/out';
+import { UploadDefaultModelInputDto, UpdateDefaultModelInputDto, SearchDefaultModelParamsDto } from '@dtos/in';
+import { DefaultModelListResultDto, DefaultModelResultDto, SearchDefaultModelResultDto, ToggleLikeResultDto } from '@dtos/out';
 import { defaultModelHandler } from '@handlers';
 import { verifyToken, verifyUserRole } from '@hooks';
 import { UserRole } from '@prisma/client';
@@ -89,5 +89,18 @@ export const defaultModelPlugin = createRoutes('Default Model', [
             }
         },
         handler: defaultModelHandler.toggleLike
+    },
+    {
+        method: 'POST',
+        url: '/:keyword',
+        onRequest: [verifyToken, verifyUserRole(UserRole.CUSTOMER)],
+        schema: {
+            summary: 'Search models base on keyword and model name',
+            params: SearchDefaultModelParamsDto,
+            response: {
+                200: SearchDefaultModelResultDto
+            }
+        },
+        handler: defaultModelHandler.search
     }
 ]);

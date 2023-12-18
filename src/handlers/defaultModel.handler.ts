@@ -1,9 +1,10 @@
 import { DELETE_MODEL_FAILED, MODEL_NOT_FOUND, UPDATE_MODEL_FAILED, TOGGLE_LIKE_FAILED } from '@constants';
-import { UploadDefaultModelInputDto } from '@dtos/in';
+import { SearchDefaultModelParamsDto, UploadDefaultModelInputDto } from '@dtos/in';
 import { DefaultModelListResultDto, DefaultModelResultDto, ToggleLikeResultDto } from '@dtos/out';
 import { Handler } from '@interfaces';
 import { prisma } from '@repositories';
 import { UpdateDefaultModelInputDto } from '@dtos/in';
+import { SearchDefaultModelResultDto } from 'src/dtos/out/searchModel.dto';
 
 const getAll: Handler<DefaultModelListResultDto> = async () => {
     const defaultModels = await prisma.defaultModel.findMany({
@@ -189,7 +190,7 @@ const del: Handler<string, { Params: { id: string } }> = async (req, res) => {
         return res.internalServerError(DELETE_MODEL_FAILED);
     }
 
-    return 'Delete succesfully';
+    return 'Delete successfully';
 };
 
 const update: Handler<string, { Params: { id: string }; Body: UpdateDefaultModelInputDto }> = async (req, res) => {
@@ -227,7 +228,7 @@ const update: Handler<string, { Params: { id: string }; Body: UpdateDefaultModel
         return res.internalServerError(UPDATE_MODEL_FAILED);
     }
 
-    return 'Update succesfully';
+    return 'Update successfully';
 };
 
 const toggleLike: Handler<ToggleLikeResultDto, { Params: { id: string } }> = async (req, res) => {
@@ -298,11 +299,25 @@ const toggleLike: Handler<ToggleLikeResultDto, { Params: { id: string } }> = asy
     }
 };
 
+const search: Handler<SearchDefaultModelResultDto, { Params: SearchDefaultModelParamsDto }> = async (req) => {
+    const keyword = req.params.keyword;
+    const simpleDefaultModelList = await prisma.model.findMany({
+        where: { name: { contains: keyword } },
+        select: {
+            id: true,
+            name: true
+        }
+    });
+
+    return simpleDefaultModelList;
+};
+
 export const defaultModelHandler = {
     get,
     getAll,
     upload,
     delete: del,
     update,
-    toggleLike
+    toggleLike,
+    search
 };

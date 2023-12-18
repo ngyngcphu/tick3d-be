@@ -10,6 +10,7 @@ export * from './home.dtos';
 export * from './order.dto';
 export * from './paypal.dto';
 export * from './register.dto';
+export * from './searchModel.dto';
 export * from './toggleLike.dto';
 export * from './user.dto';
 export * from './userModel.dto';
