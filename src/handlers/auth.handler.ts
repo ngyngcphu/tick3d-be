@@ -50,16 +50,36 @@ const signup: Handler<RegisterResultDto, { Body: RegisterInputDto }> = async (re
     const hashPassword = await hash(req.body.password, SALT_ROUNDS);
     let user: User;
     try {
-        user = await prisma.user.create({
-            data: {
-                email: req.body.email,
-                password_sh: hashPassword,
-                tel: req.body.tel,
-                first_name: req.body.firstname,
-                last_name: req.body.lastname,
-                verified: false
-            }
-        });
+        user = await prisma.customer
+            .create({
+                select: {
+                    user: {
+                        select: {
+                            email: true,
+                            first_name: true,
+                            id: true,
+                            last_name: true,
+                            password_sh: true,
+                            role: true,
+                            tel: true,
+                            verified: true
+                        }
+                    }
+                },
+                data: {
+                    user: {
+                        create: {
+                            email: req.body.email,
+                            password_sh: hashPassword,
+                            tel: req.body.tel,
+                            first_name: req.body.firstname,
+                            last_name: req.body.lastname,
+                            verified: false
+                        }
+                    }
+                }
+            })
+            .then(({ user }) => user);
     } catch (err) {
         logger.info(err);
         return res.badRequest(DUPLICATED_EMAIL);
