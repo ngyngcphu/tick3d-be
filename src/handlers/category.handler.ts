@@ -4,11 +4,11 @@ import { prisma } from '@repositories';
 
 const get: Handler<CategoryResult> = async (__req, res) => {
     try {
-        const cart = await prisma.category.findMany({
+        const cats = await prisma.category.findMany({
             select: { id: true, name: true }
         });
 
-        return cart;
+        return cats;
     } catch (e) {
         return res.badRequest();
     }
