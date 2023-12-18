@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.3](https://github.com/ngyngcphu/tick3d-be/compare/v1.9.2...v1.9.3) (2023-12-18)
+
+
+### Bug Fixes
+
+* clear tokenCookie upon entering login api ([cb6d514](https://github.com/ngyngcphu/tick3d-be/commit/cb6d514d4c29f3618b55d58bc4e26bec943ba9be))
+
 ## [1.9.2](https://github.com/ngyngcphu/tick3d-be/compare/v1.9.1...v1.9.2) (2023-12-18)
 
 
