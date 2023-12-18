@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.9.2](https://github.com/ngyngcphu/tick3d-be/compare/v1.9.1...v1.9.2) (2023-12-18)
+
+
+### Bug Fixes
+
+* properly make the seeded user verified ([7548e1f](https://github.com/ngyngcphu/tick3d-be/commit/7548e1f7d64d272198dd6f01a1f1a8dc41ee45e9))
+* support ordering on boughtAmount field ([d2e020d](https://github.com/ngyngcphu/tick3d-be/commit/d2e020de9c0839654c3baa6f5d016228c4b49312))
+
 ## [1.9.1](https://github.com/ngyngcphu/tick3d-be/compare/v1.9.0...v1.9.1) (2023-12-18)
 
 
