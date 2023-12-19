@@ -7,27 +7,47 @@ import { paypalService } from '@services';
 import { logger } from '@utils';
 
 const createOrderInDatabase: Handler<CreateOrderResultDto, { Body: CreateOrderInputDto }> = async (req, res) => {
-    const userId = req.userId;
-    const newOrder = await prisma.order.create({
-        data: { ...req.body, user_id: userId, isPaid: false },
-        select: {
-            id: true
-        }
-    });
+    try {
+        const userId = req.userId;
+        logger.error(userId);
+        const orderInfo = req.body;
+        const newOrder = await prisma.order.create({
+            data: {
+                user_id: userId,
+                total_price: orderInfo.total_price,
+                shipping_fee: orderInfo.shipping_fee,
+                est_deli_time: new Date(orderInfo.est_deli_time),
+                district: orderInfo.district,
+                ward: orderInfo.ward,
+                street: orderInfo.street,
+                streetNo: orderInfo.streetNo,
+                extra_note: orderInfo.extra_note,
+                isPaid: false
+            },
+            select: {
+                id: true
+            }
+        });
 
-    const cardModels = await prisma.cart.findMany({
-        where: {
-            user_id: userId
-        }
-    });
+        logger.info('New order created:', newOrder);
 
-    await Promise.all(
-        cardModels.map(async (cardModel) => {
-            await createOrderItem(newOrder.id, cardModel);
-        })
-    );
+        const cardModels = await prisma.cart.findMany({
+            where: {
+                user_id: userId
+            }
+        });
 
-    return res.send({ id: newOrder.id });
+        await Promise.all(
+            cardModels.map(async (cardModel) => {
+                await createOrderItem(newOrder.id, cardModel);
+            })
+        );
+
+        return res.send({ id: newOrder.id });
+    } catch (error) {
+        res.internalServerError('Failed to create the order. Please try again later.');
+        throw error;
+    }
 };
 
 async function createOrderItem(
