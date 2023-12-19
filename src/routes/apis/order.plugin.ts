@@ -55,5 +55,39 @@ export const orderPlugin = createRoutes('Order', [
             }
         },
         handler: ordersHandler.update
+    },
+    {
+        method: 'PATCH',
+        url: '/:id/paid',
+        onRequest: [verifyToken, verifyUserRole(UserRole.MANAGER)],
+        schema: {
+            summary: 'Update order payment status to true (For Managers Only).',
+            description: 'This endpoint is used when the customer pays with cash. Only managers are authorized to use this operation.',
+            params: {
+                id: Type.String()
+            },
+            response: {
+                200: UpdateOrderResultDto,
+                400: Type.String()
+            }
+        },
+        handler: ordersHandler.pay
+    },
+    {
+        method: 'PATCH',
+        url: '/:id',
+        onRequest: [verifyToken],
+        schema: {
+            summary: 'Cancel order.',
+            description: 'This endpoint is used to cancel an order, but only if the status of the order is pending.',
+            params: {
+                id: Type.String()
+            },
+            response: {
+                200: UpdateOrderResultDto,
+                400: Type.String()
+            }
+        },
+        handler: ordersHandler.cancel
     }
 ]);
