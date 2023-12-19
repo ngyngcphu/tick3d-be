@@ -36,29 +36,53 @@ const add: Handler<string, { Body: AddCartInputDto }> = async (req, res) => {
     const { models } = req.body;
 
     try {
-        await Promise.all(
-            models.map((model) =>
-                prisma.cart.upsert({
-                    create: {
-                        model_id: model.id,
-                        user_id: user_id,
-                        quantity: model.quantity
+        await prisma.$transaction(async () => {
+            const discontinuedModels = await prisma.defaultModel.findMany({
+                where: {
+                    model_id: {
+                        in: models.map((model) => model.id)
                     },
-                    update: {
-                        quantity: model.quantity
-                    },
-                    where: {
-                        user_id_model_id: {
-                            model_id: model.id,
-                            user_id: user_id
-                        }
-                    }
-                })
-            )
-        );
+                    isDiscontinued: true
+                },
+                select: {
+                    model: { select: { name: true } }
+                }
+            });
 
-        return 'Added successfully';
+            if (discontinuedModels.length > 0) {
+                const discontinuedModelNames = discontinuedModels.map((model) => model.model.name).join(', ');
+                throw new Error(`Cannot add discontinued models: ${discontinuedModelNames}`);
+            }
+
+            await Promise.all(
+                models.map((model) =>
+                    prisma.cart.upsert({
+                        create: {
+                            model_id: model.id,
+                            user_id: user_id,
+                            quantity: model.quantity
+                        },
+                        update: {
+                            quantity: model.quantity
+                        },
+                        where: {
+                            user_id_model_id: {
+                                model_id: model.id,
+                                user_id: user_id
+                            }
+                        }
+                    })
+                )
+            );
+        });
+        return res.send('Added successfully');
     } catch (e) {
+        console.error('Error adding to cart:', e);
+
+        if (e.message.includes('Cannot add discontinued models')) {
+            return res.badRequest(e.message);
+        }
+
         return res.badRequest(ADD_CART_FAILED);
     }
 };
