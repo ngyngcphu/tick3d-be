@@ -103,7 +103,7 @@ const logout: Handler = async (_req, res) => {
     return null;
 };
 
-const verifyOTP: Handler<string, { Params: { userId: string }; Body: VerifyOTPInputDto }> = async (req, res) => {
+const verifyOTP: Handler<{ message: string }, { Params: { userId: string }; Body: VerifyOTPInputDto }> = async (req, res) => {
     const verificationEmail = await prisma.verificationEmail.findFirst({
         select: {
             expiration_time: true
@@ -142,10 +142,10 @@ const verifyOTP: Handler<string, { Params: { userId: string }; Body: VerifyOTPIn
         }
     });
 
-    return 'Verify successfully !';
+    return { message: 'Verify successfully !' };
 };
 
-const sendOTP: Handler<string, { Params: { userId: string } }> = async (req, res) => {
+const sendOTP: Handler<{ message: string }, { Params: { userId: string } }> = async (req, res) => {
     const { userId } = req.params;
     const user = await prisma.user.findUnique({
         select: {
@@ -196,7 +196,7 @@ const sendOTP: Handler<string, { Params: { userId: string } }> = async (req, res
         html: `<p>Enter this OTP to verify your tick3d account: ${otp}</p>`
     });
 
-    return 'Verification email sent';
+    return { message: 'Verification email sent' };
 };
 
 export const authHandler = {

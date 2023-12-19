@@ -56,6 +56,7 @@ export const defaultModelPlugin = createRoutes('Default Model', [
         schema: {
             summary: 'Delete a default model with the specified id',
             description: 'Only the manager can do this',
+            response: { 200: Type.Object({ message: Type.String() }) },
             params: {
                 id: Type.String()
             }
@@ -72,6 +73,7 @@ export const defaultModelPlugin = createRoutes('Default Model', [
             params: {
                 id: Type.String()
             },
+            response: { 200: Type.Object({ message: Type.String() }) },
             body: UpdateDefaultModelInputDto
         },
         handler: defaultModelHandler.update
@@ -98,7 +100,7 @@ export const defaultModelPlugin = createRoutes('Default Model', [
         schema: {
             summary: 'Mark Default Model as Discontinued. Also, remove it from all current user carts.',
             params: {
-                id: Type.String()
+                id: Type.Object({ message: Type.String() })
             },
             response: {
                 200: Type.String()

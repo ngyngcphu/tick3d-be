@@ -31,7 +31,7 @@ const get: Handler<GetCartResultDto> = async (req, res) => {
     }
 };
 
-const add: Handler<string, { Body: AddCartInputDto }> = async (req, res) => {
+const add: Handler<{ message: string }, { Body: AddCartInputDto }> = async (req, res) => {
     const user_id = req.userId;
     const { models } = req.body;
 
@@ -75,7 +75,7 @@ const add: Handler<string, { Body: AddCartInputDto }> = async (req, res) => {
                 )
             );
         });
-        return res.send('Added successfully');
+        return res.send({ message: 'Added successfully' });
     } catch (e) {
         console.error('Error adding to cart:', e);
 
@@ -87,7 +87,7 @@ const add: Handler<string, { Body: AddCartInputDto }> = async (req, res) => {
     }
 };
 
-const del: Handler<string, { Body: DelCartInputDto }> = async (req, res) => {
+const del: Handler<{ message: string }, { Body: DelCartInputDto }> = async (req, res) => {
     const user_id = req.userId;
     const { models } = req.body;
 
@@ -105,13 +105,13 @@ const del: Handler<string, { Body: DelCartInputDto }> = async (req, res) => {
             )
         );
 
-        return 'Deleted successfully';
+        return { message: 'Deleted successfully' };
     } catch (e) {
         return res.badRequest(DELETE_CART_FAILED);
     }
 };
 
-const delAll: Handler<string> = async (req) => {
+const delAll: Handler<{ message: string }> = async (req) => {
     const user_id = req.userId;
 
     await prisma.cart.deleteMany({
@@ -120,7 +120,7 @@ const delAll: Handler<string> = async (req) => {
         }
     });
 
-    return 'Reset cart successfully';
+    return { message: 'Reset cart successfully' };
 };
 
 export const cartHandler = {

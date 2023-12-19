@@ -56,6 +56,7 @@ export const userModelPlugin = createRoutes('User Model', [
         onRequest: [verifyToken],
         schema: {
             summary: 'Delete the user model with the specified id',
+            response: { 200: Type.Object({ message: Type.String() }) },
             params: {
                 id: Type.String()
             }
@@ -69,6 +70,7 @@ export const userModelPlugin = createRoutes('User Model', [
         schema: {
             summary: 'Update a user model',
             description: 'Only the customer can do this',
+            response: { 200: Type.Object({ message: Type.String() }) },
             params: {
                 id: Type.String()
             },
