@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.12.0](https://github.com/ngyngcphu/tick3d-be/compare/v1.11.2...v1.12.0) (2023-12-19)
+
+
+### Features
+
+* **order:** implement APIs for cancel and update isPaid to true of order ([227860b](https://github.com/ngyngcphu/tick3d-be/commit/227860be8bc8c55b45b21caa8d66e6224049e629))
+
+
+### Bug Fixes
+
+* **order:** add token verification for create order API, correct estimate delivery time type ([4e4f37c](https://github.com/ngyngcphu/tick3d-be/commit/4e4f37c2178a89d249655bcd5568b105f7bfdd5b))
+
 ## [1.11.2](https://github.com/ngyngcphu/tick3d-be/compare/v1.11.1...v1.11.2) (2023-12-18)
 
 
