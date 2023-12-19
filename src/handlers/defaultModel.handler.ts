@@ -4,6 +4,7 @@ import { DefaultModelListResultDto, DefaultModelResultDto, ToggleLikeResultDto }
 import { Handler } from '@interfaces';
 import { prisma } from '@repositories';
 import { UpdateDefaultModelInputDto } from '@dtos/in';
+import { logger } from '@utils';
 
 const getAll: Handler<DefaultModelListResultDto, { Querystring: DefaultModelQueryStringDto }> = async (req) => {
     try {
@@ -32,7 +33,8 @@ const getAll: Handler<DefaultModelListResultDto, { Querystring: DefaultModelQuer
                         name: true
                     }
                 },
-                subImageUrls: true
+                subImageUrls: true,
+                isDiscontinued: true
             },
             where: {
                 likesNo: {
@@ -75,7 +77,8 @@ const getAll: Handler<DefaultModelListResultDto, { Querystring: DefaultModelQuer
             description: model.model.description,
             numberBought: model.model.boughtAmount,
             subImages: model.subImageUrls,
-            discount: model.model.ModelPromotion?.discount
+            discount: model.model.ModelPromotion?.discount,
+            isDiscontinued: model.isDiscontinued
         }));
     } catch (e) {
         return [];
@@ -111,7 +114,8 @@ const get: Handler<DefaultModelResultDto, { Params: { id: string } }> = async (r
                     name: true
                 }
             },
-            subImageUrls: true
+            subImageUrls: true,
+            isDiscontinued: true
         },
         where: {
             model_id: id
@@ -135,7 +139,8 @@ const get: Handler<DefaultModelResultDto, { Params: { id: string } }> = async (r
         description: model.model.description,
         numberBought: model.model.boughtAmount,
         subImages: model.subImageUrls,
-        discount: model.model.ModelPromotion?.discount
+        discount: model.model.ModelPromotion?.discount,
+        isDiscontinued: model.isDiscontinued
     };
 };
 
@@ -174,7 +179,8 @@ const upload: Handler<DefaultModelListResultDto, { Body: UploadDefaultModelInput
                             select: {
                                 name: true
                             }
-                        }
+                        },
+                        isDiscontinued: true
                     },
                     data: {
                         category_id: input.category_id,
@@ -329,11 +335,40 @@ const toggleLike: Handler<ToggleLikeResultDto, { Params: { id: string } }> = asy
     }
 };
 
+const discontinue: Handler<string, { Params: { id: string } }> = async (req, res) => {
+    const { id } = req.params;
+    try {
+        await prisma.$transaction(async (prisma) => {
+            await Promise.all([
+                prisma.defaultModel.update({
+                    data: {
+                        isDiscontinued: true
+                    },
+                    where: {
+                        model_id: id
+                    }
+                }),
+                prisma.cart.deleteMany({
+                    where: {
+                        model_id: id
+                    }
+                })
+            ]);
+        });
+    } catch (e) {
+        logger.error('Discontinue model error:', e);
+        return res.internalServerError('Model is discontinued failed');
+    }
+
+    return 'Discontinue successfully';
+};
+
 export const defaultModelHandler = {
     get,
     getAll,
     upload,
     delete: del,
     update,
-    toggleLike
+    toggleLike,
+    discontinue
 };

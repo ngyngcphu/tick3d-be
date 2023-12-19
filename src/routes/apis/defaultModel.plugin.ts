@@ -90,5 +90,20 @@ export const defaultModelPlugin = createRoutes('Default Model', [
             }
         },
         handler: defaultModelHandler.toggleLike
+    },
+    {
+        method: 'PATCH',
+        url: '/:id/discontinue',
+        onRequest: [verifyToken, verifyUserRole(UserRole.MANAGER)],
+        schema: {
+            summary: 'Mark Default Model as Discontinued. Also, remove it from all current user carts.',
+            params: {
+                id: Type.String()
+            },
+            response: {
+                200: Type.String()
+            }
+        },
+        handler: defaultModelHandler.discontinue
     }
 ]);
