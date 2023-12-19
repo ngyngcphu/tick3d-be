@@ -47,7 +47,7 @@ export const authPlugin = createRoutes('Auth', [
             },
             body: VerifyOTPInputDto,
             response: {
-                200: Type.String(),
+                200: Type.Object({ message: Type.String() }),
                 404: Type.Null()
             }
         },
@@ -62,7 +62,7 @@ export const authPlugin = createRoutes('Auth', [
                 userId: Type.String()
             },
             response: {
-                200: Type.String(),
+                200: Type.Object({ message: Type.String() }),
                 400: Type.String()
             }
         },

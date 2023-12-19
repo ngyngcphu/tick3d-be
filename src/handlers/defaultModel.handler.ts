@@ -208,7 +208,7 @@ const upload: Handler<DefaultModelListResultDto, { Body: UploadDefaultModelInput
     return outputList;
 };
 
-const del: Handler<string, { Params: { id: string } }> = async (req, res) => {
+const del: Handler<{ message: string }, { Params: { id: string } }> = async (req, res) => {
     const { id } = req.params;
 
     try {
@@ -226,10 +226,10 @@ const del: Handler<string, { Params: { id: string } }> = async (req, res) => {
         return res.internalServerError(DELETE_MODEL_FAILED);
     }
 
-    return 'Delete successfully';
+    return { message: 'Delete successfully' };
 };
 
-const update: Handler<string, { Params: { id: string }; Body: UpdateDefaultModelInputDto }> = async (req, res) => {
+const update: Handler<{ message: string }, { Params: { id: string }; Body: UpdateDefaultModelInputDto }> = async (req, res) => {
     const { id } = req.params;
     const { gcode, name, price, category_id, imageUrl, discount, description, subImageUrls } = req.body;
     try {
@@ -264,7 +264,7 @@ const update: Handler<string, { Params: { id: string }; Body: UpdateDefaultModel
         return res.internalServerError(UPDATE_MODEL_FAILED);
     }
 
-    return 'Update successfully';
+    return { message: 'Update successfully' };
 };
 
 const toggleLike: Handler<ToggleLikeResultDto, { Params: { id: string } }> = async (req, res) => {
@@ -335,7 +335,7 @@ const toggleLike: Handler<ToggleLikeResultDto, { Params: { id: string } }> = asy
     }
 };
 
-const discontinue: Handler<string, { Params: { id: string } }> = async (req, res) => {
+const discontinue: Handler<{ message: string }, { Params: { id: string } }> = async (req, res) => {
     const { id } = req.params;
     try {
         await prisma.$transaction(async (prisma) => {
@@ -360,7 +360,7 @@ const discontinue: Handler<string, { Params: { id: string } }> = async (req, res
         return res.internalServerError('Model is discontinued failed');
     }
 
-    return 'Discontinue successfully';
+    return { message: 'Discontinue successfully' };
 };
 
 export const defaultModelHandler = {
