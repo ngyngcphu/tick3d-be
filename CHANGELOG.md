@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.13.1](https://github.com/ngyngcphu/tick3d-be/compare/v1.13.0...v1.13.1) (2023-12-19)
+
+
+### Bug Fixes
+
+* **200 response:** change all responses with status 200 to JSON format ([ebf514c](https://github.com/ngyngcphu/tick3d-be/commit/ebf514c2a0c859684f87929de001b7dd4e31f65c))
+
 ## [1.13.0](https://github.com/ngyngcphu/tick3d-be/compare/v1.12.0...v1.13.0) (2023-12-19)
 
 
