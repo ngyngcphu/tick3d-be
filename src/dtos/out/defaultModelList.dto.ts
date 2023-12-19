@@ -15,7 +15,8 @@ export const DefaultModelListResultDto = Type.Array(
         description: Type.String(),
         numberBought: Type.Number(),
         subImages: Type.Array(Type.String()),
-        discount: Type.Optional(Type.Number())
+        discount: Type.Optional(Type.Number()),
+        isDiscontinued: Type.Boolean()
     })
 );
 

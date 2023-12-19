@@ -33,7 +33,8 @@ const getAll: Handler<DefaultModelListResultDto, { Querystring: DefaultModelQuer
                         name: true
                     }
                 },
-                subImageUrls: true
+                subImageUrls: true,
+                isDiscontinued: true
             },
             where: {
                 likesNo: {
@@ -76,7 +77,8 @@ const getAll: Handler<DefaultModelListResultDto, { Querystring: DefaultModelQuer
             description: model.model.description,
             numberBought: model.model.boughtAmount,
             subImages: model.subImageUrls,
-            discount: model.model.ModelPromotion?.discount
+            discount: model.model.ModelPromotion?.discount,
+            isDiscontinued: model.isDiscontinued
         }));
     } catch (e) {
         return [];
@@ -112,7 +114,8 @@ const get: Handler<DefaultModelResultDto, { Params: { id: string } }> = async (r
                     name: true
                 }
             },
-            subImageUrls: true
+            subImageUrls: true,
+            isDiscontinued: true
         },
         where: {
             model_id: id
@@ -136,7 +139,8 @@ const get: Handler<DefaultModelResultDto, { Params: { id: string } }> = async (r
         description: model.model.description,
         numberBought: model.model.boughtAmount,
         subImages: model.subImageUrls,
-        discount: model.model.ModelPromotion?.discount
+        discount: model.model.ModelPromotion?.discount,
+        isDiscontinued: model.isDiscontinued
     };
 };
 
@@ -175,7 +179,8 @@ const upload: Handler<DefaultModelListResultDto, { Body: UploadDefaultModelInput
                             select: {
                                 name: true
                             }
-                        }
+                        },
+                        isDiscontinued: true
                     },
                     data: {
                         category_id: input.category_id,
