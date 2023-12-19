@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.13.0](https://github.com/ngyngcphu/tick3d-be/compare/v1.12.0...v1.13.0) (2023-12-19)
+
+
+### Features
+
+* **default model:** add isDiscontinued to Default model and prevent cart add discontinued model ([5f4e1ec](https://github.com/ngyngcphu/tick3d-be/commit/5f4e1ec10f740e7a1dc30081681a2172ec83903e))
+* **default model:** implement API for mark default model as discontinued ([e3e8df3](https://github.com/ngyngcphu/tick3d-be/commit/e3e8df3b405b3a0649af6004f20cec0f749be937))
+
+
+### Bug Fixes
+
+* **default model:** add isDiscontinued field to related APIs ([074ab2b](https://github.com/ngyngcphu/tick3d-be/commit/074ab2b6d94e8de7cc38b82e208cc88b698db221))
+
 ## [1.12.0](https://github.com/ngyngcphu/tick3d-be/compare/v1.11.2...v1.12.0) (2023-12-19)
 
 
