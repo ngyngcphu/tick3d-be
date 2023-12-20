@@ -65,7 +65,6 @@ const generateModel = () => {
     return {
         id: faker.string.uuid(),
         categoryId: faker.helpers.arrayElement(categories).id,
-        likesNo: faker.number.int({ min: 0, max: 200 }),
         image: faker.image.url(),
         subImage1: faker.image.url(),
         subImage2: faker.image.url(),
@@ -148,7 +147,6 @@ async function handleDefaultModels() {
         return {
             model_id: defaultModel.id,
             category_id: defaultModel.categoryId,
-            likesNo: defaultModel.likesNo,
             imageUrl: defaultModel.image,
             subImageUrls: [defaultModel.subImage1, defaultModel.subImage2]
         };

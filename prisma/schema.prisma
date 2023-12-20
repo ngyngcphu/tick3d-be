@@ -77,7 +77,7 @@ model UploadedModel {
 model DefaultModel {
   model_id       String   @id
   model          Model    @relation(fields: [model_id], references: [id])
-  likesNo        Int
+  likesNo        Int      @default(0)
   imageUrl       String   @db.VarChar(255)
   subImageUrls   String[] @db.VarChar(255)
   Like           Like[]
