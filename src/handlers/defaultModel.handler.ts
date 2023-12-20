@@ -8,6 +8,9 @@ import { logger } from '@utils';
 
 const getAll: Handler<DefaultModelListResultDto, { Querystring: DefaultModelQueryStringDto }> = async (req) => {
     try {
+        logger.error(req.query.orderBy);
+        logger.error(req.query.order);
+        logger.error(req.query.orderBy === 'likesNo' ? req.query.order || 'desc' : undefined);
         const defaultModels = await prisma.defaultModel.findMany({
             select: {
                 model_id: true,
@@ -52,15 +55,19 @@ const getAll: Handler<DefaultModelListResultDto, { Querystring: DefaultModelQuer
                     }
                 }
             },
-            orderBy: {
-                likesNo: req.query.orderBy === 'likesNo' ? req.query.order || 'desc' : undefined,
-                model: {
-                    uploadTime: req.query.orderBy === 'uploadedTime' ? req.query.order || 'desc' : undefined,
-                    price: req.query.orderBy === 'price' ? req.query.order || 'asc' : undefined,
-                    name: req.query.orderBy === 'name' ? req.query.order || 'asc' : undefined,
-                    boughtAmount: req.query.orderBy === 'numberBought' ? req.query.order || 'desc' : undefined
+            orderBy: [
+                {
+                    likesNo: req.query.orderBy === 'likesNo' ? req.query.order || 'asc' : undefined
+                },
+                {
+                    model: {
+                        uploadTime: req.query.orderBy === 'uploadedTime' ? req.query.order || 'asc' : undefined,
+                        price: req.query.orderBy === 'price' ? req.query.order || 'asc' : undefined,
+                        name: req.query.orderBy === 'name' ? req.query.order || 'asc' : undefined,
+                        boughtAmount: req.query.orderBy === 'numberBought' ? req.query.order || 'asc' : undefined
+                    }
                 }
-            },
+            ],
             skip: req.query.start,
             take: req.query.noItems
         });
@@ -81,6 +88,7 @@ const getAll: Handler<DefaultModelListResultDto, { Querystring: DefaultModelQuer
             isDiscontinued: model.isDiscontinued
         }));
     } catch (e) {
+        logger.error(e);
         return [];
     }
 };
