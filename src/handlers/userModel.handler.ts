@@ -19,6 +19,8 @@ const getAll: Handler<UserModelListResultDto, { Querystring: UserModelQueryStrin
         }
     });
 
+    const totalModels = await prisma.uploadedModel.count();
+
     try {
         const userModels = await prisma.uploadedModel.findMany({
             select: {
@@ -55,14 +57,20 @@ const getAll: Handler<UserModelListResultDto, { Querystring: UserModelQueryStrin
             take: req.query.noItems
         });
 
-        return userModels.map((model) => ({
-            id: model.model_id,
-            name: model.model.name,
-            price: model.model.price,
-            uploadTime: model.model.uploadTime.toISOString()
-        }));
+        return {
+            total: totalModels,
+            models: userModels.map((model) => ({
+                id: model.model_id,
+                name: model.model.name,
+                price: model.model.price,
+                uploadTime: model.model.uploadTime.toISOString()
+            }))
+        };
     } catch (e) {
-        return [];
+        return {
+            total: totalModels,
+            models: []
+        };
     }
 };
 
@@ -101,9 +109,9 @@ const get: Handler<UserModelResultDto, { Params: { id: string } }> = async (req,
     };
 };
 
-const upload: Handler<UserModelListResultDto, { Body: UploadUserModelInputDto }> = async (req, res) => {
+const upload: Handler<UserModelListResultDto['models'], { Body: UploadUserModelInputDto }> = async (req, res) => {
     const userId = req.userId;
-    const outputList: UserModelListResultDto = [];
+    const outputList: UserModelListResultDto['models'] = [];
     const inputList = req.body;
 
     try {
