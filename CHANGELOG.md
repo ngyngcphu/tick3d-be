@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.14.2](https://github.com/ngyngcphu/tick3d-be/compare/v1.14.1...v1.14.2) (2023-12-20)
+
+
+### Bug Fixes
+
+* add default ordering on id ([fc2aa9d](https://github.com/ngyngcphu/tick3d-be/commit/fc2aa9d1f1976458442b9a5907a019d00566f8ba))
+
 ## [1.14.1](https://github.com/ngyngcphu/tick3d-be/compare/v1.14.0...v1.14.1) (2023-12-20)
 
 
