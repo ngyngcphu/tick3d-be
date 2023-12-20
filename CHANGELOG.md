@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.14.1](https://github.com/ngyngcphu/tick3d-be/compare/v1.14.0...v1.14.1) (2023-12-20)
+
+
+### Bug Fixes
+
+* pagination missing values ([c945024](https://github.com/ngyngcphu/tick3d-be/commit/c945024300563da76c8085888c9e8e3a29be9910))
+
 ## [1.14.0](https://github.com/ngyngcphu/tick3d-be/compare/v1.13.2...v1.14.0) (2023-12-20)
 
 
