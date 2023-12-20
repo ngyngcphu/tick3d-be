@@ -27,7 +27,7 @@ export const cartPlugin = createRoutes('Cart', [
             summary: 'Add some models to the cart of the current user (based on jwt)',
             body: AddCartInputDto,
             response: {
-                200: Type.String(),
+                200: Type.Object({ message: Type.String() }),
                 400: Type.String()
             }
         },
@@ -40,7 +40,7 @@ export const cartPlugin = createRoutes('Cart', [
         schema: {
             summary: 'Reset the cart of the current user (based on jwt)',
             response: {
-                200: Type.String()
+                200: Type.Object({ message: Type.String() })
             }
         },
         handler: cartHandler.delAll
@@ -53,7 +53,7 @@ export const cartPlugin = createRoutes('Cart', [
             summary: 'Remove some models from the cart of the current user (based on jwt)',
             body: DelCartInputDto,
             response: {
-                200: Type.String(),
+                200: Type.Object({ message: Type.String() }),
                 400: Type.String()
             }
         },

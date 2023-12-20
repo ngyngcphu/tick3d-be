@@ -75,14 +75,15 @@ model UploadedModel {
 }
 
 model DefaultModel {
-  model_id     String    @id
-  model        Model     @relation(fields: [model_id], references: [id])
-  likesNo      Int
-  imageUrl     String    @db.VarChar(255)
-  subImageUrls String[]  @db.VarChar(255)
-  Like         Like[]
-  category_id  String
-  Category     Category  @relation(fields: [category_id], references: [id])
+  model_id       String   @id
+  model          Model    @relation(fields: [model_id], references: [id])
+  likesNo        Int      @default(0)
+  imageUrl       String   @db.VarChar(255)
+  subImageUrls   String[] @db.VarChar(255)
+  Like           Like[]
+  category_id    String
+  Category       Category @relation(fields: [category_id], references: [id])
+  isDiscontinued Boolean  @default(false)
 }
 
 model Like {

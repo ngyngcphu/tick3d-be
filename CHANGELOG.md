@@ -1,5 +1,58 @@
 # Changelog
 
+## [1.14.0](https://github.com/ngyngcphu/tick3d-be/compare/v1.13.2...v1.14.0) (2023-12-20)
+
+
+### Features
+
+* **default models:** convert order object to array respecting Prisma rules ([9371992](https://github.com/ngyngcphu/tick3d-be/commit/9371992f4c0d28dd818a3e77d31c5890dbae66de))
+
+## [1.13.2](https://github.com/ngyngcphu/tick3d-be/compare/v1.13.1...v1.13.2) (2023-12-20)
+
+
+### Bug Fixes
+
+* **seed.ts:** remove redundant model types from seed data ([87a0898](https://github.com/ngyngcphu/tick3d-be/commit/87a0898dc84d849b2f7ff0b1f6526e37663e62e8))
+
+## [1.13.1](https://github.com/ngyngcphu/tick3d-be/compare/v1.13.0...v1.13.1) (2023-12-19)
+
+
+### Bug Fixes
+
+* **200 response:** change all responses with status 200 to JSON format ([ebf514c](https://github.com/ngyngcphu/tick3d-be/commit/ebf514c2a0c859684f87929de001b7dd4e31f65c))
+
+## [1.13.0](https://github.com/ngyngcphu/tick3d-be/compare/v1.12.0...v1.13.0) (2023-12-19)
+
+
+### Features
+
+* **default model:** add isDiscontinued to Default model and prevent cart add discontinued model ([5f4e1ec](https://github.com/ngyngcphu/tick3d-be/commit/5f4e1ec10f740e7a1dc30081681a2172ec83903e))
+* **default model:** implement API for mark default model as discontinued ([e3e8df3](https://github.com/ngyngcphu/tick3d-be/commit/e3e8df3b405b3a0649af6004f20cec0f749be937))
+
+
+### Bug Fixes
+
+* **default model:** add isDiscontinued field to related APIs ([074ab2b](https://github.com/ngyngcphu/tick3d-be/commit/074ab2b6d94e8de7cc38b82e208cc88b698db221))
+
+## [1.12.0](https://github.com/ngyngcphu/tick3d-be/compare/v1.11.2...v1.12.0) (2023-12-19)
+
+
+### Features
+
+* **order:** implement APIs for cancel and update isPaid to true of order ([227860b](https://github.com/ngyngcphu/tick3d-be/commit/227860be8bc8c55b45b21caa8d66e6224049e629))
+
+
+### Bug Fixes
+
+* **order:** add token verification for create order API, correct estimate delivery time type ([4e4f37c](https://github.com/ngyngcphu/tick3d-be/commit/4e4f37c2178a89d249655bcd5568b105f7bfdd5b))
+
+## [1.11.2](https://github.com/ngyngcphu/tick3d-be/compare/v1.11.1...v1.11.2) (2023-12-18)
+
+
+### Bug Fixes
+
+* cookie config ([f1b9921](https://github.com/ngyngcphu/tick3d-be/commit/f1b9921d435467c757c2c7cc50a6392c5a51d648))
+
 ## [1.11.1](https://github.com/ngyngcphu/tick3d-be/compare/v1.11.0...v1.11.1) (2023-12-18)
 
 

@@ -4,11 +4,15 @@ import { DefaultModelListResultDto, DefaultModelResultDto, ToggleLikeResultDto }
 import { Handler } from '@interfaces';
 import { prisma } from '@repositories';
 import { UpdateDefaultModelInputDto } from '@dtos/in';
+import { logger } from '@utils';
 
 const getAll: Handler<DefaultModelListResultDto, { Querystring: DefaultModelQueryStringDto }> = async (req) => {
     const totalModels = await prisma.defaultModel.count();
 
     try {
+        logger.error(req.query.orderBy);
+        logger.error(req.query.order);
+        logger.error(req.query.orderBy === 'likesNo' ? req.query.order || 'desc' : undefined);
         const defaultModels = await prisma.defaultModel.findMany({
             select: {
                 model_id: true,
@@ -34,7 +38,8 @@ const getAll: Handler<DefaultModelListResultDto, { Querystring: DefaultModelQuer
                         name: true
                     }
                 },
-                subImageUrls: true
+                subImageUrls: true,
+                isDiscontinued: true
             },
             where: {
                 likesNo: {
@@ -122,7 +127,8 @@ const get: Handler<DefaultModelResultDto, { Params: { id: string } }> = async (r
                     name: true
                 }
             },
-            subImageUrls: true
+            subImageUrls: true,
+            isDiscontinued: true
         },
         where: {
             model_id: id
@@ -146,7 +152,8 @@ const get: Handler<DefaultModelResultDto, { Params: { id: string } }> = async (r
         description: model.model.description,
         numberBought: model.model.boughtAmount,
         subImages: model.subImageUrls,
-        discount: model.model.ModelPromotion?.discount
+        discount: model.model.ModelPromotion?.discount,
+        isDiscontinued: model.isDiscontinued
     };
 };
 
@@ -185,7 +192,8 @@ const upload: Handler<DefaultModelListResultDto['models'], { Body: UploadDefault
                             select: {
                                 name: true
                             }
-                        }
+                        },
+                        isDiscontinued: true
                     },
                     data: {
                         category_id: input.category_id,
@@ -213,7 +221,7 @@ const upload: Handler<DefaultModelListResultDto['models'], { Body: UploadDefault
     return outputList;
 };
 
-const del: Handler<string, { Params: { id: string } }> = async (req, res) => {
+const del: Handler<{ message: string }, { Params: { id: string } }> = async (req, res) => {
     const { id } = req.params;
 
     try {
@@ -231,10 +239,10 @@ const del: Handler<string, { Params: { id: string } }> = async (req, res) => {
         return res.internalServerError(DELETE_MODEL_FAILED);
     }
 
-    return 'Delete successfully';
+    return { message: 'Delete successfully' };
 };
 
-const update: Handler<string, { Params: { id: string }; Body: UpdateDefaultModelInputDto }> = async (req, res) => {
+const update: Handler<{ message: string }, { Params: { id: string }; Body: UpdateDefaultModelInputDto }> = async (req, res) => {
     const { id } = req.params;
     const { gcode, name, price, category_id, imageUrl, discount, description, subImageUrls } = req.body;
     try {
@@ -269,7 +277,7 @@ const update: Handler<string, { Params: { id: string }; Body: UpdateDefaultModel
         return res.internalServerError(UPDATE_MODEL_FAILED);
     }
 
-    return 'Update successfully';
+    return { message: 'Update successfully' };
 };
 
 const toggleLike: Handler<ToggleLikeResultDto, { Params: { id: string } }> = async (req, res) => {
@@ -340,11 +348,40 @@ const toggleLike: Handler<ToggleLikeResultDto, { Params: { id: string } }> = asy
     }
 };
 
+const discontinue: Handler<{ message: string }, { Params: { id: string } }> = async (req, res) => {
+    const { id } = req.params;
+    try {
+        await prisma.$transaction(async (prisma) => {
+            await Promise.all([
+                prisma.defaultModel.update({
+                    data: {
+                        isDiscontinued: true
+                    },
+                    where: {
+                        model_id: id
+                    }
+                }),
+                prisma.cart.deleteMany({
+                    where: {
+                        model_id: id
+                    }
+                })
+            ]);
+        });
+    } catch (e) {
+        logger.error('Discontinue model error:', e);
+        return res.internalServerError('Model is discontinued failed');
+    }
+
+    return { message: 'Discontinue successfully' };
+};
+
 export const defaultModelHandler = {
     get,
     getAll,
     upload,
     delete: del,
     update,
-    toggleLike
+    toggleLike,
+    discontinue
 };

@@ -15,7 +15,8 @@ export const DefaultModelResultDto = Type.Object({
     description: Type.String(),
     numberBought: Type.Number(),
     subImages: Type.Array(Type.String()),
-    discount: Type.Optional(Type.Number())
+    discount: Type.Optional(Type.Number()),
+    isDiscontinued: Type.Boolean()
 });
 
 export type DefaultModelResultDto = Static<typeof DefaultModelResultDto>;

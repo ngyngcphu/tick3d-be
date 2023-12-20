@@ -150,7 +150,7 @@ const upload: Handler<UserModelListResultDto['models'], { Body: UploadUserModelI
     return outputList;
 };
 
-const del: Handler<string, { Params: { id: string } }> = async (req, res) => {
+const del: Handler<{ message: string }, { Params: { id: string } }> = async (req, res) => {
     const userId = req.userId;
     const { id } = req.params;
 
@@ -170,10 +170,10 @@ const del: Handler<string, { Params: { id: string } }> = async (req, res) => {
         return res.internalServerError(DELETE_MODEL_FAILED);
     }
 
-    return 'Delete succesfully';
+    return { message: 'Delete succesfully' };
 };
 
-const update: Handler<string, { Params: { id: string }; Body: UpdateUserModelInputDto }> = async (req, res) => {
+const update: Handler<{ message: string }, { Params: { id: string }; Body: UpdateUserModelInputDto }> = async (req, res) => {
     const userId = req.userId;
     const { id } = req.params;
     const { gcode, name, price } = req.body;
@@ -201,7 +201,7 @@ const update: Handler<string, { Params: { id: string }; Body: UpdateUserModelInp
         return res.internalServerError(UPDATE_MODEL_FAILED);
     }
 
-    return 'Update succesfully';
+    return { message: 'Update succesfully' };
 };
 
 export const userModelHandler = {
