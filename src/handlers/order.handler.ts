@@ -90,6 +90,12 @@ const getOrders: Handler<OrderListResultDto, { Querystring: OrderQueryStringDto 
         return res.badRequest(USER_NOT_FOUND);
     }
 
+    const totalOrders = await prisma.order.count({
+        where: {
+            user_id: user.role === UserRole.MANAGER ? req.query.userId : userId
+        }
+    });
+
     try {
         const orders = await prisma.order.findMany({
             select: {
@@ -125,24 +131,30 @@ const getOrders: Handler<OrderListResultDto, { Querystring: OrderQueryStringDto 
             take: req.query.noItems
         });
 
-        return orders.map((order) => ({
-            creationTime: order.creation_time.toISOString(),
-            digitalOrderId: order.digital_order_id || undefined,
-            district: order.district,
-            estimatedDeliveryTime: order.est_deli_time.toISOString(),
-            id: order.id,
-            isPaid: order.isPaid,
-            shippingFee: order.shipping_fee,
-            status: order.status,
-            street: order.street,
-            streetNo: order.streetNo,
-            totalPrice: order.total_price,
-            ward: order.ward,
-            note: order.extra_note || undefined,
-            userId: order.user_id
-        }));
+        return {
+            total: totalOrders,
+            orders: orders.map((order) => ({
+                creationTime: order.creation_time.toISOString(),
+                digitalOrderId: order.digital_order_id || undefined,
+                district: order.district,
+                estimatedDeliveryTime: order.est_deli_time.toISOString(),
+                id: order.id,
+                isPaid: order.isPaid,
+                shippingFee: order.shipping_fee,
+                status: order.status,
+                street: order.street,
+                streetNo: order.streetNo,
+                totalPrice: order.total_price,
+                ward: order.ward,
+                note: order.extra_note || undefined,
+                userId: order.user_id
+            }))
+        };
     } catch (e) {
-        return [];
+        return {
+            total: totalOrders,
+            orders: []
+        };
     }
 };
 

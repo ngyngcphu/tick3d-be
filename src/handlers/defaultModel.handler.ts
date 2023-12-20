@@ -7,6 +7,8 @@ import { UpdateDefaultModelInputDto } from '@dtos/in';
 import { logger } from '@utils';
 
 const getAll: Handler<DefaultModelListResultDto, { Querystring: DefaultModelQueryStringDto }> = async (req) => {
+    const totalModels = await prisma.defaultModel.count();
+
     try {
         logger.error(req.query.orderBy);
         logger.error(req.query.order);
@@ -55,41 +57,44 @@ const getAll: Handler<DefaultModelListResultDto, { Querystring: DefaultModelQuer
                     }
                 }
             },
-            orderBy: [
-                {
-                    likesNo: req.query.orderBy === 'likesNo' ? req.query.order || 'asc' : undefined
-                },
-                {
-                    model: {
-                        uploadTime: req.query.orderBy === 'uploadedTime' ? req.query.order || 'asc' : undefined,
-                        price: req.query.orderBy === 'price' ? req.query.order || 'asc' : undefined,
-                        name: req.query.orderBy === 'name' ? req.query.order || 'asc' : undefined,
-                        boughtAmount: req.query.orderBy === 'numberBought' ? req.query.order || 'asc' : undefined
-                    }
-                }
-            ],
+            orderBy: {
+                likesNo: req.query.orderBy === 'likesNo' ? req.query.order || 'desc' : undefined,
+                model:
+                    req.query.orderBy !== 'likesNo'
+                        ? {
+                              uploadTime: req.query.orderBy === 'uploadedTime' ? req.query.order || 'desc' : undefined,
+                              price: req.query.orderBy === 'price' ? req.query.order || 'asc' : undefined,
+                              name: req.query.orderBy === 'name' ? req.query.order || 'asc' : undefined,
+                              boughtAmount: req.query.orderBy === 'numberBought' ? req.query.order || 'desc' : undefined
+                          }
+                        : undefined
+            },
             skip: req.query.start,
             take: req.query.noItems
         });
 
-        return defaultModels.map((model) => ({
-            id: model.model_id,
-            category_id: model.category_id,
-            category: model.Category.name,
-            imageUrl: model.imageUrl,
-            likesNo: model.likesNo,
-            name: model.model.name,
-            price: model.model.price,
-            uploadTime: model.model.uploadTime.toISOString(),
-            description: model.model.description,
-            numberBought: model.model.boughtAmount,
-            subImages: model.subImageUrls,
-            discount: model.model.ModelPromotion?.discount,
-            isDiscontinued: model.isDiscontinued
-        }));
+        return {
+            total: totalModels,
+            models: defaultModels.map((model) => ({
+                id: model.model_id,
+                category_id: model.category_id,
+                category: model.Category.name,
+                imageUrl: model.imageUrl,
+                likesNo: model.likesNo,
+                name: model.model.name,
+                price: model.model.price,
+                uploadTime: model.model.uploadTime.toISOString(),
+                description: model.model.description,
+                numberBought: model.model.boughtAmount,
+                subImages: model.subImageUrls,
+                discount: model.model.ModelPromotion?.discount
+            }))
+        };
     } catch (e) {
-        logger.error(e);
-        return [];
+        return {
+            total: totalModels,
+            models: []
+        };
     }
 };
 
@@ -152,8 +157,8 @@ const get: Handler<DefaultModelResultDto, { Params: { id: string } }> = async (r
     };
 };
 
-const upload: Handler<DefaultModelListResultDto, { Body: UploadDefaultModelInputDto }> = async (req) => {
-    const outputList: DefaultModelListResultDto = [];
+const upload: Handler<DefaultModelListResultDto['models'], { Body: UploadDefaultModelInputDto }> = async (req) => {
+    const outputList: DefaultModelListResultDto['models'] = [];
     const inputList = req.body;
 
     try {

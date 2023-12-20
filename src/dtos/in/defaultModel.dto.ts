@@ -4,15 +4,15 @@ export const DefaultModelQueryStringDto = Type.Object({
     keyword: Type.Optional(Type.String({ description: 'The substring that the model name should contain' })),
     uploaded_after: Type.Optional(
         Type.String({
-            format: 'date-time',
-            description: 'The time after which the model was uploaded, specified in ISO format',
+            format: 'date',
+            description: 'The date after which the model was uploaded, specified in ISO format',
             examples: ['2023-12-18']
         })
     ),
     uploaded_before: Type.Optional(
         Type.String({
-            format: 'date-time',
-            description: 'The time before which the model was uploaded, specified in ISO format',
+            format: 'date',
+            description: 'The date before which the model was uploaded, specified in ISO format',
             examples: ['2023-12-25']
         })
     ),
