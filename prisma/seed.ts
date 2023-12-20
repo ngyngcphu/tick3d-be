@@ -28,10 +28,6 @@ const users = [
 
 const categories: { name: string; id: string }[] = [
     {
-        name: 'All things',
-        id: 'clpf9dsqc000008kwc9d3f8tr'
-    },
-    {
         name: 'Fashion',
         id: 'clpf9hn1t000108kw2iw00323'
     },
