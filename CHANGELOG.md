@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.13.2](https://github.com/ngyngcphu/tick3d-be/compare/v1.13.1...v1.13.2) (2023-12-20)
+
+
+### Bug Fixes
+
+* **seed.ts:** remove redundant model types from seed data ([87a0898](https://github.com/ngyngcphu/tick3d-be/commit/87a0898dc84d849b2f7ff0b1f6526e37663e62e8))
+
 ## [1.13.1](https://github.com/ngyngcphu/tick3d-be/compare/v1.13.0...v1.13.1) (2023-12-19)
 
 
