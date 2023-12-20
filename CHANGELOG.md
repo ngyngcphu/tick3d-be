@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.14.0](https://github.com/ngyngcphu/tick3d-be/compare/v1.13.2...v1.14.0) (2023-12-20)
+
+
+### Features
+
+* **default models:** convert order object to array respecting Prisma rules ([9371992](https://github.com/ngyngcphu/tick3d-be/commit/9371992f4c0d28dd818a3e77d31c5890dbae66de))
+
 ## [1.13.2](https://github.com/ngyngcphu/tick3d-be/compare/v1.13.1...v1.13.2) (2023-12-20)
 
 

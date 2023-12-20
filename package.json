@@ -1,6 +1,6 @@
 {
   "name": "tick3d-be",
-  "version": "1.13.2",
+  "version": "1.14.0",
   "license": "ISC",
   "description": "3D Printing Service",
   "type": "commonjs",
