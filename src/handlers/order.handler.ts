@@ -127,12 +127,16 @@ const getOrders: Handler<OrderListResultDto, { Querystring: OrderQueryStringDto 
                 },
                 isPaid: req.query.isPaid
             },
-            orderBy: {
-                id: req.query.orderBy ? undefined : 'asc',
-                creation_time: req.query.orderBy === 'creationTime' ? req.query.order || 'desc' : undefined,
-                shipping_fee: req.query.orderBy === 'shippingFee' ? req.query.order || 'desc' : undefined,
-                total_price: req.query.orderBy === 'totalPrice' ? req.query.order || 'desc' : undefined
-            },
+            orderBy: [
+                {
+                    creation_time: req.query.orderBy === 'creationTime' ? req.query.order || 'desc' : undefined,
+                    shipping_fee: req.query.orderBy === 'shippingFee' ? req.query.order || 'desc' : undefined,
+                    total_price: req.query.orderBy === 'totalPrice' ? req.query.order || 'desc' : undefined
+                },
+                {
+                    id: 'asc'
+                }
+            ],
             skip: req.query.start,
             take: req.query.noItems
         });
