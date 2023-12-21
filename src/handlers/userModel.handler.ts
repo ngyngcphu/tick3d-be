@@ -19,7 +19,21 @@ const getAll: Handler<UserModelListResultDto, { Querystring: UserModelQueryStrin
         }
     });
 
-    const totalModels = await prisma.uploadedModel.count();
+    const totalModels = await prisma.uploadedModel.count({
+        where: {
+            user_id: user?.role === UserRole.CUSTOMER ? user_id : undefined,
+            model: {
+                name: {
+                    contains: req.query.keyword,
+                    mode: 'insensitive'
+                },
+                uploadTime: {
+                    gt: req.query.uploaded_after && new Date(req.query.uploaded_after),
+                    lt: req.query.uploaded_before && new Date(req.query.uploaded_before)
+                }
+            }
+        }
+    });
 
     try {
         const userModels = await prisma.uploadedModel.findMany({

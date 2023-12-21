@@ -92,7 +92,12 @@ const getOrders: Handler<OrderListResultDto, { Querystring: OrderQueryStringDto 
 
     const totalOrders = await prisma.order.count({
         where: {
-            user_id: user.role === UserRole.MANAGER ? req.query.userId : userId
+            user_id: user.role === UserRole.MANAGER ? req.query.userId : userId,
+            creation_time: {
+                gt: req.query.created_after && new Date(req.query.created_after),
+                lt: req.query.created_before && new Date(req.query.created_before)
+            },
+            isPaid: req.query.isPaid
         }
     });
 
