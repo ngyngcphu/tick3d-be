@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.14.4](https://github.com/ngyngcphu/tick3d-be/compare/v1.14.3...v1.14.4) (2023-12-21)
+
+
+### Bug Fixes
+
+* secondary sorting criteria for tie-breaking ([adb0e11](https://github.com/ngyngcphu/tick3d-be/commit/adb0e1148dae651f151be6b72faa24aa51ad2b66))
+
 ## [1.14.3](https://github.com/ngyngcphu/tick3d-be/compare/v1.14.2...v1.14.3) (2023-12-21)
 
 
