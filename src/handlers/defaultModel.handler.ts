@@ -7,7 +7,24 @@ import { UpdateDefaultModelInputDto } from '@dtos/in';
 import { logger } from '@utils';
 
 const getAll: Handler<DefaultModelListResultDto, { Querystring: DefaultModelQueryStringDto }> = async (req) => {
-    const totalModels = await prisma.defaultModel.count();
+    const totalModels = await prisma.defaultModel.count({
+        where: {
+            likesNo: {
+                gte: req.query.likes_ge
+            },
+            category_id: req.query.categoryId,
+            model: {
+                name: {
+                    contains: req.query.keyword,
+                    mode: 'insensitive'
+                },
+                uploadTime: {
+                    gt: req.query.uploaded_after && new Date(req.query.uploaded_after),
+                    lt: req.query.uploaded_before && new Date(req.query.uploaded_before)
+                }
+            }
+        }
+    });
 
     try {
         const defaultModels = await prisma.defaultModel.findMany({
