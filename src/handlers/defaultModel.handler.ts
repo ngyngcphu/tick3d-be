@@ -71,19 +71,23 @@ const getAll: Handler<DefaultModelListResultDto, { Querystring: DefaultModelQuer
                     }
                 }
             },
-            orderBy: {
-                model_id: req.query.orderBy ? undefined : 'asc',
-                likesNo: req.query.orderBy === 'likesNo' ? req.query.order || 'desc' : undefined,
-                model:
-                    req.query.orderBy !== 'likesNo' && req.query.orderBy
-                        ? {
-                              uploadTime: req.query.orderBy === 'uploadedTime' ? req.query.order || 'desc' : undefined,
-                              price: req.query.orderBy === 'price' ? req.query.order || 'asc' : undefined,
-                              name: req.query.orderBy === 'name' ? req.query.order || 'asc' : undefined,
-                              boughtAmount: req.query.orderBy === 'numberBought' ? req.query.order || 'desc' : undefined
-                          }
-                        : undefined
-            },
+            orderBy: [
+                {
+                    likesNo: req.query.orderBy === 'likesNo' ? req.query.order || 'desc' : undefined,
+                    model:
+                        req.query.orderBy !== 'likesNo'
+                            ? {
+                                  uploadTime: req.query.orderBy === 'uploadedTime' ? req.query.order || 'desc' : undefined,
+                                  price: req.query.orderBy === 'price' ? req.query.order || 'asc' : undefined,
+                                  name: req.query.orderBy === 'name' ? req.query.order || 'asc' : undefined,
+                                  boughtAmount: req.query.orderBy === 'numberBought' ? req.query.order || 'desc' : undefined
+                              }
+                            : undefined
+                },
+                {
+                    model_id: 'asc'
+                }
+            ],
             skip: req.query.start,
             take: req.query.noItems
         });

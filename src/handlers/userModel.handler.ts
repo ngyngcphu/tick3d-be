@@ -60,14 +60,18 @@ const getAll: Handler<UserModelListResultDto, { Querystring: UserModelQueryStrin
                     }
                 }
             },
-            orderBy: {
-                model_id: req.query.orderBy ? undefined : 'asc',
-                model: req.query.orderBy && {
-                    uploadTime: req.query.orderBy === 'uploadedTime' ? req.query.order || 'desc' : undefined,
-                    price: req.query.orderBy === 'price' ? req.query.order || 'asc' : undefined,
-                    name: req.query.orderBy === 'name' ? req.query.order || 'asc' : undefined
+            orderBy: [
+                {
+                    model: req.query.orderBy && {
+                        uploadTime: req.query.orderBy === 'uploadedTime' ? req.query.order || 'desc' : undefined,
+                        price: req.query.orderBy === 'price' ? req.query.order || 'asc' : undefined,
+                        name: req.query.orderBy === 'name' ? req.query.order || 'asc' : undefined
+                    }
+                },
+                {
+                    model_id: 'asc'
                 }
-            },
+            ],
             skip: req.query.start,
             take: req.query.noItems
         });
