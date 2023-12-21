@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.14.3](https://github.com/ngyngcphu/tick3d-be/compare/v1.14.2...v1.14.3) (2023-12-21)
+
+
+### Bug Fixes
+
+* total count when filtered ([d62c957](https://github.com/ngyngcphu/tick3d-be/commit/d62c95779d141e5bb76bbe08a0ddbadf8f1a0a3b))
+
 ## [1.14.2](https://github.com/ngyngcphu/tick3d-be/compare/v1.14.1...v1.14.2) (2023-12-20)
 
 
