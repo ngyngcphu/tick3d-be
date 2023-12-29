@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.15.0](https://github.com/ngyngcphu/tick3d-be/compare/v1.14.6...v1.15.0) (2023-12-29)
+
+
+### Features
+
+* add meta fields to cart items ([4abd916](https://github.com/ngyngcphu/tick3d-be/commit/4abd916b4d30d48d88d128029d52ee8b0657d954))
+
 ## [1.14.6](https://github.com/ngyngcphu/tick3d-be/compare/v1.14.5...v1.14.6) (2023-12-29)
 
 
