@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.14.6](https://github.com/ngyngcphu/tick3d-be/compare/v1.14.5...v1.14.6) (2023-12-29)
+
+
+### Bug Fixes
+
+* check for discontinued models in order api ([5bfbe2d](https://github.com/ngyngcphu/tick3d-be/commit/5bfbe2d1830d9b516db101a86232d4655ba2de96))
+
 ## [1.14.5](https://github.com/ngyngcphu/tick3d-be/compare/v1.14.4...v1.14.5) (2023-12-29)
 
 
