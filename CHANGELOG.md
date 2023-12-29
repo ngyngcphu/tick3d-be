@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.14.5](https://github.com/ngyngcphu/tick3d-be/compare/v1.14.4...v1.14.5) (2023-12-29)
+
+
+### Bug Fixes
+
+* add more fields to cart get api ([9a0d267](https://github.com/ngyngcphu/tick3d-be/commit/9a0d267ba0ed47f9687c0f340143add6d5eb401e))
+* remove redundant field ([be6e09e](https://github.com/ngyngcphu/tick3d-be/commit/be6e09e30186a5523e810d93c100d7fe3a248ed0))
+
 ## [1.14.4](https://github.com/ngyngcphu/tick3d-be/compare/v1.14.3...v1.14.4) (2023-12-21)
 
 
