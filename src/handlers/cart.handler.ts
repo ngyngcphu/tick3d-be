@@ -10,7 +10,6 @@ const get: Handler<GetCartResultDto> = async (req, res) => {
     try {
         const cart = await prisma.cart.findMany({
             select: {
-                model_id: true,
                 model: {
                     select: {
                         id: true,

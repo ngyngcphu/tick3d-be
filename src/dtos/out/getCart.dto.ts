@@ -4,7 +4,6 @@ import { Static, Type } from '@sinclair/typebox';
 
 export const GetCartResultDto = Type.Array(
     Type.Object({
-        model_id: Type.String(),
         quantity: Type.Number(),
         model: Type.Object({
             id: Type.String(),
