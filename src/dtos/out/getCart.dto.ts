@@ -11,7 +11,9 @@ export const GetCartResultDto = Type.Object({
             name: Type.String(),
             price: Type.Number(),
             discount: Type.Optional(Type.Number()),
-            image: Type.Optional(Type.String())
+            image: Type.Optional(Type.String()),
+            isDiscontinued: Type.Boolean(),
+            isUserUploaded: Type.Boolean()
         })
     )
 });

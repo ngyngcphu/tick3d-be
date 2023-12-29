@@ -17,7 +17,8 @@ const get: Handler<GetCartResultDto> = async (req, res) => {
                         price: true,
                         DefaultModel: {
                             select: {
-                                imageUrl: true
+                                imageUrl: true,
+                                isDiscontinued: true
                             }
                         },
                         ModelPromotion: {
@@ -42,7 +43,9 @@ const get: Handler<GetCartResultDto> = async (req, res) => {
                 id: item.model.id,
                 name: item.model.name,
                 price: item.model.price,
-                quantity: item.quantity
+                quantity: item.quantity,
+                isDiscontinued: item.model.DefaultModel?.isDiscontinued || false,
+                isUserUploaded: item.model.DefaultModel !== undefined
             }))
         };
     } catch (e) {
