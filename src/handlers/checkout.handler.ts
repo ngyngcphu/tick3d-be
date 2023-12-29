@@ -9,39 +9,40 @@ import { logger } from '@utils';
 const createOrderInDatabase: Handler<CreateOrderResultDto, { Body: CreateOrderInputDto }> = async (req, res) => {
     try {
         const userId = req.userId;
-        logger.error(userId);
         const orderInfo = req.body;
-        const newOrder = await prisma.order.create({
-            data: {
-                user_id: userId,
-                total_price: orderInfo.total_price,
-                shipping_fee: orderInfo.shipping_fee,
-                est_deli_time: new Date(orderInfo.est_deli_time),
-                district: orderInfo.district,
-                ward: orderInfo.ward,
-                street: orderInfo.street,
-                streetNo: orderInfo.streetNo,
-                extra_note: orderInfo.extra_note,
-                isPaid: false
-            },
-            select: {
-                id: true
-            }
+        const newOrder = await prisma.$transaction(async () => {
+            const order = await prisma.order.create({
+                data: {
+                    user_id: userId,
+                    total_price: orderInfo.total_price,
+                    shipping_fee: orderInfo.shipping_fee,
+                    est_deli_time: new Date(orderInfo.est_deli_time),
+                    district: orderInfo.district,
+                    ward: orderInfo.ward,
+                    street: orderInfo.street,
+                    streetNo: orderInfo.streetNo,
+                    extra_note: orderInfo.extra_note,
+                    isPaid: false
+                },
+                select: {
+                    id: true
+                }
+            });
+
+            const cartModels = await prisma.cart.findMany({
+                where: {
+                    user_id: userId
+                }
+            });
+
+            await Promise.all(
+                cartModels.map(async (cardModel) => {
+                    await createOrderItem(order.id, cardModel);
+                })
+            );
+
+            return order;
         });
-
-        logger.info('New order created:', newOrder);
-
-        const cardModels = await prisma.cart.findMany({
-            where: {
-                user_id: userId
-            }
-        });
-
-        await Promise.all(
-            cardModels.map(async (cardModel) => {
-                await createOrderItem(newOrder.id, cardModel);
-            })
-        );
 
         return res.send({ id: newOrder.id });
     } catch (error) {
@@ -52,20 +53,21 @@ const createOrderInDatabase: Handler<CreateOrderResultDto, { Body: CreateOrderIn
 
 async function createOrderItem(
     orderId: string,
-    cardModel: {
+    cartModel: {
         user_id: string;
         model_id: string;
         quantity: number;
     }
 ) {
     const model = await prisma.model.findFirst({
-        where: { id: cardModel.model_id }
+        where: { id: cartModel.model_id }
     });
     if (!model) throw new Error('Model not found');
 
     const defaultModel = await prisma.defaultModel.findFirst({
         where: { model_id: model.id }
     });
+    if (defaultModel?.isDiscontinued) throw new Error('Default model discontinued');
 
     const imageUrl = defaultModel ? defaultModel.imageUrl : '';
 
@@ -75,8 +77,8 @@ async function createOrderItem(
             order_id: orderId,
             name: model.name,
             gcode: model.gcode,
-            quantity: cardModel.quantity,
-            imageUrl: imageUrl
+            quantity: cartModel.quantity,
+            imageUrl
         }
     });
 }
