@@ -14,7 +14,17 @@ const get: Handler<GetCartResultDto> = async (req, res) => {
                     select: {
                         id: true,
                         name: true,
-                        price: true
+                        price: true,
+                        DefaultModel: {
+                            select: {
+                                imageUrl: true
+                            }
+                        },
+                        ModelPromotion: {
+                            select: {
+                                discount: true
+                            }
+                        }
                     }
                 },
                 quantity: true
@@ -24,7 +34,17 @@ const get: Handler<GetCartResultDto> = async (req, res) => {
             }
         });
 
-        return cart;
+        return {
+            total: cart.reduce((acc, { quantity }) => quantity + acc, 0),
+            cart: cart.map((item) => ({
+                discount: item.model.ModelPromotion?.discount,
+                image: item.model.DefaultModel?.imageUrl,
+                id: item.model.id,
+                name: item.model.name,
+                price: item.model.price,
+                quantity: item.quantity
+            }))
+        };
     } catch (e) {
         return res.badRequest();
     }
