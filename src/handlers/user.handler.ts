@@ -9,7 +9,9 @@ const getUserById: Handler<UserDto> = async (req, res) => {
         select: {
             id: true,
             email: true,
-            role: true
+            role: true,
+            first_name: true,
+            last_name: true
         },
         where: { id: userId }
     });
@@ -17,7 +19,8 @@ const getUserById: Handler<UserDto> = async (req, res) => {
     return {
         id: user.id,
         email: user.email,
-        role: user.role
+        role: user.role,
+        VnFormatName: user.last_name + ' ' + user.first_name
     };
 };
 
