@@ -3,14 +3,23 @@ import { Static, Type } from '@sinclair/typebox';
 // See https://github.com/sinclairzx81/typebox
 
 export const CreatePayPalOrderDto = Type.Object({
-    intent: Type.String(),
-    orderId: Type.String()
+    orderInfo: Type.Object({
+        total_price: Type.Number(),
+        shipping_fee: Type.Number(),
+        est_deli_time: Type.String(),
+        district: Type.String(),
+        ward: Type.String(),
+        street: Type.String(),
+        streetNo: Type.String(),
+        extra_note: Type.String()
+    }),
+    intent: Type.String()
 });
 
 export const CompletePayPalOrderDto = Type.Object(
     {
         intent: Type.String({ default: 'CAPTURE' }),
-        paypalOrderId: Type.String({ description: 'The id of Paypal order you get when creating' })
+        paypalOrderId: Type.String({ description: 'The id of Paypal order you get when creating Paypal order' })
     },
     {
         examples: [
