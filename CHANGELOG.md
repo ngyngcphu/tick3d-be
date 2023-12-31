@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.17.3](https://github.com/ngyngcphu/tick3d-be/compare/v1.17.2...v1.17.3) (2023-12-31)
+
+
+### Bug Fixes
+
+* **paypal:** merge create order API with create PayPal order; Remove order on PayPal failure ([71de069](https://github.com/ngyngcphu/tick3d-be/commit/71de06924687ecbd11a66127bffac43cd7a0cc1a))
+* uploaded model api now consider default models only ([dc6f818](https://github.com/ngyngcphu/tick3d-be/commit/dc6f8188fd87619ce01e0daad34e2231187df735))
+
 ## [1.17.2](https://github.com/ngyngcphu/tick3d-be/compare/v1.17.1...v1.17.2) (2023-12-31)
 
 
