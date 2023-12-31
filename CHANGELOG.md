@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.17.5](https://github.com/ngyngcphu/tick3d-be/compare/v1.17.4...v1.17.5) (2023-12-31)
+
+
+### Bug Fixes
+
+* **checkout:** rounded USD convert of total_price; update corespond order by digitalOrderId ([9fb2089](https://github.com/ngyngcphu/tick3d-be/commit/9fb20892df02bc9a694209bd9fafeddce75d1175))
+
 ## [1.17.4](https://github.com/ngyngcphu/tick3d-be/compare/v1.17.3...v1.17.4) (2023-12-31)
 
 
