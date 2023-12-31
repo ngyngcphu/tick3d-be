@@ -96,11 +96,12 @@ model Like {
 }
 
 model Cart {
-  user_id  String
-  user     Customer @relation(fields: [user_id], references: [user_id])
-  model_id String
-  model    Model    @relation(fields: [model_id], references: [id])
-  quantity Int
+  user_id   String
+  user      Customer @relation(fields: [user_id], references: [user_id])
+  model_id  String
+  model     Model    @relation(fields: [model_id], references: [id])
+  quantity  Int
+  addedTime DateTime @default(now())
 
   @@id([user_id, model_id])
 }
