@@ -64,7 +64,8 @@ const signup: Handler<RegisterResultDto, { Body: RegisterInputDto }> = async (re
                             password_sh: true,
                             role: true,
                             tel: true,
-                            verified: true
+                            verified: true,
+                            joinedAt: true
                         }
                     }
                 },

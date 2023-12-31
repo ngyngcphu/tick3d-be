@@ -16,6 +16,7 @@ model User {
   tel               String             @db.VarChar(15)
   first_name        String             @db.VarChar(63)
   last_name         String             @db.VarChar(63)
+  joinedAt          DateTime           @default(now())
   Customer          Customer?
   Manager           Manager?
   verified          Boolean            @default(false)
