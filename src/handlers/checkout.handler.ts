@@ -136,7 +136,7 @@ const createPayPalOrder: Handler<PaypalDto, { Body: CreatePayPalOrderDto }> = as
                     {
                         amount: {
                             currency_code: 'USD',
-                            value: (order.total_price * VNDToDollarsRatio).toString()
+                            value: (order.total_price * VNDToDollarsRatio).toFixed(2)
                         }
                     }
                 ]
@@ -151,7 +151,7 @@ const createPayPalOrder: Handler<PaypalDto, { Body: CreatePayPalOrderDto }> = as
 
             return digital_order_id;
         });
-
+        logger.error(digitalOrderId);
         return res.send({ id: digitalOrderId });
     } catch (err) {
         logger.error(err);
@@ -182,7 +182,15 @@ const completePayPalOrder: Handler<CompletePaypalDto, { Body: CompletePayPalOrde
     try {
         const accessToken = await getPayPalAccessToken();
 
-        const orderId = req.body.paypalOrderId;
+        const digitalOrderId = req.body.paypalOrderId;
+
+        const orders = await prisma.order.findMany({
+            where: {
+                digital_order_id: digitalOrderId
+            }
+        });
+
+        const orderId = orders[0].id;
 
         const completeOrderResponse = await paypalService.completeOrder(
             `Bearer ${accessToken}`,
