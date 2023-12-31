@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.17.2](https://github.com/ngyngcphu/tick3d-be/compare/v1.17.1...v1.17.2) (2023-12-31)
+
+
+### Bug Fixes
+
+* verify token optionally when getAll defaultModels ([6b3b210](https://github.com/ngyngcphu/tick3d-be/commit/6b3b210574b94756ec71e95369f8dd7f83ac54c5))
+
 ## [1.17.1](https://github.com/ngyngcphu/tick3d-be/compare/v1.17.0...v1.17.1) (2023-12-31)
 
 
