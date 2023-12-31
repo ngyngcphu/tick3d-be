@@ -9,7 +9,8 @@ export const UserModelListResultDto = Type.Object({
             id: Type.String(),
             name: Type.String(),
             price: Type.Number(),
-            uploadTime: Type.String({ format: 'date-time' })
+            uploadTime: Type.String({ format: 'date-time' }),
+            IsModelInCart: Type.Boolean()
         })
     )
 });
