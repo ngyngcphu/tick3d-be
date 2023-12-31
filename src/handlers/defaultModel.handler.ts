@@ -106,7 +106,8 @@ const getAll: Handler<DefaultModelListResultDto, { Querystring: DefaultModelQuer
                 description: model.model.description,
                 numberBought: model.model.boughtAmount,
                 subImages: model.subImageUrls,
-                discount: model.model.ModelPromotion?.discount
+                discount: model.model.ModelPromotion?.discount,
+                isDiscontinued: model.isDiscontinued
             }))
         };
     } catch (e) {

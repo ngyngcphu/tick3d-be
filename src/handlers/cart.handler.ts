@@ -36,7 +36,7 @@ const get: Handler<GetCartResultDto> = async (req, res) => {
         });
 
         return {
-            total: cart.reduce((acc, { quantity }) => quantity + acc, 0),
+            total: cart.length,
             cart: cart.map((item) => ({
                 discount: item.model.ModelPromotion?.discount,
                 image: item.model.DefaultModel?.imageUrl,
