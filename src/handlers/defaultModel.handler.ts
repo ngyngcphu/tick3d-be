@@ -7,17 +7,6 @@ import { UpdateDefaultModelInputDto } from '@dtos/in';
 import { logger } from '@utils';
 
 const getAll: Handler<DefaultModelListResultDto, { Querystring: DefaultModelQueryStringDto }> = async (req) => {
-    const IsModelInCart = async (modelId: string) => {
-        return (
-            (await prisma.cart.count({
-                where: {
-                    model_id: modelId,
-                    user_id: req.userId
-                }
-            })) !== 0
-        );
-    };
-
     const totalModels = await prisma.defaultModel.count({
         where: {
             likesNo: {
@@ -52,7 +41,12 @@ const getAll: Handler<DefaultModelListResultDto, { Querystring: DefaultModelQuer
                             }
                         },
                         description: true,
-                        boughtAmount: true
+                        boughtAmount: true,
+                        Cart: {
+                            where: {
+                                user_id: req.userId
+                            }
+                        }
                     }
                 },
                 imageUrl: true,
@@ -120,7 +114,7 @@ const getAll: Handler<DefaultModelListResultDto, { Querystring: DefaultModelQuer
                     subImages: model.subImageUrls,
                     discount: model.model.ModelPromotion?.discount,
                     isDiscontinued: model.isDiscontinued,
-                    IsModelInCart: await IsModelInCart(model.model_id)
+                    isModelInCart: model.model.Cart.length !== 0
                 }))
             )
         };
@@ -247,7 +241,7 @@ const upload: Handler<DefaultModelListResultDto['models'], { Body: UploadDefault
                     subImages: input.subImageUrls || [],
                     category_id: input.category_id,
                     category: defaultModel.Category.name,
-                    IsModelInCart: false
+                    isModelInCart: false
                 });
             })
         );

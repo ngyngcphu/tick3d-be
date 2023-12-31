@@ -10,7 +10,7 @@ import { UserModelQueryStringDto } from '@dtos/in';
 const getAll: Handler<UserModelListResultDto, { Querystring: UserModelQueryStringDto }> = async (req) => {
     const user_id = req.userId;
 
-    const IsModelInCart = async (modelId: string) => {
+    const isModelInCart = async (modelId: string) => {
         return (
             (await prisma.cart.count({
                 where: {
@@ -95,7 +95,7 @@ const getAll: Handler<UserModelListResultDto, { Querystring: UserModelQueryStrin
                     name: model.model.name,
                     price: model.model.price,
                     uploadTime: model.model.uploadTime.toISOString(),
-                    isModelInCart: await IsModelInCart(model.model_id)
+                    isModelInCart: await isModelInCart(model.model_id)
                 }))
             )
         };
