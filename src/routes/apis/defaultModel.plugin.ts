@@ -1,7 +1,7 @@
 import { UploadDefaultModelInputDto, UpdateDefaultModelInputDto, DefaultModelQueryStringDto } from '@dtos/in';
 import { DefaultModelListResultDto, DefaultModelResultDto, ToggleLikeResultDto } from '@dtos/out';
 import { defaultModelHandler } from '@handlers';
-import { verifyToken, verifyUserRole } from '@hooks';
+import { verifyToken, verifyTokenOrPass, verifyUserRole } from '@hooks';
 import { UserRole } from '@prisma/client';
 import { Type } from '@sinclair/typebox';
 import { createRoutes } from '@utils';
@@ -10,7 +10,7 @@ export const defaultModelPlugin = createRoutes('Default Model', [
     {
         method: 'GET',
         url: '',
-        onRequest: [],
+        onRequest: [verifyTokenOrPass],
         schema: {
             summary: 'Get all default models',
             querystring: DefaultModelQueryStringDto,
