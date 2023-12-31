@@ -19,7 +19,7 @@ export const DefaultModelListResultDto = Type.Object({
             subImages: Type.Array(Type.String()),
             discount: Type.Optional(Type.Number()),
             isDiscontinued: Type.Boolean(),
-            IsModelInCart: Type.Boolean()
+            isModelInCart: Type.Boolean()
         })
     )
 });
