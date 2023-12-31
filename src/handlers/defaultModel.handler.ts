@@ -7,6 +7,17 @@ import { UpdateDefaultModelInputDto } from '@dtos/in';
 import { logger } from '@utils';
 
 const getAll: Handler<DefaultModelListResultDto, { Querystring: DefaultModelQueryStringDto }> = async (req) => {
+    const IsModelInCart = async (modelId: string) => {
+        return (
+            (await prisma.cart.count({
+                where: {
+                    model_id: modelId,
+                    user_id: req.userId
+                }
+            })) !== 0
+        );
+    };
+
     const totalModels = await prisma.defaultModel.count({
         where: {
             likesNo: {
@@ -94,21 +105,24 @@ const getAll: Handler<DefaultModelListResultDto, { Querystring: DefaultModelQuer
 
         return {
             total: totalModels,
-            models: defaultModels.map((model) => ({
-                id: model.model_id,
-                category_id: model.category_id,
-                category: model.Category.name,
-                imageUrl: model.imageUrl,
-                likesNo: model.likesNo,
-                name: model.model.name,
-                price: model.model.price,
-                uploadTime: model.model.uploadTime.toISOString(),
-                description: model.model.description,
-                numberBought: model.model.boughtAmount,
-                subImages: model.subImageUrls,
-                discount: model.model.ModelPromotion?.discount,
-                isDiscontinued: model.isDiscontinued
-            }))
+            models: await Promise.all(
+                defaultModels.map(async (model) => ({
+                    id: model.model_id,
+                    category_id: model.category_id,
+                    category: model.Category.name,
+                    imageUrl: model.imageUrl,
+                    likesNo: model.likesNo,
+                    name: model.model.name,
+                    price: model.model.price,
+                    uploadTime: model.model.uploadTime.toISOString(),
+                    description: model.model.description,
+                    numberBought: model.model.boughtAmount,
+                    subImages: model.subImageUrls,
+                    discount: model.model.ModelPromotion?.discount,
+                    isDiscontinued: model.isDiscontinued,
+                    IsModelInCart: await IsModelInCart(model.model_id)
+                }))
+            )
         };
     } catch (e) {
         return {
@@ -232,7 +246,8 @@ const upload: Handler<DefaultModelListResultDto['models'], { Body: UploadDefault
                     discount: input.discount,
                     subImages: input.subImageUrls || [],
                     category_id: input.category_id,
-                    category: defaultModel.Category.name
+                    category: defaultModel.Category.name,
+                    IsModelInCart: false
                 });
             })
         );

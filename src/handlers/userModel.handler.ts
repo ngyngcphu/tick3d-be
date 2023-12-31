@@ -10,6 +10,17 @@ import { UserModelQueryStringDto } from '@dtos/in';
 const getAll: Handler<UserModelListResultDto, { Querystring: UserModelQueryStringDto }> = async (req) => {
     const user_id = req.userId;
 
+    const IsModelInCart = async (modelId: string) => {
+        return (
+            (await prisma.cart.count({
+                where: {
+                    model_id: modelId,
+                    user_id: user_id
+                }
+            })) !== 0
+        );
+    };
+
     const user = await prisma.user.findFirst({
         select: {
             role: true
@@ -78,12 +89,15 @@ const getAll: Handler<UserModelListResultDto, { Querystring: UserModelQueryStrin
 
         return {
             total: totalModels,
-            models: userModels.map((model) => ({
-                id: model.model_id,
-                name: model.model.name,
-                price: model.model.price,
-                uploadTime: model.model.uploadTime.toISOString()
-            }))
+            models: await Promise.all(
+                userModels.map(async (model) => ({
+                    id: model.model_id,
+                    name: model.model.name,
+                    price: model.model.price,
+                    uploadTime: model.model.uploadTime.toISOString(),
+                    isModelInCart: await IsModelInCart(model.model_id)
+                }))
+            )
         };
     } catch (e) {
         return {
