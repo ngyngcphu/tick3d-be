@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.16.0](https://github.com/ngyngcphu/tick3d-be/compare/v1.15.1...v1.16.0) (2023-12-31)
+
+
+### Features
+
+* **model:** add isModelInCart to model result ([2f09c35](https://github.com/ngyngcphu/tick3d-be/commit/2f09c356cb5f052c4da39bd05fb2d2689d007084))
+
 ## [1.15.1](https://github.com/ngyngcphu/tick3d-be/compare/v1.15.0...v1.15.1) (2023-12-31)
 
 
