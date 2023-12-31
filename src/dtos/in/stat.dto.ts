@@ -13,7 +13,7 @@ export const JoinedUserStatQuerystringDto = Type.Object({
     interval: Type.Number({ minimum: 1, multipleOf: 1, default: 1, description: 'The length of a sub-interval' })
 });
 
-export const UploadedUserModelStatQuerystringDto = Type.Object({
+export const UploadedModelStatQuerystringDto = Type.Object({
     start: Type.String({ format: 'date', description: 'The start date of the interval' }),
     end: Type.String({ format: 'date', description: 'The end date of the interval' }),
     unit: Type.Union([Type.Literal('day'), Type.Literal('month')], {
@@ -37,6 +37,6 @@ export const RevenueStatQuerystringDto = Type.Object({
 
 export type RevenueStatQuerystringDto = Static<typeof RevenueStatQuerystringDto>;
 
-export type UploadedUserModelStatQuerystringDto = Static<typeof UploadedUserModelStatQuerystringDto>;
+export type UploadedModelStatQuerystringDto = Static<typeof UploadedModelStatQuerystringDto>;
 
 export type JoinedUserStatQuerystringDto = Static<typeof JoinedUserStatQuerystringDto>;

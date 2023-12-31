@@ -1,5 +1,5 @@
-import { JoinedUserStatQuerystringDto, RevenueStatQuerystringDto, UploadedUserModelStatQuerystringDto } from '@dtos/in';
-import { CategoryStatResultDto, JoinedUserStatResultDto, RevenueStatResultDto, UploadedUserModelStatResultDto } from '@dtos/out';
+import { JoinedUserStatQuerystringDto, RevenueStatQuerystringDto, UploadedModelStatQuerystringDto } from '@dtos/in';
+import { CategoryStatResultDto, JoinedUserStatResultDto, RevenueStatResultDto, UploadedModelStatResultDto } from '@dtos/out';
 import { statHandler } from '@handlers';
 import { verifyToken, verifyUserRole } from '@hooks';
 import { UserRole } from '@prisma/client';
@@ -49,10 +49,10 @@ export const statPlugin = createRoutes('Stat', [
         url: '/userModel',
         onRequest: [verifyToken, verifyUserRole(UserRole.MANAGER)],
         schema: {
-            summary: 'Summarize the total uploaded user models in a given interval',
-            querystring: UploadedUserModelStatQuerystringDto,
+            summary: 'Summarize the total uploaded default models in a given interval',
+            querystring: UploadedModelStatQuerystringDto,
             response: {
-                200: UploadedUserModelStatResultDto
+                200: UploadedModelStatResultDto
             }
         },
         handler: statHandler.uploadedUserModelCount
