@@ -93,35 +93,64 @@ async function getPayPalAccessToken() {
 
 const createPayPalOrder: Handler<PaypalDto, { Body: CreatePayPalOrderDto }> = async (req, res) => {
     try {
-        const accessToken = await getPayPalAccessToken();
+        const userId = req.userId;
+        const orderInfo = req.body.orderInfo;
 
-        const order = await prisma.order.findFirst({
-            where: { id: req.body.orderId },
-            select: {
-                total_price: true
-            }
-        });
-
-        if (!order) return res.badRequest('Order not found');
-
-        const orderDataJson = {
-            intent: req.body.intent.toUpperCase(),
-            purchase_units: [
-                {
-                    amount: {
-                        currency_code: 'USD',
-                        value: (order.total_price * VNDToDollarsRatio).toString()
-                    }
+        const digitalOrderId = await prisma.$transaction(async () => {
+            const order = await prisma.order.create({
+                data: {
+                    user_id: userId,
+                    total_price: orderInfo.total_price,
+                    shipping_fee: orderInfo.shipping_fee,
+                    est_deli_time: new Date(orderInfo.est_deli_time),
+                    district: orderInfo.district,
+                    ward: orderInfo.ward,
+                    street: orderInfo.street,
+                    streetNo: orderInfo.streetNo,
+                    extra_note: orderInfo.extra_note,
+                    isPaid: false
+                },
+                select: {
+                    id: true,
+                    total_price: true
                 }
-            ]
-        };
-        const data = JSON.stringify(orderDataJson);
+            });
 
-        const createOrderResponse = await paypalService.createOrder(`Bearer ${accessToken}`, data);
+            const cartModels = await prisma.cart.findMany({
+                where: {
+                    user_id: userId
+                }
+            });
 
-        const digitalOrderId = createOrderResponse.id;
+            await Promise.all(
+                cartModels.map(async (cardModel) => {
+                    await createOrderItem(order.id, cardModel);
+                })
+            );
 
-        await prisma.order.update({ where: { id: req.body.orderId }, data: { digital_order_id: digitalOrderId } });
+            const accessToken = await getPayPalAccessToken();
+
+            const orderDataJson = {
+                intent: req.body.intent.toUpperCase(),
+                purchase_units: [
+                    {
+                        amount: {
+                            currency_code: 'USD',
+                            value: (order.total_price * VNDToDollarsRatio).toString()
+                        }
+                    }
+                ]
+            };
+            const data = JSON.stringify(orderDataJson);
+
+            const createOrderResponse = await paypalService.createOrder(`Bearer ${accessToken}`, data);
+
+            const digitalOrderId = createOrderResponse.id;
+
+            const { digital_order_id } = await prisma.order.update({ where: { id: order.id }, data: { digital_order_id: digitalOrderId } });
+
+            return digital_order_id;
+        });
 
         return res.send({ id: digitalOrderId });
     } catch (err) {
@@ -177,6 +206,11 @@ const completePayPalOrder: Handler<CompletePaypalDto, { Body: CompletePayPalOrde
         return res.send({ id: completeOrderResponse.id, amountMoney });
     } catch (err) {
         logger.error(err);
+        await prisma.order.deleteMany({
+            where: {
+                digital_order_id: req.body.paypalOrderId
+            }
+        });
         res.internalServerError();
     }
 };
