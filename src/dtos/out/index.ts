@@ -13,6 +13,7 @@ export * from './orderListResult.dto';
 export * from './orderResultDto.dto';
 export * from './paypal.dto';
 export * from './register.dto';
+export * from './stat.dto';
 export * from './toggleLike.dto';
 export * from './updateOrder.dto';
 export * from './user.dto';

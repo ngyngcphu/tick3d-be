@@ -13,7 +13,8 @@ const users = [
         tel: '0123456789',
         first_name: 'admin',
         last_name: 'good',
-        verified: true
+        verified: true,
+        joinedAt: new Date('2023-9-10')
     },
     {
         email: 'customer@gmail.com',
@@ -22,7 +23,8 @@ const users = [
         tel: '9876543210',
         first_name: 'user',
         last_name: 'good',
-        verified: true
+        verified: true,
+        joinedAt: new Date('2023-10-10')
     }
 ];
 
@@ -92,7 +94,8 @@ async function handleUsers() {
             tel: user.tel,
             last_name: user.last_name,
             first_name: user.first_name,
-            verified: user?.verified
+            verified: user?.verified,
+            joinedAt: user.joinedAt
         };
     });
 

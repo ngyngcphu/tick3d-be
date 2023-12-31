@@ -9,6 +9,7 @@ export * from './delCart.dto';
 export * from './order.dto';
 export * from './paypal.dto';
 export * from './register.dto';
+export * from './stat.dto';
 export * from './updateDefaultModel.dto';
 export * from './updateUserModel.dto';
 export * from './uploadDefaultModel.dto';
