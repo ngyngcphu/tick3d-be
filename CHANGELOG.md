@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.17.1](https://github.com/ngyngcphu/tick3d-be/compare/v1.17.0...v1.17.1) (2023-12-31)
+
+
+### Bug Fixes
+
+* clean isModelInCart ([a6b1ea7](https://github.com/ngyngcphu/tick3d-be/commit/a6b1ea727d185379731b67010ed2cbd4a0844d61))
+* naming ([d7c4a61](https://github.com/ngyngcphu/tick3d-be/commit/d7c4a619850bf89dbff89ad48eace3dc1fd140ff))
+
 ## [1.17.0](https://github.com/ngyngcphu/tick3d-be/compare/v1.16.1...v1.17.0) (2023-12-31)
 
 
