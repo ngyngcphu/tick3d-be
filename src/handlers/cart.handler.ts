@@ -32,6 +32,9 @@ const get: Handler<GetCartResultDto> = async (req, res) => {
             },
             where: {
                 user_id
+            },
+            orderBy: {
+                addedTime: 'desc'
             }
         });
 

@@ -172,7 +172,8 @@ const upload: Handler<UserModelListResultDto['models'], { Body: UploadUserModelI
                 });
                 outputList.push({
                     ...model,
-                    uploadTime: model.uploadTime.toISOString()
+                    uploadTime: model.uploadTime.toISOString(),
+                    isModelInCart: false
                 });
             })
         );
@@ -203,7 +204,7 @@ const del: Handler<{ message: string }, { Params: { id: string } }> = async (req
         return res.internalServerError(DELETE_MODEL_FAILED);
     }
 
-    return { message: 'Delete succesfully' };
+    return { message: 'Delete successfully' };
 };
 
 const update: Handler<{ message: string }, { Params: { id: string }; Body: UpdateUserModelInputDto }> = async (req, res) => {
@@ -234,7 +235,7 @@ const update: Handler<{ message: string }, { Params: { id: string }; Body: Updat
         return res.internalServerError(UPDATE_MODEL_FAILED);
     }
 
-    return { message: 'Update succesfully' };
+    return { message: 'Update successfully' };
 };
 
 export const userModelHandler = {
