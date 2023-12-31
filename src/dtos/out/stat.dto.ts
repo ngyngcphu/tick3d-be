@@ -5,7 +5,8 @@ import { Static, Type } from '@sinclair/typebox';
 export const CategoryStatResultDto = Type.Array(
     Type.Object({
         count: Type.Number(),
-        id: Type.String()
+        id: Type.String(),
+        name: Type.String()
     })
 );
 

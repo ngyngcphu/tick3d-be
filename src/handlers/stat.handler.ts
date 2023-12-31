@@ -9,10 +9,13 @@ const noByCategory: Handler<CategoryStatResultDto> = async () => {
         _count: true
     });
 
-    return cats.map((cat) => ({
-        count: cat._count,
-        id: cat.category_id
-    }));
+    return await Promise.all(
+        cats.map(async (cat) => ({
+            count: cat._count,
+            id: cat.category_id,
+            name: (await prisma.category.findFirst({ where: { id: cat.category_id } }))!.name
+        }))
+    );
 };
 
 const joinedUsers: Handler<JoinedUserStatResultDto, { Querystring: JoinedUserStatQuerystringDto }> = async (req) => {
