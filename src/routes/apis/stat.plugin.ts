@@ -46,7 +46,7 @@ export const statPlugin = createRoutes('Stat', [
     },
     {
         method: 'GET',
-        url: '/userModel',
+        url: '/defaultModel',
         onRequest: [verifyToken, verifyUserRole(UserRole.MANAGER)],
         schema: {
             summary: 'Summarize the total uploaded default models in a given interval',

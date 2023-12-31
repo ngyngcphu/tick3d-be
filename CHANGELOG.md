@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.17.4](https://github.com/ngyngcphu/tick3d-be/compare/v1.17.3...v1.17.4) (2023-12-31)
+
+
+### Bug Fixes
+
+* stat/defaultModel endpoint ([b7c379b](https://github.com/ngyngcphu/tick3d-be/commit/b7c379b82a6474cc3fda58b8a276c1b61ca02cee))
+
 ## [1.17.3](https://github.com/ngyngcphu/tick3d-be/compare/v1.17.2...v1.17.3) (2023-12-31)
 
 
