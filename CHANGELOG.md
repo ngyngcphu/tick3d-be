@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.17.0](https://github.com/ngyngcphu/tick3d-be/compare/v1.16.1...v1.17.0) (2023-12-31)
+
+
+### Features
+
+* add stat api ([461f50e](https://github.com/ngyngcphu/tick3d-be/commit/461f50ed003873138774061f7d68fb5c25e069dd))
+
+
+### Bug Fixes
+
+* add name field to stat api ([aa06654](https://github.com/ngyngcphu/tick3d-be/commit/aa06654440ff00d298d1ffc74d3f290006a9ba62))
+* type error ([37aa0ad](https://github.com/ngyngcphu/tick3d-be/commit/37aa0adf4ae4e32e753fde7d92798f8836a124dd))
+
 ## [1.16.1](https://github.com/ngyngcphu/tick3d-be/compare/v1.16.0...v1.16.1) (2023-12-31)
 
 
