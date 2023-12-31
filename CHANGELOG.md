@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.15.1](https://github.com/ngyngcphu/tick3d-be/compare/v1.15.0...v1.15.1) (2023-12-31)
+
+
+### Bug Fixes
+
+* **model:** adjust total model in cart to total types instead of total quantity ([cc8b76d](https://github.com/ngyngcphu/tick3d-be/commit/cc8b76dff77673c26fbd3d70bf84b5c0a6ae436d))
+
 ## [1.15.0](https://github.com/ngyngcphu/tick3d-be/compare/v1.14.6...v1.15.0) (2023-12-29)
 
 
