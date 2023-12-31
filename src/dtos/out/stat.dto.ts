@@ -19,7 +19,7 @@ export const JoinedUserStatResultDto = Type.Array(
     })
 );
 
-export const UploadedUserModelStatResultDto = Type.Array(
+export const UploadedModelStatResultDto = Type.Array(
     Type.Object({
         start: Type.String({ format: 'date' }),
         end: Type.String({ format: 'date' }),
@@ -37,7 +37,7 @@ export const RevenueStatResultDto = Type.Array(
 
 export type RevenueStatResultDto = Static<typeof RevenueStatResultDto>;
 
-export type UploadedUserModelStatResultDto = Static<typeof UploadedUserModelStatResultDto>;
+export type UploadedModelStatResultDto = Static<typeof UploadedModelStatResultDto>;
 
 export type JoinedUserStatResultDto = Static<typeof JoinedUserStatResultDto>;
 

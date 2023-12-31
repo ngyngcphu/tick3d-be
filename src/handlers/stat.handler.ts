@@ -1,7 +1,7 @@
-import { CategoryStatResultDto, JoinedUserStatResultDto, RevenueStatResultDto, UploadedUserModelStatResultDto } from '@dtos/out';
+import { CategoryStatResultDto, JoinedUserStatResultDto, RevenueStatResultDto, UploadedModelStatResultDto } from '@dtos/out';
 import { Handler } from '@interfaces';
 import { prisma } from '@repositories';
-import { JoinedUserStatQuerystringDto, RevenueStatQuerystringDto, UploadedUserModelStatQuerystringDto } from 'src/dtos/in/stat.dto';
+import { JoinedUserStatQuerystringDto, RevenueStatQuerystringDto, UploadedModelStatQuerystringDto } from 'src/dtos/in/stat.dto';
 
 const noByCategory: Handler<CategoryStatResultDto> = async () => {
     const cats = await prisma.defaultModel.groupBy({
@@ -79,14 +79,12 @@ const joinedUsers: Handler<JoinedUserStatResultDto, { Querystring: JoinedUserSta
     }));
 };
 
-const uploadedUserModelCount: Handler<UploadedUserModelStatResultDto, { Querystring: UploadedUserModelStatQuerystringDto }> = async (
-    req
-) => {
+const uploadedUserModelCount: Handler<UploadedModelStatResultDto, { Querystring: UploadedModelStatQuerystringDto }> = async (req) => {
     const { start: _start, end: _end, interval, unit } = req.query;
     const start = new Date(_start);
     const end = new Date(_end);
 
-    const newModels = await prisma.uploadedModel.findMany({
+    const newModels = await prisma.defaultModel.findMany({
         select: {
             model: {
                 select: {
