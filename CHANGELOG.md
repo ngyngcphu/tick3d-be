@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.16.1](https://github.com/ngyngcphu/tick3d-be/compare/v1.16.0...v1.16.1) (2023-12-31)
+
+
+### Bug Fixes
+
+* **cart:** order in-cart model by added time ([7c8dfeb](https://github.com/ngyngcphu/tick3d-be/commit/7c8dfeb61125af14ad33dc8159c34f71bb866413))
+* **user:** add Vietnamese format name to user data response ([26fe827](https://github.com/ngyngcphu/tick3d-be/commit/26fe827bb9b65564b3a38f815efd6cee1d3d8e5c))
+
 ## [1.16.0](https://github.com/ngyngcphu/tick3d-be/compare/v1.15.1...v1.16.0) (2023-12-31)
 
 
