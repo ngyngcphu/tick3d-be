@@ -3,5 +3,7 @@
  */
 
 export * from './createRoutes';
+export * from './estimateDeliveryTime';
 export * from './estimatePrice';
+export * from './estimateShippingFee';
 export * from './logger';
