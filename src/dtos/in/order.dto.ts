@@ -12,14 +12,10 @@ export const CreateOrderInputDto = Type.Object(
     {
         examples: [
             {
-                total_price: 45000,
-                shipping_fee: 15000,
-                est_deli_time: '2023-11-25T13:30:00',
                 district: 'string',
                 ward: 'string',
                 street: 'string',
                 streetNo: 'string',
-                isPaid: false,
                 extra_note: 'string'
             }
         ]

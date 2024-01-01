@@ -32,13 +32,15 @@ const createOrderInDatabase: Handler<CreateOrderResultDto, { Body: CreateOrderIn
                 }
             });
 
+            const shipping_fee = estimateShippingFee(orderInfo);
             const order = await prisma.order.create({
                 data: {
                     user_id: userId,
-                    total_price: cartModels
-                        .map((model) => model.model.price * model.quantity * (1 - (model.model.ModelPromotion?.discount || 0)))
-                        .reduce((acc, cur) => acc + cur, 0),
-                    shipping_fee: estimateShippingFee(orderInfo),
+                    total_price:
+                        cartModels
+                            .map((model) => model.model.price * model.quantity * (1 - (model.model.ModelPromotion?.discount || 0)))
+                            .reduce((acc, cur) => acc + cur, 0) + shipping_fee,
+                    shipping_fee,
                     est_deli_time: estimatedDeliveryTime(orderInfo),
                     district: orderInfo.district,
                     ward: orderInfo.ward,
@@ -48,7 +50,10 @@ const createOrderInDatabase: Handler<CreateOrderResultDto, { Body: CreateOrderIn
                     isPaid: false
                 },
                 select: {
-                    id: true
+                    id: true,
+                    shipping_fee: true,
+                    est_deli_time: true,
+                    total_price: true
                 }
             });
 
@@ -67,7 +72,12 @@ const createOrderInDatabase: Handler<CreateOrderResultDto, { Body: CreateOrderIn
             }
         });
 
-        return res.send({ id: newOrder.id });
+        return {
+            id: newOrder.id,
+            shippingFee: newOrder.shipping_fee,
+            deliTime: newOrder.est_deli_time.toDateString(),
+            totalPrice: newOrder.total_price
+        };
     } catch (error) {
         res.internalServerError('Failed to create the order. Please try again later.');
         throw error;
@@ -119,7 +129,7 @@ const createPayPalOrder: Handler<PaypalDto, { Body: CreatePayPalOrderDto }> = as
         const userId = req.userId;
         const orderInfo = req.body.orderInfo;
 
-        const digitalOrderId = await prisma.$transaction(async () => {
+        const newOrder = await prisma.$transaction(async () => {
             const cartModels = await prisma.cart.findMany({
                 select: {
                     user_id: true,
@@ -141,13 +151,15 @@ const createPayPalOrder: Handler<PaypalDto, { Body: CreatePayPalOrderDto }> = as
                 }
             });
 
+            const shipping_fee = estimateShippingFee(orderInfo);
             const order = await prisma.order.create({
                 data: {
                     user_id: userId,
-                    total_price: cartModels
-                        .map((model) => model.model.price * model.quantity * (1 - (model.model.ModelPromotion?.discount || 0)))
-                        .reduce((acc, cur) => acc + cur, 0),
-                    shipping_fee: estimateShippingFee(orderInfo),
+                    total_price:
+                        cartModels
+                            .map((model) => model.model.price * model.quantity * (1 - (model.model.ModelPromotion?.discount || 0)))
+                            .reduce((acc, cur) => acc + cur, 0) + shipping_fee,
+                    shipping_fee,
                     est_deli_time: estimatedDeliveryTime(orderInfo),
                     district: orderInfo.district,
                     ward: orderInfo.ward,
@@ -158,7 +170,9 @@ const createPayPalOrder: Handler<PaypalDto, { Body: CreatePayPalOrderDto }> = as
                 },
                 select: {
                     id: true,
-                    total_price: true
+                    total_price: true,
+                    shipping_fee: true,
+                    est_deli_time: true
                 }
             });
 
@@ -189,7 +203,7 @@ const createPayPalOrder: Handler<PaypalDto, { Body: CreatePayPalOrderDto }> = as
 
             const { digital_order_id } = await prisma.order.update({ where: { id: order.id }, data: { digital_order_id: digitalOrderId } });
 
-            return digital_order_id;
+            return { digital_order_id: digital_order_id as string, order };
         });
         await prisma.cart.deleteMany({
             where: {
@@ -197,7 +211,12 @@ const createPayPalOrder: Handler<PaypalDto, { Body: CreatePayPalOrderDto }> = as
             }
         });
 
-        return res.send({ id: digitalOrderId });
+        return {
+            id: newOrder.digital_order_id,
+            deliTime: newOrder.order.est_deli_time.toDateString(),
+            shippingFee: newOrder.order.shipping_fee,
+            totalPrice: newOrder.order.total_price
+        };
     } catch (err) {
         logger.error(err);
         res.internalServerError();
