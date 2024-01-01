@@ -4,9 +4,6 @@ import { Static, Type } from '@sinclair/typebox';
 
 export const CreatePayPalOrderDto = Type.Object({
     orderInfo: Type.Object({
-        total_price: Type.Number(),
-        shipping_fee: Type.Number(),
-        est_deli_time: Type.String(),
         district: Type.String(),
         ward: Type.String(),
         street: Type.String(),
