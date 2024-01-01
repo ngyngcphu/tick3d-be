@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.17.6](https://github.com/ngyngcphu/tick3d-be/compare/v1.17.5...v1.17.6) (2024-01-01)
+
+
+### Bug Fixes
+
+* protect against request forging ([541a307](https://github.com/ngyngcphu/tick3d-be/commit/541a307c45249899fb1378b8a8919f8cf18204d2))
+* return calculated order info ([60354be](https://github.com/ngyngcphu/tick3d-be/commit/60354be5511fef86e1b55724f30ee9875b99cb60))
+* typescript unused var ([a5b62f2](https://github.com/ngyngcphu/tick3d-be/commit/a5b62f2f1ee3585d82236422840f6b7a87d208a6))
+
 ## [1.17.5](https://github.com/ngyngcphu/tick3d-be/compare/v1.17.4...v1.17.5) (2023-12-31)
 
 
